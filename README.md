@@ -1,3 +1,2 @@
-QtCircuit
-=========
-In development
+# QtCircuit
+Application for drawing electric circuit.

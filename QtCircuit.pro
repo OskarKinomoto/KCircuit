@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2014-11-21T20:10:04
+# Project created by QtCreator 2015-01-21T18:04:02
 #
 #-------------------------------------------------
 
@@ -13,24 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        qtcircuitmain.cpp \
-    kquitmodifiedbox.cpp \
-    program.cpp \
-    circuitwidget.cpp \
-    settingswindow.cpp \
-    circuitrenderarea.cpp \
-    circuitscrollarea.cpp
+	mainwindow.cpp \
+    mainwidget.cpp
 
-HEADERS  += qtcircuitmain.h \
-    kquitmodifiedbox.h \
-    program.h \
-    circuitwidget.h \
-    settingswindow.h \
-    circuitrenderarea.h \
-    circuitscrollarea.h
+HEADERS  += mainwindow.h \
+    enum.h \
+    mainwidget.h
 
 QMAKE_CXXFLAGS += -std=c++11
-
-TRANSLATIONS = QtCircuit_en_US.ts \
-    QtCircuit_pl_PL.ts
-CODECFORTR = UTF-8
