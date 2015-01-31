@@ -3,7 +3,15 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+
+#include "mainwidget.h"
+#include "objectsettingswidget.h"
+
+#include "aboutdialog.h"
+
 #include "enum.h"
+
+#include "circuit.h"
 
 class MainWindow : public QMainWindow
 {
@@ -11,9 +19,13 @@ class MainWindow : public QMainWindow
 
 public:
   MainWindow(QWidget *parent = 0);
-  ///~MainWindow();
+
+  inline static K::tool selectedTool(){return MainWindow::_selectedTool;}
 
 private:
+  //Main Widget
+  void initMainWidget();
+  MainWidget * mainWidget;
   //Actions
   void initActions();
   QAction * newFileAction;
@@ -26,10 +38,20 @@ private:
   QAction * wireSelectAction;
   QAction * resistorSelectAction; ///TODO ofc~
 
+  QAction * zoomInAction;
+  QAction * zoomInAction2;
+  QAction * zoomInAction3;
+  QAction * zoomOutAction;
+  QAction * showGridAction;
+
+  QAction * aboutApplicationAction;
+
   //Menu
   void initMenus();
   QMenu * fileMenu;
   QMenu * editMenu;
+  QMenu * viewMenu;
+  QMenu * helpMenu;
 
   //Settings
   void loadSettings();
@@ -37,23 +59,41 @@ private:
 
   //Tool Bars
   void initToolBars();
+  QToolBar * applicationBar;
   QToolBar * toolBar; // Toolbar with resistors etc
+  QToolBar * objectSettingsBar;
+
+  //Object settings
+  void initObjectSettingsWidget();
+  ObjectSettingsWidget * objectSettingsWidget;
 
   //Selected tool;
-  K::tool selectedTool = K::MOUSE;
+  static K::tool _selectedTool;
   void unselectLastUsed();
+
+  //Dialogs
+  void initDialogs();
+  QFileDialog * openFileDialog;
+  QFileDialog * saveFileDialog;
+  QFileDialog * saveFileAsDialog;
+  AboutDialog * aboutDialog;
 
 protected:
   void closeEvent (QCloseEvent * event);
 
 private slots:
   void newFile();
-  void saveFile();
-  void saveFileAs();
-  void openFile();
+  void saveFile(QString file);
+  void saveFileTest();
+  void saveFileAs(QString file);
+  void openFile(QString file);
   void quit();
   void wireSelect();
   void mouseSelect();
+  void aboutApplication();
+  void showGrid(bool b);
+  void zoomIn();
+  void zoomOut();
 };
 
 #endif // MAINWINDOW_H

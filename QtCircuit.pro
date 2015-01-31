@@ -14,10 +14,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
 	mainwindow.cpp \
-    mainwidget.cpp
+    mainwidget.cpp \
+    objectsettingswidget.cpp \
+    aboutdialog.cpp \
+    circuit.cpp \
+    circuitscrollarea.cpp \
+    circuitwidget.cpp \
+    coordinate.cpp \
+    abstractcircuitobject.cpp \
+    circuitobject.cpp \
+    circuitwire.cpp
 
 HEADERS  += mainwindow.h \
     enum.h \
-    mainwidget.h
+    mainwidget.h \
+    objectsettingswidget.h \
+    aboutdialog.h \
+    circuit.h \
+    circuitscrollarea.h \
+    circuitwidget.h \
+    coordinate.h \
+    abstractcircuitobject.h \
+    circuitobject.h \
+    circuitwire.h
 
 QMAKE_CXXFLAGS += -std=c++11

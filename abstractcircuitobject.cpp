@@ -1,12 +1,9 @@
-#include "circuitobject.h"
+#include "abstractcircuitobject.h"
 
-CircuitObject::CircuitObject()
+
+
+
+AbstractCircuitObject::~AbstractCircuitObject()
 {
 
 }
-
-CircuitObject::~CircuitObject()
-{
-
-}
-

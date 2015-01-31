@@ -1,12 +1,24 @@
-#ifndef CIRCUITOBJECT_H
-#define CIRCUITOBJECT_H
+#ifndef ABSTRACTCIRCUITOBJECT_H
+#define ABSTRACTCIRCUITOBJECT_H
 
+#include <QPainter>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
-class CircuitObject
+#include "coordinate.h"
+#include "enum.h"
+
+const int grid = 20;
+
+class AbstractCircuitObject
 {
 public:
-  CircuitObject();
-  ~CircuitObject();
+  virtual ~AbstractCircuitObject() = 0;
+  virtual void draw(QPainter&, float scale) = 0;
+  virtual K::status mouseEvent(QMouseEvent * event, float scale) = 0;
+  virtual K::status keyEvent(QKeyEvent * event, float scale) = 0;
+
+  enum status{DRAWING, END_DRAWING, DESTROY};
 };
 
-#endif // CIRCUITOBJECT_H
+#endif // ABSTRACTCIRCUITOBJECT_H

@@ -1,6 +1,7 @@
 #ifndef OBJECTSETTINGSWIDGET_H
 #define OBJECTSETTINGSWIDGET_H
 
+#include <QtWidgets>
 
 class ObjectSettingsWidget : public QWidget
 {

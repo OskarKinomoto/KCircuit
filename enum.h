@@ -3,6 +3,7 @@
 namespace K
 {
   enum tool{MOUSE, WIRE, RESISTOR};
+  enum status{DRAWING, DRAWED, DESTROY};
 }
 
 #endif // ENUM_H
