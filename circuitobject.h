@@ -5,11 +5,10 @@
 
 class CircuitObject : public AbstractCircuitObject
 {
-private:
-  Coordinate coords;
+protected:
+  Coordinate cords;
 public:
-  CircuitObject(Coordinate c);
-  CircuitObject(int x = 0, int y = 0);
+  CircuitObject();
   virtual ~CircuitObject();
 };
 

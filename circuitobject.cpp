@@ -1,13 +1,7 @@
 #include "circuitobject.h"
 
-CircuitObject::CircuitObject(Coordinate c)
+CircuitObject::CircuitObject()
 {
-  coords = c;
-}
-
-CircuitObject::CircuitObject(int x, int y)
-{
-  coords = Coordinate(x,y);
 }
 
 CircuitObject::~CircuitObject()

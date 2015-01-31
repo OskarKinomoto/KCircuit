@@ -25,6 +25,13 @@ MainWidget::~MainWidget()
 int MainWidget::newTab(Circuit *circuit)
 {
   if(!circuit) throw std::string("nullptr in MainWidget::newTab");
+
+  for(int i = 0; i < tabWidget->count(); ++i)
+    {
+      if(((CircuitScrollArea*)tabWidget->widget(i))->circuitWidget->isNew())
+        closeTabI(i);
+    }
+
   int i = tabWidget->addTab(new CircuitScrollArea(circuit, tabWidget), circuit->name());
   tabWidget->setCurrentIndex(i);
 
@@ -49,10 +56,18 @@ void MainWidget::updateCurrent()
   ((CircuitScrollArea*)tabWidget->currentWidget())->widget()->update();
 }
 
+void MainWidget::closeTabI(int i)
+{
+  tabWidget->removeTab(i);
+}
+
 void MainWidget::closeTab(int i)
 {
   /// TODO ask save/cancel/don't save
+  if(((CircuitScrollArea*)tabWidget->widget(i))->circuitWidget)
   tabWidget->removeTab(i);
-  if(!tabWidget->count()) this->newTab(new Circuit(tr("new")));
+  if(!tabWidget->count()) this->newTab(new Circuit());
 }
+
+
 

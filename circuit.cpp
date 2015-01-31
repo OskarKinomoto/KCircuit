@@ -1,13 +1,59 @@
 #include "circuit.h"
 
 #include "mainwindow.h"
+
 #define selectedTool MainWindow::selectedTool
+#define MAGICK_NUMBER 0x8a3f98c0
 
 constexpr double Circuit::scaleList[];
 
-Circuit::Circuit(QString name)
+Circuit::Circuit(QString path)
 {
-  _name = name;
+  if(!QFile::exists(path)) throw tr("File don't exist");
+  _path = path;
+
+  QFile file(path);
+  _name = QFileInfo(file).fileName();
+  file.open(QIODevice::ReadOnly);
+  QDataStream in(&file);
+
+  quint32 magick;
+  in >> magick;
+  if(magick != MAGICK_NUMBER) throw tr("Wrong type or corupt file");
+
+  quint32 objectVersion;
+  in >> objectVersion;
+  if(objectVersion > OBJECT_VERSION) throw tr("File newer than program. Please upgrade QtCircuit.");
+
+  quint32 count;
+  in >> count;
+  _objects.reserve(count);
+
+  for(quint32 i = 0; i < count; ++i)
+    {
+      quint32 io;
+      in >> io;
+
+      switch(io)
+        {
+        case K::Object::WIRE:
+          _objects.push_back(new CircuitWire(in));
+          break;
+        case K::Object::RESISTOR:
+          _objects.push_back(new CircuitResistor(in));
+          break;
+        default:
+          qDebug() << "nieznany typ :<";
+          break;
+        }
+    }
+}
+
+Circuit::Circuit()
+{
+  _name = tr("new");
+  _path = "";
+  newFile = true;
 }
 
 Circuit::~Circuit()
@@ -44,7 +90,7 @@ void Circuit::mouseEvent(QMouseEvent *event)
 {
   switch(selectedTool())
     {
-      case K::MOUSE:
+    case K::MOUSE:
       ///TODO ergo znajdywanie co gdzie i jak :)
       break;
 
@@ -54,7 +100,7 @@ void Circuit::mouseEvent(QMouseEvent *event)
     }
 }
 
-void Circuit::keyPressEvent(QKeyEvent *event)
+void Circuit::keyReleaseEvent(QKeyEvent *event)
 {
   if(_nowDrawing != nullptr)
     {
@@ -63,14 +109,10 @@ void Circuit::keyPressEvent(QKeyEvent *event)
         {
           _nowDrawing = nullptr;
           _widget->releaseMouse();
+          setModyfied();
         }
       if(status == K::DESTROY)
-        {
-          delete _nowDrawing;
-          _nowDrawing = nullptr;
-          _objects.pop_back();
-          _widget->releaseMouse();
-        }
+        this->destroyDrawingObject();
     }
   _widget->update();
 }
@@ -103,7 +145,51 @@ void Circuit::scaleDown()
 
 void Circuit::setScale(double scale)
 {
+  if(scale > scaleList[0] && scale < scaleList[scaleListSize - 1])
+    {
+      _scale = scale;
+      _widget->updateSize();
+    }
+}
 
+void Circuit::saveFile()
+{
+  QFile file(_path);
+  file.open(QIODevice::WriteOnly);
+  QDataStream out(&file);
+  out << quint32(MAGICK_NUMBER);
+  out << quint32(OBJECT_VERSION);
+
+  out.setVersion(QDataStream::Qt_5_4);
+
+  quint32 count = 0;
+  out << count;
+
+  for(auto object : _objects)
+    {
+      if(object->save(out)) ++count;
+    }
+  out.device()->seek(8);
+  out << count;
+
+  setModyfied(false);
+}
+
+void Circuit::saveFileAs(QString newPath)
+{
+  _path = newPath;
+  this->saveFile();
+}
+
+void Circuit::destroyDrawingObject()
+{
+  if(_nowDrawing != nullptr)
+    {
+      delete _nowDrawing;
+      _nowDrawing = nullptr;
+      _objects.pop_back();
+      _widget->releaseMouse();
+    }
 }
 
 void Circuit::drawing(QMouseEvent * event)
@@ -112,27 +198,48 @@ void Circuit::drawing(QMouseEvent * event)
     {
       _nowDrawing = new CircuitWire(Coordinate(event->x(),event->y()), _scale);
       _objects.push_back(_nowDrawing);
-      /// COS TU ZMIENIC :)
       _widget->grabMouse();
     }
   else if(_nowDrawing == nullptr)
     {
-      ///switch na resistory
+      switch(selectedTool())
+        {
+        case K::RESISTOR:
+          _nowDrawing = new CircuitResistor(Coordinate(event->x(),event->y()), _scale);
+          break;
+        case K::MOUSE:
+        case K::WIRE:
+          break;
+        default:
+          qDebug() << "selectedTool default in " << __FILE__;
+          break;
+        }
+      if(_nowDrawing)
+        {
+          _objects.push_back(_nowDrawing);
+          _widget->grabMouse();
+        }
     }
   else
     {
-      auto status = _nowDrawing->mouseEvent(event, _scale);
-      if(status == K::DRAWED)
+      int x = event->x();
+      int y = event->y();
+      if((x < 0 || y < 0 || y > _widget->height() || x > _widget->width()) && selectedTool() != K::WIRE)
         {
-          _nowDrawing = nullptr;
-          _widget->releaseMouse();
+          //Out of bonds
+          this->destroyDrawingObject();
         }
-      if(status == K::DESTROY)
+      else
         {
-          delete _nowDrawing;
-          _nowDrawing = nullptr;
-          _objects.pop_back();
-          _widget->releaseMouse();
+          auto status = _nowDrawing->mouseEvent(event, _scale);
+          if(status == K::DRAWED)
+            {
+              _nowDrawing = nullptr;
+              _widget->releaseMouse();
+              setModyfied();
+            }
+          if(status == K::DESTROY)
+            this->destroyDrawingObject();
         }
     }
 

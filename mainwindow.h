@@ -80,16 +80,25 @@ private:
 
 protected:
   void closeEvent (QCloseEvent * event);
+  void leaveEvent ( QEvent * event );
+  void enterEvent ( QEvent * event );
+
+private:
+  bool mouseGrabRestore = false;
+  //int mouseGrabRestoreIndex = -1;
+
 
 private slots:
   void newFile();
-  void saveFile(QString file);
-  void saveFileTest();
+  void saveFile();
   void saveFileAs(QString file);
   void openFile(QString file);
   void quit();
+
   void wireSelect();
   void mouseSelect();
+  void resistorSelect();
+
   void aboutApplication();
   void showGrid(bool b);
   void zoomIn();

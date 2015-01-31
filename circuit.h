@@ -1,29 +1,40 @@
 #ifndef CIRCUIT_H
 #define CIRCUIT_H
 
+#include <QObject>
+
 #include <QString>
+#include <QFile>
+#include <QDataStream>
+
+#include <QDebug>
 
 #include <vector>
 
 #include "circuitwire.h"
+#include "circuitresistor.h"
+
 #include "enum.h"
 
 class CircuitWidget;
 
-class Circuit
+class Circuit : public QObject
 {
+  Q_OBJECT
+
   friend class CircuitWidget;
 public:
-  Circuit(QString name);
+  Circuit(QString path);
+  Circuit();
   ~Circuit();
 
   inline void setWidget(CircuitWidget * widget) { _widget = widget; }
 
-  inline QString name(){return _name;}
+  inline QString name(){QString tmp; if(modyfied) tmp += "*"; tmp+=_name; return tmp;}
 
   void draw(QPainter&);
   void mouseEvent(QMouseEvent * event);
-  void keyPressEvent(QKeyEvent * event);
+  void keyReleaseEvent(QKeyEvent * event);
 
   inline double scale() { return _scale; }
 
@@ -38,9 +49,22 @@ public:
 
   static bool showGrid;
 
+  void saveFile();
+  void saveFileAs(QString newPath);
+  inline bool hasPath() { return _path != ""; }
+  inline bool isModyfied() { return modyfied; }
+  inline void setModyfied(bool b = true) {modyfied = b; newFile = false;}
+
+  void destroyDrawingObject();
+
+  bool newFile = false;
+
 private:
-  ///TMP NAME
   QString _name;
+  QString _path;
+
+  bool modyfied = false;
+
   CircuitWidget * _widget;
 
   std::vector<AbstractCircuitObject*> _objects;

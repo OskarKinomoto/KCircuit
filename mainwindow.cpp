@@ -39,6 +39,7 @@ void MainWindow::initActions()
   //saveFileAction
   saveFileAction = new QAction(QIcon::fromTheme("document-save"), tr("&Save"), nullptr);
   saveFileAction->setShortcut(QKeySequence::Save);
+  connect(saveFileAction, SIGNAL(triggered()), this, SLOT(saveFile()));
 
   //saveFileAsAction
   saveFileAsAction = new QAction(QIcon::fromTheme("document-save-as"), tr("Save as"), nullptr);
@@ -57,11 +58,16 @@ void MainWindow::initActions()
   ///mouseSelectAction->setShortcut(QKeySequence::Quit);
   connect(mouseSelectAction, SIGNAL(triggered()), this, SLOT(mouseSelect()));
 
-  //mouseSelectAction
+  //wireSelectAction
   wireSelectAction = new QAction(QIcon::fromTheme("input-keyboard"), tr("Wire"), nullptr);
   wireSelectAction->setCheckable(true);
   ///wireSelectAction->setShortcut(QKeySequence::Quit);
   connect(wireSelectAction, SIGNAL(triggered()), this, SLOT(wireSelect()));
+
+  //resistorSelectAction
+  resistorSelectAction = new QAction(QIcon::fromTheme("application-redo"), tr("Resistor"), nullptr);
+  resistorSelectAction->setCheckable(true);
+  connect(resistorSelectAction, SIGNAL(triggered()), this, SLOT(resistorSelect()));
 
   //aboutAction
   aboutApplicationAction = new QAction(QIcon::fromTheme("help-about"), tr("About"), nullptr);
@@ -81,7 +87,7 @@ void MainWindow::initActions()
   zoomInAction3 = new QAction(QIcon::fromTheme("zoom-in"), tr("Zoom in"), nullptr);
   zoomInAction->setShortcut(QKeySequence::ZoomIn);
   zoomInAction2->setShortcut(QKeySequence(QString("ctrl+=")));
-  zoomInAction3->setShortcut(QKeySequence(Qt::Key_1));
+  ///zoomInAction3->setShortcut(QKeySequence(Qt::Key_1));
   connect(zoomInAction, SIGNAL(triggered()), this, SLOT(zoomIn()));
   connect(zoomInAction2, SIGNAL(triggered()), this, SLOT(zoomIn()));
   connect(zoomInAction3, SIGNAL(triggered()), this, SLOT(zoomIn()));
@@ -121,6 +127,7 @@ void MainWindow::initMenus()
 
 void MainWindow::loadSettings()
 {
+  this->setFocusPolicy(Qt::WheelFocus);
   QSettings settings;
   settings.beginGroup("MainWindow");
   this->resize(settings.value("size", QSize(800, 600)).toSize());
@@ -152,6 +159,7 @@ void MainWindow::initToolBars()
   toolBar = new QToolBar(tr("items")); ///TODO nazwa :<
   toolBar->addAction(mouseSelectAction);
   toolBar->addAction(wireSelectAction);
+  toolBar->addAction(resistorSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
 
   objectSettingsBar = new QToolBar(tr("Object settings"));
@@ -168,10 +176,14 @@ void MainWindow::unselectLastUsed()
 {
   switch(_selectedTool)
     {
-      case K::MOUSE: mouseSelectAction->setChecked(false);
+    case K::MOUSE: mouseSelectAction->setChecked(false);
       break;
 
-      case K::WIRE: wireSelectAction->setChecked(false);
+    case K::WIRE: wireSelectAction->setChecked(false);
+      break;
+
+    case K::RESISTOR: resistorSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
       break;
 
     }
@@ -196,14 +208,18 @@ void MainWindow::initDialogs()
   saveFileDialog->setNameFilters(fileList);
   saveFileDialog->setDefaultSuffix(QString(".qtc"));
   saveFileDialog->setAcceptMode(QFileDialog::AcceptSave);
-  connect(saveFileAction, SIGNAL(triggered()), this, SLOT(saveFileTest()));
-  connect(saveFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFile(QString)));
+  saveFileDialog->setFileMode(QFileDialog::AnyFile);
+  saveFileDialog->setConfirmOverwrite(true);
+
+
+  //connect(saveFileAction, SIGNAL(triggered()), this, SLOT(saveFileTest()));
+  //connect(saveFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFileAs(QString)));
 
   saveFileAsDialog->setNameFilters(fileList);
   saveFileAsDialog->setDefaultSuffix(QString(".qtc"));
   saveFileAsDialog->setAcceptMode(QFileDialog::AcceptSave);
-  connect(saveFileAsAction, SIGNAL(triggered()), saveFileAsDialog, SLOT(exec()));
-  connect(saveFileAsDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFileAs(QString)));
+  //connect(saveFileAsAction, SIGNAL(triggered()), saveFileAsDialog, SLOT(exec()));
+  //connect(saveFileAsDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFileAs(QString)));
 
   // about dialog
   aboutDialog = new AboutDialog(nullptr);
@@ -211,23 +227,33 @@ void MainWindow::initDialogs()
 
 void MainWindow::newFile()
 {
-  this->mainWidget->newTab(new Circuit(tr("new")));
+  this->mainWidget->newTab(new Circuit());
 }
 
-void MainWindow::saveFile(QString file)
+void MainWindow::saveFile()
 {
+  auto circ = this->mainWidget->getCurrent()->circuitWidget;
 
-}
+  if(circ->hasPath())
+    {
+      circ->saveFile();
+      return;
+    }
 
-void MainWindow::saveFileTest()
-{
-  ///TODO jeżeli już zapisany to zapisać i nie pytać~
-  saveFileDialog->exec();
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                  "/home/oskar/Qt/QtCircuit/SAMPLE/",
+                                                  tr("QtCircuit File (*.qtc)"));
+
+  if(QFile::exists(fileName))
+    {
+      ///TODO ovverride/cancel
+    }
+  circ->saveFileAs(fileName);
 }
 
 void MainWindow::saveFileAs(QString file)
 {
-
+  this->mainWidget->getCurrent()->circuitWidget->saveFileAs(file);
 }
 
 void MainWindow::openFile(QString file)
@@ -260,6 +286,14 @@ void MainWindow::mouseSelect()
   mainWidget->setMouseTrackingOnTabs(false);
 }
 
+void MainWindow::resistorSelect()
+{
+  unselectLastUsed();
+  resistorSelectAction->setChecked(true);
+  _selectedTool = K::RESISTOR;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
 void MainWindow::aboutApplication()
 {
   aboutDialog->show();
@@ -285,8 +319,26 @@ void MainWindow::zoomOut()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
-    event->ignore();
-    this->quit();
+  event->ignore();
+  this->quit();
+}
+
+void MainWindow::leaveEvent(QEvent *event)
+{
+  mouseGrabRestore = this->mainWidget->getCurrent()->circuitWidget->grabedMouse;
+  //mouseGrabRestoreIndex = this->mainWidget->currentIndex();
+  this->mainWidget->getCurrent()->circuitWidget->releaseMouse();
+  QWidget::leaveEvent(event);
+}
+
+void MainWindow::enterEvent(QEvent *event)
+{
+  if(mouseGrabRestore)
+    {
+      this->mainWidget->getCurrent()->circuitWidget->grabMouse();
+      mouseGrabRestore = false;
+    }
+  QWidget::enterEvent(event);
 }
 
 

@@ -6,22 +6,24 @@
 #include <QDebug>
 
 #include "abstractcircuitobject.h"
-#include "coordinate.h"
+
 
 
 class CircuitWire : public AbstractCircuitObject
 {
 private:
   std::vector<Coordinate> cords;
-  bool drawing;
+  bool drawing = false;
 
 public:
   CircuitWire(Coordinate begin, float scale);
+  CircuitWire(QDataStream& in);
   ~CircuitWire();
 
   virtual void draw(QPainter&p, float scale);
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
   virtual K::status keyEvent(QKeyEvent * event, float scale);
+  virtual bool save(QDataStream& out);
 };
 
 #endif // CIRCUITWIRE_H

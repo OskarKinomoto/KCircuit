@@ -18,6 +18,7 @@ public:
   void setMouseTrackingOnTabs(bool enable);
   void updateCurrent();
   inline CircuitScrollArea * getCurrent() { return (CircuitScrollArea*)tabWidget->currentWidget();}
+  inline int currentIndex() { return tabWidget->currentIndex(); }
 
 private:
   QVBoxLayout * vBox;
@@ -25,6 +26,7 @@ private:
   QWidget * statusBar;
   bool mouseTracking = false;
 
+  void closeTabI(int i);
 signals:
 
 public slots:

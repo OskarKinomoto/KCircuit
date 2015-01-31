@@ -17,6 +17,7 @@ public:
 
   void recolorScrollBars();
   void setMouseTrackingCircuit(bool enable);
+  void setTitle(QString s);
 
 protected:
   virtual void resizeEvent (QResizeEvent * event);
@@ -24,6 +25,7 @@ protected:
 
 private:
   QWidget * corner;
+  QTabWidget * parentTabWidget;
   decltype(QWheelEvent.delta()) delta = 0;
 
 };

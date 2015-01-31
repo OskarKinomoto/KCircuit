@@ -2,10 +2,22 @@
 
 CircuitWire::CircuitWire(Coordinate begin, float scale)
 {
- Coordinate tmp(begin/(grid*scale));
+ float gs = scale * grid;
+ Coordinate tmp(begin.x() / gs + .5, begin.y() / gs + .5);
  cords.push_back(tmp);
  cords.push_back(tmp);
  drawing = true;
+}
+
+CircuitWire::CircuitWire(QDataStream &in)
+{
+  quint16 t;
+  in >> t;
+  cords.reserve(t);
+  for(int i = 0; i < t; ++i)
+    {
+      cords.push_back(Coordinate(in));
+    }
 }
 
 CircuitWire::~CircuitWire()
@@ -49,4 +61,18 @@ K::status CircuitWire::keyEvent(QKeyEvent *event, float scale)
       return K::DESTROY;
     }
   return K::DRAWING;
+}
+
+bool CircuitWire::save(QDataStream &out)
+{
+  // TYP
+  out << quint32(K::Object::WIRE);
+  out << quint16(cords.size());
+
+  for(auto itr : cords)
+    {
+      out << itr;
+    }
+
+  return true;
 }

@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #define selectedTool MainWindow::selectedTool
 
+//extern void CircuitScrollArea::setTitle(QString &s);
+
 CircuitWidget::CircuitWidget(Circuit *_circuit, QWidget *parent) : QWidget(parent)
 {
   circuit = _circuit;
@@ -16,9 +18,26 @@ CircuitWidget::~CircuitWidget()
 
 }
 
+void CircuitWidget::updateTitle()
+{
+  ((CircuitScrollArea*)this->parentWidget())->setTitle(circuit->name());
+}
+
 void CircuitWidget::updateSize()
 {
   this->resize(circuit->width() * circuit->scale(), circuit->height() * circuit->scale());
+}
+
+void CircuitWidget::grabMouse()
+{
+  grabedMouse = true;
+  QWidget::grabMouse();
+}
+
+void CircuitWidget::releaseMouse()
+{
+  grabedMouse = false;
+  QWidget::releaseMouse();
 }
 
 void CircuitWidget::paintEvent(QPaintEvent *)
@@ -33,13 +52,7 @@ void CircuitWidget::paintEvent(QPaintEvent *)
 void CircuitWidget::mouseMoveEvent(QMouseEvent *event)
 {
   event = new QMouseEvent(event->type(), event->pos(), Qt::NoButton, Qt::NoButton, 0);
-  int x = event->x();
-  int y = event->y();
 
-  if(x < 0 || y < 0 || y > height() || x > width())
-    {
-
-    }
   circuit->mouseEvent(event);
 }
 
@@ -61,10 +74,10 @@ void CircuitWidget::mousePressEvent(QMouseEvent *event)
   event->ignore();
 }
 
-void CircuitWidget::keyPressEvent(QKeyEvent *event)
+void CircuitWidget::keyReleaseEvent(QKeyEvent *event)
 {
-  circuit->keyPressEvent(event);
-  QWidget::keyPressEvent(event);
+  circuit->keyReleaseEvent(event);
+  QWidget::keyReleaseEvent(event);
 }
 
 #undef selectedTool
