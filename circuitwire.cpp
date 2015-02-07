@@ -2,11 +2,11 @@
 
 CircuitWire::CircuitWire(Coordinate begin, float scale)
 {
- float gs = scale * grid;
- Coordinate tmp(begin.x() / gs + .5, begin.y() / gs + .5);
- cords.push_back(tmp);
- cords.push_back(tmp);
- drawing = true;
+  float gs = scale * grid;
+  Coordinate tmp(begin.x() / gs + .5, begin.y() / gs + .5);
+  cords.push_back(tmp);
+  cords.push_back(tmp);
+  drawing = true;
 }
 
 CircuitWire::CircuitWire(QDataStream &in)
@@ -26,11 +26,11 @@ CircuitWire::~CircuitWire()
 
 void CircuitWire::draw(QPainter &p, float scale)
 {
-      float gs = scale * grid;
-      for(auto itr = cords.begin(), itr2 = itr + 1; itr2 < cords.end(); ++itr, ++itr2)
-        {
-          p.drawLine(itr->x()*gs, itr->y()*gs, itr2->x()*gs, itr2->y()*gs);
-        }
+  float gs = scale * grid;
+  for(auto itr = cords.begin(), itr2 = itr + 1; itr2 < cords.end(); ++itr, ++itr2)
+    {
+      p.drawLine(itr->x()*gs, itr->y()*gs, itr2->x()*gs, itr2->y()*gs);
+    }
 
 }
 
@@ -38,29 +38,27 @@ K::status CircuitWire::mouseEvent(QMouseEvent *event, float scale)
 {
   float gs = scale * grid;
   Coordinate tmp(event->x()/gs + .5, event->y()/gs + .5);
-  cords[cords.size() - 1] = tmp;
+
   if(event->button() == Qt::LeftButton && tmp != cords[cords.size() - 2])
     {
+      cords[cords.size() - 1] = tmp;
       cords.push_back(tmp);
+      return K::DRAWING;
     }
-
-  return K::DRAWING;
-
-}
-
-K::status CircuitWire::keyEvent(QKeyEvent *event, float scale)
-{
-  auto key = event->key();
-  if(key == Qt::Key_Enter || key == Qt::Key_Return)
+  else if(event->button() == Qt::RightButton)
     {
       cords.pop_back();
-      return K::DRAWED;
+      if(cords.size() < 2)
+        {
+          return K::DESTROY;
+        }
+      cords[cords.size() - 1] = tmp;
+      return K::DRAWING;
+
     }
-  else if(key == Qt::Key_Escape)
-    {
-      return K::DESTROY;
-    }
+  cords[cords.size() - 1] = tmp;
   return K::DRAWING;
+
 }
 
 bool CircuitWire::save(QDataStream &out)
@@ -75,4 +73,11 @@ bool CircuitWire::save(QDataStream &out)
     }
 
   return true;
+}
+
+K::status CircuitWire::doubleClick()
+{
+  cords.pop_back();
+  if(cords.size() < 2) return K::DESTROY;
+  return K::DRAWED;
 }

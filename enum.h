@@ -5,12 +5,12 @@
 
 namespace K
 {
-  enum tool{MOUSE, WIRE, RESISTOR};
+  enum tool{MOUSE, WIRE, RESISTOR, CAPACITOR};
   enum status{DRAWING, DRAWED, DESTROY};
 
   namespace Object
   {
-    enum object:quint8{WIRE = 1, RESISTOR = 2};
+    enum object:quint8{WIRE = 1, RESISTOR = 2, CAPACITOR = 3};
   }
 }
 

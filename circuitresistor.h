@@ -5,17 +5,17 @@
 
 class CircuitResistor : public CircuitObject
 {
-private:
-  bool drawing = false;
+
 public:
-  CircuitResistor(Coordinate begin, float scale);
+  CircuitResistor(Coordinate begin, float scale, quint16 rotation);
   CircuitResistor(QDataStream& in);
   ~CircuitResistor();
 
   virtual void draw(QPainter&p, float scale);
-  virtual K::status mouseEvent(QMouseEvent * event, float scale);
-  virtual K::status keyEvent(QKeyEvent * event, float scale);
   virtual bool save(QDataStream& out);
+
+private:
+  constexpr static float wspr = (2.5 + sqrt(2) + 0.5/sqrt(2));
 };
 
 #endif // CIRCUITRESISTOR_H

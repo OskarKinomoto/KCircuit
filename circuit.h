@@ -13,6 +13,7 @@
 
 #include "circuitwire.h"
 #include "circuitresistor.h"
+#include "circuitcapacitor.h"
 
 #include "enum.h"
 
@@ -33,8 +34,9 @@ public:
   inline QString name(){QString tmp; if(modyfied) tmp += "*"; tmp+=_name; return tmp;}
 
   void draw(QPainter&);
+  void exportToPNG(QString path);
   void mouseEvent(QMouseEvent * event);
-  void keyReleaseEvent(QKeyEvent * event);
+  void doubleClick();
 
   inline double scale() { return _scale; }
 
@@ -46,6 +48,8 @@ public:
   void scaleUp();
   void scaleDown();
   void setScale(double scale);
+  void rotate();
+  void smallRotate();
 
   static bool showGrid;
 
@@ -54,6 +58,8 @@ public:
   inline bool hasPath() { return _path != ""; }
   inline bool isModyfied() { return modyfied; }
   inline void setModyfied(bool b = true) {modyfied = b; newFile = false;}
+
+  inline void resetRotation() {rotation = 0;}
 
   void destroyDrawingObject();
 
@@ -64,6 +70,7 @@ private:
   QString _path;
 
   bool modyfied = false;
+  quint16 rotation = 0;
 
   CircuitWidget * _widget;
 

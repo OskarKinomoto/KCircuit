@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse) return;
+
 K::tool MainWindow::_selectedTool = K::MOUSE;
 extern bool Circuit::showGrid;
 
@@ -7,15 +9,15 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   loadSettings();
+  initMainWidget();
   initActions();
   initMenus();
   initObjectSettingsWidget();
   initToolBars();
-  initMainWidget();
   initDialogs();
 
   //After everything open new file
-  newFile();
+  newFileInit();
 }
 
 void MainWindow::initMainWidget()
@@ -34,12 +36,16 @@ void MainWindow::initActions()
   //openFileAction
   openFileAction = new QAction(QIcon::fromTheme("document-open"), tr("&Open"), nullptr);
   openFileAction->setShortcut(QKeySequence::Open);
-  //moved to dialogs
+  ///TODO remove back to dialogs
 
   //saveFileAction
   saveFileAction = new QAction(QIcon::fromTheme("document-save"), tr("&Save"), nullptr);
   saveFileAction->setShortcut(QKeySequence::Save);
   connect(saveFileAction, SIGNAL(triggered()), this, SLOT(saveFile()));
+
+  //exportToAction
+  exportToAction = new QAction(tr("&Export to..."), nullptr);
+  connect(exportToAction, SIGNAL(triggered()), this, SLOT(exportFile()));
 
   //saveFileAsAction
   saveFileAsAction = new QAction(QIcon::fromTheme("document-save-as"), tr("Save as"), nullptr);
@@ -68,6 +74,11 @@ void MainWindow::initActions()
   resistorSelectAction = new QAction(QIcon::fromTheme("application-redo"), tr("Resistor"), nullptr);
   resistorSelectAction->setCheckable(true);
   connect(resistorSelectAction, SIGNAL(triggered()), this, SLOT(resistorSelect()));
+
+  //capacitorSelectAction
+  capacitorSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Capacitor"), nullptr);
+  capacitorSelectAction->setCheckable(true);
+  connect(capacitorSelectAction, SIGNAL(triggered()), this, SLOT(capacitorSelect()));
 
   //aboutAction
   aboutApplicationAction = new QAction(QIcon::fromTheme("help-about"), tr("About"), nullptr);
@@ -98,6 +109,16 @@ void MainWindow::initActions()
   zoomOutAction = new QAction(QIcon::fromTheme("zoom-out"), tr("Zoom out"), nullptr);
   zoomOutAction->setShortcut(QKeySequence::ZoomOut);
   connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
+
+  rotateAction = new QAction(QIcon::fromTheme("object-rotate-right"), tr("Rotate 90°"), nullptr);
+  rotateAction->setShortcut(tr("R"));
+  this->addAction(rotateAction);
+  connect(rotateAction, SIGNAL(triggered()), mainWidget, SLOT(rotate()));
+
+  smallRotateAction = new QAction(QIcon::fromTheme("object-rotate-right"), tr("Rotate 45°"), nullptr);
+  smallRotateAction->setShortcut(tr("Alt+R"));
+  this->addAction(smallRotateAction);
+  connect(smallRotateAction, SIGNAL(triggered()), mainWidget, SLOT(smallRotate()));
 }
 
 void MainWindow::initMenus()
@@ -108,6 +129,8 @@ void MainWindow::initMenus()
   fileMenu->addAction(openFileAction);
   fileMenu->addAction(saveFileAction);
   fileMenu->addAction(saveFileAsAction);
+  fileMenu->addSeparator();
+  fileMenu->addAction(exportToAction);
   fileMenu->addSeparator();
   fileMenu->addAction(quitAction);
 
@@ -133,6 +156,8 @@ void MainWindow::loadSettings()
   this->resize(settings.value("size", QSize(800, 600)).toSize());
   this->move(settings.value("pos", QPoint(200, 200)).toPoint());
   settings.endGroup();
+
+  QApplication::setDoubleClickInterval(300);
 }
 
 void MainWindow::saveSettings()
@@ -160,6 +185,7 @@ void MainWindow::initToolBars()
   toolBar->addAction(mouseSelectAction);
   toolBar->addAction(wireSelectAction);
   toolBar->addAction(resistorSelectAction);
+  toolBar->addAction(capacitorSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
 
   objectSettingsBar = new QToolBar(tr("Object settings"));
@@ -186,6 +212,10 @@ void MainWindow::unselectLastUsed()
       this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
       break;
 
+    case K::CAPACITOR: capacitorSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
     }
 }
 
@@ -202,18 +232,10 @@ void MainWindow::initDialogs()
   openFileDialog->setNameFilters(fileList);
   openFileDialog->setDefaultSuffix(QString(".qtc"));
   openFileDialog->setAcceptMode(QFileDialog::AcceptOpen);
+  openFileDialog->setDirectory("/home/oskar/Qt/QtCircuit/SAMPLE/");
   connect(openFileAction, SIGNAL(triggered()), openFileDialog, SLOT(exec()));
   connect(openFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(openFile(QString)));
 
-  saveFileDialog->setNameFilters(fileList);
-  saveFileDialog->setDefaultSuffix(QString(".qtc"));
-  saveFileDialog->setAcceptMode(QFileDialog::AcceptSave);
-  saveFileDialog->setFileMode(QFileDialog::AnyFile);
-  saveFileDialog->setConfirmOverwrite(true);
-
-
-  //connect(saveFileAction, SIGNAL(triggered()), this, SLOT(saveFileTest()));
-  //connect(saveFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFileAs(QString)));
 
   saveFileAsDialog->setNameFilters(fileList);
   saveFileAsDialog->setDefaultSuffix(QString(".qtc"));
@@ -227,12 +249,19 @@ void MainWindow::initDialogs()
 
 void MainWindow::newFile()
 {
+  STOP_ACTION
+      this->mainWidget->newTab(new Circuit());
+}
+
+void MainWindow::newFileInit()
+{
   this->mainWidget->newTab(new Circuit());
 }
 
 void MainWindow::saveFile()
 {
-  auto circ = this->mainWidget->getCurrent()->circuitWidget;
+  STOP_ACTION
+      auto circ = this->mainWidget->getCurrent()->circuitWidget;
 
   if(circ->hasPath())
     {
@@ -240,25 +269,37 @@ void MainWindow::saveFile()
       return;
     }
 
-  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                  "/home/oskar/Qt/QtCircuit/SAMPLE/",
-                                                  tr("QtCircuit File (*.qtc)"));
-
-  if(QFile::exists(fileName))
-    {
-      ///TODO ovverride/cancel
-    }
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+  if(fileName == "") return; //Nie wybrano pliku
   circ->saveFileAs(fileName);
 }
 
 void MainWindow::saveFileAs(QString file)
 {
-  this->mainWidget->getCurrent()->circuitWidget->saveFileAs(file);
+  STOP_ACTION
+      this->mainWidget->getCurrent()->circuitWidget->saveFileAs(file);
 }
 
 void MainWindow::openFile(QString file)
 {
-  this->mainWidget->newTab(new Circuit(file));
+  STOP_ACTION
+      this->mainWidget->newTab(new Circuit(file));
+}
+
+void MainWindow::exportFile()
+{
+  STOP_ACTION
+      QString fileName = QFileDialog::getSaveFileName(this, tr("Export to"), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("PNG image (*.png)"), 0, QFileDialog::DontUseNativeDialog);
+  if(fileName == "") return;
+  auto type = QFileInfo(fileName).completeSuffix();
+  if(type == "png") // export to png
+    {
+      this->mainWidget->getCurrent()->circuitWidget->exportToPNG(fileName);
+    }
+  else if(type == "")
+    {this->mainWidget->getCurrent()->circuitWidget->exportToPNG(fileName+".png");
+
+    }
 }
 
 
@@ -272,7 +313,8 @@ void MainWindow::quit()
 
 void MainWindow::wireSelect()
 {
-  unselectLastUsed();
+  STOP_ACTION
+      unselectLastUsed();
   wireSelectAction->setChecked(true);
   _selectedTool = K::WIRE;
   mainWidget->setMouseTrackingOnTabs(true);
@@ -280,7 +322,8 @@ void MainWindow::wireSelect()
 
 void MainWindow::mouseSelect()
 {
-  unselectLastUsed();
+  STOP_ACTION
+      unselectLastUsed();
   mouseSelectAction->setChecked(true);
   _selectedTool = K::MOUSE;
   mainWidget->setMouseTrackingOnTabs(false);
@@ -288,20 +331,37 @@ void MainWindow::mouseSelect()
 
 void MainWindow::resistorSelect()
 {
-  unselectLastUsed();
+  STOP_ACTION
+      unselectLastUsed();
   resistorSelectAction->setChecked(true);
   _selectedTool = K::RESISTOR;
   mainWidget->setMouseTrackingOnTabs(true);
 }
 
+void MainWindow::coilSelect()
+{
+
+}
+
+void MainWindow::capacitorSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  capacitorSelectAction->setChecked(true);
+  _selectedTool = K::CAPACITOR;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
 void MainWindow::aboutApplication()
 {
-  aboutDialog->show();
+  STOP_ACTION
+      aboutDialog->show();
 }
 
 void MainWindow::showGrid(bool b)
 {
-  QSettings set;
+  STOP_ACTION
+      QSettings set;
   set.setValue("showgrid", b);
   Circuit::showGrid = b;
   mainWidget->updateCurrent();

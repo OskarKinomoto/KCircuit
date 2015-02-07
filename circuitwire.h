@@ -22,8 +22,8 @@ public:
 
   virtual void draw(QPainter&p, float scale);
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
-  virtual K::status keyEvent(QKeyEvent * event, float scale);
   virtual bool save(QDataStream& out);
+  virtual K::status doubleClick();
 };
 
 #endif // CIRCUITWIRE_H

@@ -15,7 +15,7 @@ CircuitWidget::CircuitWidget(Circuit *_circuit, QWidget *parent) : QWidget(paren
 
 CircuitWidget::~CircuitWidget()
 {
-
+  delete circuit;
 }
 
 void CircuitWidget::updateTitle()
@@ -45,6 +45,7 @@ void CircuitWidget::paintEvent(QPaintEvent *)
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
   painter.setRenderHint(QPainter::HighQualityAntialiasing);
+  painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
   circuit->draw(painter);
 }
@@ -66,6 +67,11 @@ void CircuitWidget::mouseReleaseEvent(QMouseEvent *event)
       event->ignore();
       return;
     }
+  if(ignoreMouse)
+    {
+      ignoreMouse = false;
+      return;
+    }
   circuit->mouseEvent(event);
 }
 
@@ -74,10 +80,10 @@ void CircuitWidget::mousePressEvent(QMouseEvent *event)
   event->ignore();
 }
 
-void CircuitWidget::keyReleaseEvent(QKeyEvent *event)
+void CircuitWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-  circuit->keyReleaseEvent(event);
-  QWidget::keyReleaseEvent(event);
+  ignoreMouse = true;
+  circuit->doubleClick();
 }
 
 #undef selectedTool

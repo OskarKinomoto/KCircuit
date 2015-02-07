@@ -69,5 +69,15 @@ void MainWidget::closeTab(int i)
   if(!tabWidget->count()) this->newTab(new Circuit());
 }
 
+void MainWidget::rotate()
+{
+  this->getCurrent()->circuitWidget->rotate();
+}
+
+void MainWidget::smallRotate()
+{
+  this->getCurrent()->circuitWidget->smallRotate();
+}
+
 
 

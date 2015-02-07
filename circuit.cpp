@@ -42,8 +42,10 @@ Circuit::Circuit(QString path)
         case K::Object::RESISTOR:
           _objects.push_back(new CircuitResistor(in));
           break;
+        case K::Object::CAPACITOR:
+          _objects.push_back(new CircuitCapacitor(in));
         default:
-          qDebug() << "nieznany typ :<";
+          qDebug() << "nieznany typ " << __FILE__ << " line " << __LINE__;
           break;
         }
     }
@@ -79,11 +81,30 @@ void Circuit::draw(QPainter &p)
           p.drawPoint(i, j);
       p.restore();
     }
-
+  QPen pen(Qt::black);
+  pen.setWidthF(1.6);
+  p.setPen(pen);
   for(auto itr : _objects)
     {
       itr->draw(p, _scale);
     }
+}
+
+void Circuit::exportToPNG(QString path)
+{
+  QImage pixmap(_width, _height, QImage::Format_ARGB32);
+  pixmap.fill(Qt::white);
+  QPainter p(&pixmap);
+  QPen pen(Qt::black);
+  pen.setWidthF(1.6);
+  p.setPen(pen);
+  p.setRenderHint(QPainter::Antialiasing);
+
+  for(auto itr : _objects)
+    {
+      itr->draw(p, 1);
+    }
+  pixmap.save(path);
 }
 
 void Circuit::mouseEvent(QMouseEvent *event)
@@ -100,21 +121,18 @@ void Circuit::mouseEvent(QMouseEvent *event)
     }
 }
 
-void Circuit::keyReleaseEvent(QKeyEvent *event)
+void Circuit::doubleClick()
 {
-  if(_nowDrawing != nullptr)
+  if(_nowDrawing)
     {
-      auto status = _nowDrawing->keyEvent(event, _scale);
+      auto status = _nowDrawing->doubleClick();
       if(status == K::DRAWED)
         {
           _nowDrawing = nullptr;
           _widget->releaseMouse();
           setModyfied();
         }
-      if(status == K::DESTROY)
-        this->destroyDrawingObject();
     }
-  _widget->update();
 }
 
 void Circuit::scaleUp()
@@ -149,6 +167,24 @@ void Circuit::setScale(double scale)
     {
       _scale = scale;
       _widget->updateSize();
+    }
+}
+
+void Circuit::rotate()
+{
+  if(_nowDrawing){
+      rotation += 90; rotation %= 360;
+      _nowDrawing->rotate();
+      _widget->update();
+    }
+}
+
+void Circuit::smallRotate()
+{
+  if(_nowDrawing){
+      rotation += 45; rotation %= 360;
+      _nowDrawing->smallRotate();
+      _widget->update();
     }
 }
 
@@ -205,13 +241,16 @@ void Circuit::drawing(QMouseEvent * event)
       switch(selectedTool())
         {
         case K::RESISTOR:
-          _nowDrawing = new CircuitResistor(Coordinate(event->x(),event->y()), _scale);
+          _nowDrawing = new CircuitResistor(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::CAPACITOR:
+          _nowDrawing = new CircuitCapacitor(Coordinate(event->x(),event->y()), _scale, rotation);
           break;
         case K::MOUSE:
         case K::WIRE:
           break;
         default:
-          qDebug() << "selectedTool default in " << __FILE__;
+          qDebug() << "selectedTool default in " << __FILE__ << " line " << __LINE__;
           break;
         }
       if(_nowDrawing)

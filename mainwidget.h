@@ -31,6 +31,8 @@ signals:
 
 public slots:
   void closeTab(int i);
+  void rotate();
+  void smallRotate();
 };
 
 #endif // MAINWIDGET_H

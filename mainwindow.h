@@ -32,17 +32,22 @@ private:
   QAction * saveFileAction;
   QAction * saveFileAsAction;
   QAction * openFileAction;
+  QAction * exportToAction;
   QAction * quitAction;
 
   QAction * mouseSelectAction;
   QAction * wireSelectAction;
-  QAction * resistorSelectAction; ///TODO ofc~
+  QAction * resistorSelectAction;
+  QAction * coilSelectAction;
+  QAction * capacitorSelectAction;
 
   QAction * zoomInAction;
   QAction * zoomInAction2;
   QAction * zoomInAction3;
   QAction * zoomOutAction;
   QAction * showGridAction;
+  QAction * rotateAction;
+  QAction * smallRotateAction;
 
   QAction * aboutApplicationAction;
 
@@ -85,19 +90,24 @@ protected:
 
 private:
   bool mouseGrabRestore = false;
-  //int mouseGrabRestoreIndex = -1;
-
 
 private slots:
   void newFile();
+  void newFileInit();
+
   void saveFile();
   void saveFileAs(QString file);
   void openFile(QString file);
+
+  void exportFile();
+
   void quit();
 
   void wireSelect();
   void mouseSelect();
   void resistorSelect();
+  void coilSelect();
+  void capacitorSelect();
 
   void aboutApplication();
   void showGrid(bool b);

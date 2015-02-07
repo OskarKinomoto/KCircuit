@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     abstractcircuitobject.cpp \
     circuitobject.cpp \
     circuitwire.cpp \
-    circuitresistor.cpp
+    circuitresistor.cpp \
+    circuitcapacitor.cpp
 
 HEADERS  += mainwindow.h \
     enum.h \
@@ -38,6 +39,7 @@ HEADERS  += mainwindow.h \
     abstractcircuitobject.h \
     circuitobject.h \
     circuitwire.h \
-    circuitresistor.h
+    circuitresistor.h \
+    circuitcapacitor.h
 
 QMAKE_CXXFLAGS += -std=c++11
