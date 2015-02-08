@@ -13,6 +13,7 @@ public:
   virtual bool save(QDataStream& out);
   virtual void smallRotate(){}
   virtual bool isSmallRotate() { return false; }
+  static QFont oxy;
 };
 
 #endif // CIRCUITOPAMP_H

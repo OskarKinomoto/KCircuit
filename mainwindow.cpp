@@ -8,6 +8,7 @@ extern bool Circuit::showGrid;
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
+  initFonts();
   loadSettings();
   initMainWidget();
   initActions();
@@ -305,6 +306,12 @@ void MainWindow::initDialogs()
 
   // about dialog
   aboutDialog = new AboutDialog(nullptr);
+}
+
+void MainWindow::initFonts()
+{
+  QFontDatabase::addApplicationFont(":/fonts/oxygen.otf");
+  CircuitOpAmp::oxy = QFont("Oxygen");
 }
 
 void MainWindow::newFile()

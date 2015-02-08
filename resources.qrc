@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="oxygen.otf">res/fonts/oxygen/Oxygen.otf</file>
+    </qresource>
+</RCC>

@@ -55,3 +55,6 @@ HEADERS  += mainwindow.h \
     circuitopamp.h
 
 QMAKE_CXXFLAGS += -std=c++11
+
+RESOURCES += \
+    resources.qrc

@@ -19,6 +19,14 @@ CircuitWidget::~CircuitWidget()
   delete circuit;
 }
 
+void CircuitWidget::centering()
+{
+  auto hm = scroll->horizontalScrollBar()->maximum();
+  auto vm = scroll->verticalScrollBar()->maximum();
+  scroll->horizontalScrollBar()->setSliderPosition(hm/2);
+  scroll->verticalScrollBar()->setSliderPosition(vm/2);
+}
+
 void CircuitWidget::updateTitle()
 {
   ((CircuitScrollArea*)this->parentWidget())->setTitle(circuit->name());
@@ -26,7 +34,15 @@ void CircuitWidget::updateTitle()
 
 void CircuitWidget::updateSize()
 {
+  float v = float(scroll->verticalScrollBar()->value())/scroll->verticalScrollBar()->maximum();
+  float h = float(scroll->horizontalScrollBar()->value())/scroll->horizontalScrollBar()->maximum();
+  if(!scroll->horizontalScrollBar()->maximum()) h = 0.5;
+  if(!scroll->verticalScrollBar()->maximum()) v = 0.5;
+
   this->resize(circuit->width() * circuit->scale(), circuit->height() * circuit->scale());
+
+  scroll->verticalScrollBar()->setSliderPosition(scroll->verticalScrollBar()->maximum()*v);
+  scroll->horizontalScrollBar()->setSliderPosition(scroll->horizontalScrollBar()->maximum()*h);
 }
 
 void CircuitWidget::grabMouse()
@@ -50,7 +66,7 @@ void CircuitWidget::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
-  //painter.setRenderHint(QPainter::HighQualityAntialiasing);
+  painter.setRenderHint(QPainter::HighQualityAntialiasing);
   painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
   circuit->draw(painter);

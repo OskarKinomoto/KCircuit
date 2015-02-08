@@ -34,6 +34,8 @@ public:
   inline bool isNew() { return circuit->newFile; }
   inline void destroyDrawingObject() { circuit->destroyDrawingObject(); }
 
+  void centering();
+
   void updateTitle();
   void grabMouse();
   void releaseMouse();

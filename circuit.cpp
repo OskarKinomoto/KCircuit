@@ -107,6 +107,7 @@ void Circuit::draw(QPainter &p)
     {
       itr->draw(p, _scale);
     }
+  if(!s1){ _widget->centering(); s1 = true; }
 }
 
 void Circuit::exportToPNG(QString path)
@@ -234,6 +235,8 @@ void Circuit::saveFile()
 
 void Circuit::saveFileAs(QString newPath)
 {
+  auto type = QFileInfo(newPath).completeSuffix();
+  if(type != ".qtc") newPath += ".qtc";
   _path = newPath;
   QFile file(_path);
   _name = QFileInfo(file).fileName();

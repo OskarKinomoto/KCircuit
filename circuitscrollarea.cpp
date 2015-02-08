@@ -22,10 +22,6 @@ CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QSc
   this->recolorScrollBars();
 
   parentTabWidget = parent;
-  parentTabWidget->depth();
-
-  //centering
-
 
 }
 

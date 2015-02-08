@@ -18,6 +18,7 @@ public:
   void recolorScrollBars();
   void setMouseTrackingCircuit(bool enable);
   void setTitle(QString s);
+  void inline center(){ circuitWidget->centering(); }
 
 
 

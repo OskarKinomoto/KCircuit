@@ -96,6 +96,8 @@ private:
   int _height = 800;
 
   QRect getRectangle(QImage & p);
+
+  bool s1 = false;
 };
 
 #endif // CIRCUIT_H

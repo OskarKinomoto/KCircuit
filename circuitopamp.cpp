@@ -1,5 +1,7 @@
 #include "circuitopamp.h"
 
+QFont CircuitOpAmp::oxy;
+
 CircuitOpAmp::CircuitOpAmp(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
 {
   float gs = scale * grid;
@@ -30,12 +32,10 @@ void CircuitOpAmp::draw(QPainter &p, float scale)
   p.drawLine(3*gs, 0, 2.5*gs, 0);
   p.drawLine(-3*gs, -1*gs, -1.5*gs, -1*gs);
   p.drawLine(-3*gs, 1*gs, -1.5*gs, 1*gs);
-  QFont f(p.font());
-  f.setPixelSize(gs);
-  p.setFont(f);
-  qDebug() << p.font().family();
+  oxy.setPixelSize(gs);
+  p.setFont(oxy);
   p.drawText(-.8*gs, 1.3*gs, "+");
-  p.drawText(-.8*gs, -0.7*gs, "-");
+  p.drawText(-.8*gs, -0.7*gs, "–");
 
   p.restore();
 }

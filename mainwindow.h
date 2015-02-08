@@ -88,6 +88,9 @@ private:
   QFileDialog * saveFileAsDialog;
   AboutDialog * aboutDialog;
 
+  //Fonts
+  void initFonts();
+
 protected:
   void closeEvent (QCloseEvent * event);
   void leaveEvent ( QEvent * event );
