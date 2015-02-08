@@ -15,7 +15,7 @@ public:
   virtual bool save(QDataStream& out);
 
 private:
-  constexpr static float wspr = (2.5 + sqrt(2) + 0.5/sqrt(2));
+  constexpr static float wspr = (2*sqrt(2));
 };
 
 #endif // CIRCUITRESISTOR_H

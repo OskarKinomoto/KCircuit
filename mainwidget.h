@@ -10,6 +10,7 @@ class MainWidget : public QWidget
 {
   Q_OBJECT
 public:
+  static MainWidget * MAIN_WIDGET;
   explicit MainWidget(QWidget *parent = 0);
   ~MainWidget();
 
@@ -19,6 +20,8 @@ public:
   void updateCurrent();
   inline CircuitScrollArea * getCurrent() { return (CircuitScrollArea*)tabWidget->currentWidget();}
   inline int currentIndex() { return tabWidget->currentIndex(); }
+
+  void setName(QString name, CircuitScrollArea * w);
 
 private:
   QVBoxLayout * vBox;

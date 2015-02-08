@@ -66,7 +66,7 @@ public:
   void saveFileAs(QString newPath);
   inline bool hasPath() { return _path != ""; }
   inline bool isModyfied() { return modyfied; }
-  inline void setModyfied(bool b = true) {modyfied = b; newFile = false;}
+  inline void setModyfied(bool b = true);
 
   inline void resetRotation() {rotation = 0;}
 

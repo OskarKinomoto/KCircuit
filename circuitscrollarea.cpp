@@ -1,5 +1,7 @@
 #include "circuitscrollarea.h"
+#include "mainwidget.h"
 
+//MainWidget * MainWidget::MAIN_WIDGET = nullptr;
 
 CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QScrollArea(parent)
 {
@@ -19,7 +21,8 @@ CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QSc
   this->horizontalScrollBar()->setAutoFillBackground(true);
   this->recolorScrollBars();
 
-  parentTabWidget = (QTabWidget*)this->parentWidget();
+  parentTabWidget = parent;
+  parentTabWidget->depth();
 
   //centering
 
@@ -49,7 +52,7 @@ void CircuitScrollArea::setMouseTrackingCircuit(bool enable)
 
 void CircuitScrollArea::setTitle(QString s)
 {
-  //parentTabWidget->hide();
+  MainWidget::MAIN_WIDGET->setName(s, this);
 }
 
 void CircuitScrollArea::resizeEvent(QResizeEvent *event)

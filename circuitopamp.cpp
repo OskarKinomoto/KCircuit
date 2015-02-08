@@ -24,17 +24,18 @@ void CircuitOpAmp::draw(QPainter &p, float scale)
   if(drawing) p.setPen(Qt::gray);
   p.translate(cords.x() * gs, cords.y() * gs);
   p.rotate(this->angle);
-  p.drawLine(-2.5*gs, -2.5*gs, -2.5*gs, 2.5*gs);
-  p.drawLine(-2.5*gs, -2.5*gs, 1.5*gs, 0);
-  p.drawLine(-2.5*gs, 2.5*gs, 1.5*gs, 0);
-  p.drawLine(2*gs, 0, 1.5*gs, 0);
-  p.drawLine(-4*gs, -1*gs, -2.5*gs, -1*gs);
-  p.drawLine(-4*gs, 1*gs, -2.5*gs, 1*gs);
+  p.drawLine(-1.5*gs, -2.5*gs, -1.5*gs, 2.5*gs);
+  p.drawLine(-1.5*gs, -2.5*gs, 2.5*gs, 0);
+  p.drawLine(-1.5*gs, 2.5*gs, 2.5*gs, 0);
+  p.drawLine(3*gs, 0, 2.5*gs, 0);
+  p.drawLine(-3*gs, -1*gs, -1.5*gs, -1*gs);
+  p.drawLine(-3*gs, 1*gs, -1.5*gs, 1*gs);
   QFont f(p.font());
   f.setPixelSize(gs);
   p.setFont(f);
-  p.drawText(-1.8*gs, 1.3*gs, "+");
-  p.drawText(-1.8*gs, -0.7*gs, "-");
+  qDebug() << p.font().family();
+  p.drawText(-.8*gs, 1.3*gs, "+");
+  p.drawText(-.8*gs, -0.7*gs, "-");
 
   p.restore();
 }

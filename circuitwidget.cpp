@@ -12,7 +12,6 @@ CircuitWidget::CircuitWidget(Circuit *_circuit, CircuitScrollArea *parent) : QWi
   this->setAutoFillBackground(true);
   this->setBackgroundRole(QPalette::Base);
   this->setFocusPolicy(Qt::StrongFocus);
-  scroll->setTitle("a");
 }
 
 CircuitWidget::~CircuitWidget()
@@ -40,6 +39,11 @@ void CircuitWidget::releaseMouse()
 {
   grabedMouse = false;
   QWidget::releaseMouse();
+}
+
+void CircuitWidget::updateName()
+{
+  scroll->setTitle(circuit->name());
 }
 
 void CircuitWidget::paintEvent(QPaintEvent *)

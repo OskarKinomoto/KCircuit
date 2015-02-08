@@ -19,6 +19,8 @@ public:
   void setMouseTrackingCircuit(bool enable);
   void setTitle(QString s);
 
+
+
 protected:
   virtual void resizeEvent (QResizeEvent * event);
   virtual void wheelEvent(QWheelEvent * event);

@@ -41,7 +41,7 @@ public:
 private:
   friend class Circuit;
 
-
+  void updateName();
   void updateSize();
 protected:
   void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;

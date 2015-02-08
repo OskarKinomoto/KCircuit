@@ -1,5 +1,7 @@
 #include "mainwidget.h"
 
+MainWidget * MainWidget::MAIN_WIDGET;
+
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
   vBox = new QVBoxLayout();
@@ -15,6 +17,8 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
   vBox->addWidget(tabWidget,1);
   vBox->addWidget(statusBar);
   this->setLayout(vBox);
+
+  MAIN_WIDGET = this;
 }
 
 MainWidget::~MainWidget()
@@ -24,7 +28,7 @@ MainWidget::~MainWidget()
 
 int MainWidget::newTab(Circuit *circuit)
 {
-  if(!circuit) throw std::string("nullptr in MainWidget::newTab");
+  if(!circuit) throw QString(QString("nullptr in ") + __FILE__ + " line " + QString(__LINE__));
 
   for(int i = 0; i < tabWidget->count(); ++i)
     {
@@ -32,11 +36,11 @@ int MainWidget::newTab(Circuit *circuit)
         closeTabI(i);
     }
 
-  int i = tabWidget->addTab(new CircuitScrollArea(circuit, tabWidget), circuit->name());
+  CircuitScrollArea * c = new CircuitScrollArea(circuit, tabWidget);
+  int i = tabWidget->addTab(c, circuit->name());
   tabWidget->setCurrentIndex(i);
 
-  ((CircuitScrollArea*)tabWidget->widget(i))
-      ->setMouseTrackingCircuit(mouseTracking);
+  c->setMouseTrackingCircuit(mouseTracking);
 
   return i;
 }
@@ -56,6 +60,11 @@ void MainWidget::updateCurrent()
   ((CircuitScrollArea*)tabWidget->currentWidget())->widget()->update();
 }
 
+void MainWidget::setName(QString name, CircuitScrollArea *w)
+{
+  tabWidget->setTabText(tabWidget->indexOf(w), name);
+}
+
 void MainWidget::closeTabI(int i)
 {
   tabWidget->removeTab(i);
@@ -63,7 +72,6 @@ void MainWidget::closeTabI(int i)
 
 void MainWidget::closeTab(int i)
 {
-  /// TODO ask save/cancel/don't save
   if(((CircuitScrollArea*)tabWidget->widget(i))->circuitWidget)
   tabWidget->removeTab(i);
   if(!tabWidget->count()) this->newTab(new Circuit());

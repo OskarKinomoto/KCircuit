@@ -235,8 +235,12 @@ void Circuit::saveFile()
 void Circuit::saveFileAs(QString newPath)
 {
   _path = newPath;
+  QFile file(_path);
+  _name = QFileInfo(file).fileName();
   this->saveFile();
 }
+
+void Circuit::setModyfied(bool b) {modyfied = b; newFile = false; _widget->updateName();}
 
 void Circuit::destroyDrawingObject()
 {
