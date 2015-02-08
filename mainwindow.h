@@ -44,6 +44,7 @@ private:
   QAction * ADCSelectAction;
   QAction * diodeSelectAction;
   QAction * generatorSelectAction;
+  QAction * opAmpSelectAction;
 
   QAction * zoomInAction;
   QAction * zoomInAction2;
@@ -116,6 +117,7 @@ private slots:
   void ADCSelect();
   void diodeSelect();
   void generatorSelect();
+  void opAmpSelect();
 
   void aboutApplication();
   void showGrid(bool b);

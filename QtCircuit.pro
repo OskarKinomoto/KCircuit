@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     circuitvdc.cpp \
     circuitadc.cpp \
     circuitdiode.cpp \
-    circuitgenerator.cpp
+    circuitgenerator.cpp \
+    circuitopamp.cpp
 
 HEADERS  += mainwindow.h \
     enum.h \
@@ -50,6 +51,7 @@ HEADERS  += mainwindow.h \
     circuitvdc.h \
     circuitadc.h \
     circuitdiode.h \
-    circuitgenerator.h
+    circuitgenerator.h \
+    circuitopamp.h
 
 QMAKE_CXXFLAGS += -std=c++11

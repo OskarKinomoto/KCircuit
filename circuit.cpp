@@ -60,6 +60,9 @@ Circuit::Circuit(QString path)
         case K::Object::GENERATOR:
           _objects.push_back(new CircuitGenerator(in));
           break;
+        case K::Object::OPAMP:
+          _objects.push_back(new CircuitOpAmp(in));
+          break;
         default:
           qDebug() << "nieznany typ " << __FILE__ << " line " << __LINE__;
           break;
@@ -199,7 +202,7 @@ void Circuit::rotate()
 
 void Circuit::smallRotate()
 {
-  if(_nowDrawing){
+  if(_nowDrawing && _nowDrawing->isSmallRotate()){
       rotation += 45; rotation %= 360;
       _nowDrawing->smallRotate();
       _widget->update();
@@ -278,6 +281,9 @@ void Circuit::drawing(QMouseEvent * event)
           break;
         case K::GENERATOR:
           _nowDrawing = new CircuitGenerator(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::OPAMP:
+          _nowDrawing = new CircuitOpAmp(Coordinate(event->x(),event->y()), _scale, rotation);
           break;
         case K::MOUSE:
         case K::WIRE:

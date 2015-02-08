@@ -4,13 +4,15 @@
 
 //extern void CircuitScrollArea::setTitle(QString &s);
 
-CircuitWidget::CircuitWidget(Circuit *_circuit, QWidget *parent) : QWidget(parent)
+CircuitWidget::CircuitWidget(Circuit *_circuit, CircuitScrollArea *parent) : QWidget(parent)
 {
   circuit = _circuit;
+  scroll = parent;
   this->updateSize();
   this->setAutoFillBackground(true);
   this->setBackgroundRole(QPalette::Base);
   this->setFocusPolicy(Qt::StrongFocus);
+  scroll->setTitle("a");
 }
 
 CircuitWidget::~CircuitWidget()

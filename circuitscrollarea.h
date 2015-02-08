@@ -10,7 +10,7 @@ class CircuitScrollArea : public QScrollArea
   Q_OBJECT
 
 public:
-  CircuitScrollArea(Circuit * circuit, QWidget * parent);
+  CircuitScrollArea(Circuit * circuit, QTabWidget * parent);
   ~CircuitScrollArea();
 
   CircuitWidget * circuitWidget;

@@ -20,6 +20,7 @@
 #include "circuitadc.h"
 #include "circuitdiode.h"
 #include "circuitgenerator.h"
+#include "circuitopamp.h"
 
 #include "enum.h"
 

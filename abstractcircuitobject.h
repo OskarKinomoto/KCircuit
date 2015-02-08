@@ -20,6 +20,7 @@ class AbstractCircuitObject
 private:
 public:
   virtual ~AbstractCircuitObject() = 0;
+  virtual bool isSmallRotate() = 0;
   virtual void draw(QPainter&, float scale) = 0;
   virtual void rotate(){}
   virtual void smallRotate(){}

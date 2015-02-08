@@ -105,6 +105,11 @@ void MainWindow::initActions()
   generatorSelectAction->setCheckable(true);
   connect(generatorSelectAction, SIGNAL(triggered()), this, SLOT(generatorSelect()));
 
+  //opAmpSelectAction
+  opAmpSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Generator"), nullptr);
+  opAmpSelectAction->setCheckable(true);
+  connect(opAmpSelectAction, SIGNAL(triggered()), this, SLOT(opAmpSelect()));
+
   //aboutAction
   aboutApplicationAction = new QAction(QIcon::fromTheme("help-about"), tr("About"), nullptr);
   connect(aboutApplicationAction, SIGNAL(triggered()), this, SLOT(aboutApplication()));
@@ -216,6 +221,7 @@ void MainWindow::initToolBars()
   toolBar->addAction(VDCSelectAction);
   toolBar->addAction(ADCSelectAction);
   toolBar->addAction(generatorSelectAction);
+  toolBar->addAction(opAmpSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
 
   objectSettingsBar = new QToolBar(tr("Object settings"));
@@ -263,6 +269,10 @@ void MainWindow::unselectLastUsed()
       break;
 
     case K::GENERATOR: generatorSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::OPAMP: opAmpSelectAction->setChecked(false);
       this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
       break;
 
@@ -439,6 +449,15 @@ void MainWindow::generatorSelect()
       unselectLastUsed();
   generatorSelectAction->setChecked(true);
   _selectedTool = K::GENERATOR;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
+void MainWindow::opAmpSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  opAmpSelectAction->setChecked(true);
+  _selectedTool = K::OPAMP;
   mainWidget->setMouseTrackingOnTabs(true);
 }
 

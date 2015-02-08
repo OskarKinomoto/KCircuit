@@ -13,8 +13,9 @@ protected:
 
   bool drawing = false;
 
-  void rotate();
-  void smallRotate();
+  void virtual rotate();
+  void virtual smallRotate();
+  virtual bool isSmallRotate() { return true; }
   void setAngle(qint16 a);
   virtual K::status doubleClick() { return K::DRAWING;}
 public:

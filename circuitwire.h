@@ -19,7 +19,7 @@ public:
   CircuitWire(Coordinate begin, float scale);
   CircuitWire(QDataStream& in);
   ~CircuitWire();
-
+  virtual bool isSmallRotate() { return false; }
   virtual void draw(QPainter&p, float scale);
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
   virtual bool save(QDataStream& out);

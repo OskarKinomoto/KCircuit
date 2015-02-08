@@ -13,9 +13,10 @@ class CircuitWidget : public QWidget
   Q_OBJECT
 private:
   Circuit * circuit;
+  CircuitScrollArea * scroll;
   bool ignoreMouse = false;
 public:
-  explicit CircuitWidget(Circuit * _circuit, QWidget *parent = 0);
+  explicit CircuitWidget(Circuit * _circuit, CircuitScrollArea *parent);
   ~CircuitWidget();
 
   inline void scaleUp() { circuit->scaleUp(); }

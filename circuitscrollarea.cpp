@@ -1,12 +1,12 @@
 #include "circuitscrollarea.h"
 
 
-CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QWidget *parent) : QScrollArea(parent)
+CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QScrollArea(parent)
 {
   this->setBackgroundRole(QPalette::Dark);
   this->setAlignment(Qt::AlignCenter);
 
-  circuitWidget = new CircuitWidget(circuit);
+  circuitWidget = new CircuitWidget(circuit, this);
   this->setWidget(circuitWidget);
   circuit->setWidget(circuitWidget);
 
@@ -49,7 +49,7 @@ void CircuitScrollArea::setMouseTrackingCircuit(bool enable)
 
 void CircuitScrollArea::setTitle(QString s)
 {
-  parentTabWidget->setTabText(parentTabWidget->indexOf(this), s);
+  //parentTabWidget->hide();
 }
 
 void CircuitScrollArea::resizeEvent(QResizeEvent *event)
