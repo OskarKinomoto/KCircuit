@@ -25,7 +25,12 @@ SOURCES += main.cpp\
     circuitobject.cpp \
     circuitwire.cpp \
     circuitresistor.cpp \
-    circuitcapacitor.cpp
+    circuitcapacitor.cpp \
+    circuitcoil.cpp \
+    circuitvdc.cpp \
+    circuitadc.cpp \
+    circuitdiode.cpp \
+    circuitgenerator.cpp
 
 HEADERS  += mainwindow.h \
     enum.h \
@@ -40,6 +45,11 @@ HEADERS  += mainwindow.h \
     circuitobject.h \
     circuitwire.h \
     circuitresistor.h \
-    circuitcapacitor.h
+    circuitcapacitor.h \
+    circuitcoil.h \
+    circuitvdc.h \
+    circuitadc.h \
+    circuitdiode.h \
+    circuitgenerator.h
 
 QMAKE_CXXFLAGS += -std=c++11

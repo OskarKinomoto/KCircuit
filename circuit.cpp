@@ -44,6 +44,22 @@ Circuit::Circuit(QString path)
           break;
         case K::Object::CAPACITOR:
           _objects.push_back(new CircuitCapacitor(in));
+          break;
+        case K::Object::COIL:
+          _objects.push_back(new CircuitCoil(in));
+          break;
+        case K::Object::VDC:
+          _objects.push_back(new CircuitVDC(in));
+          break;
+        case K::Object::ADC:
+          _objects.push_back(new CircuitADC(in));
+          break;
+        case K::Object::DIODE:
+          _objects.push_back(new CircuitDiode(in));
+          break;
+        case K::Object::GENERATOR:
+          _objects.push_back(new CircuitGenerator(in));
+          break;
         default:
           qDebug() << "nieznany typ " << __FILE__ << " line " << __LINE__;
           break;
@@ -82,7 +98,7 @@ void Circuit::draw(QPainter &p)
       p.restore();
     }
   QPen pen(Qt::black);
-  pen.setWidthF(1.6);
+  pen.setWidth(2);
   p.setPen(pen);
   for(auto itr : _objects)
     {
@@ -96,15 +112,17 @@ void Circuit::exportToPNG(QString path)
   pixmap.fill(Qt::white);
   QPainter p(&pixmap);
   QPen pen(Qt::black);
-  pen.setWidthF(1.6);
+  pen.setWidth(2);
   p.setPen(pen);
+  p.setRenderHint(QPainter::SmoothPixmapTransform);
   p.setRenderHint(QPainter::Antialiasing);
 
   for(auto itr : _objects)
     {
       itr->draw(p, 1);
     }
-  pixmap.save(path);
+  QImage croped = pixmap.copy(this->getRectangle(pixmap));
+  croped.save(path);
 }
 
 void Circuit::mouseEvent(QMouseEvent *event)
@@ -246,6 +264,21 @@ void Circuit::drawing(QMouseEvent * event)
         case K::CAPACITOR:
           _nowDrawing = new CircuitCapacitor(Coordinate(event->x(),event->y()), _scale, rotation);
           break;
+        case K::COIL:
+          _nowDrawing = new CircuitCoil(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::VDC:
+          _nowDrawing = new CircuitVDC(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::ADC:
+          _nowDrawing = new CircuitADC(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::DIODE:
+          _nowDrawing = new CircuitDiode(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
+        case K::GENERATOR:
+          _nowDrawing = new CircuitGenerator(Coordinate(event->x(),event->y()), _scale, rotation);
+          break;
         case K::MOUSE:
         case K::WIRE:
           break;
@@ -283,6 +316,45 @@ void Circuit::drawing(QMouseEvent * event)
     }
 
   _widget->update();
+}
+
+QRect Circuit::getRectangle(QImage &p)
+{
+  int r = 0;
+  int l = p.width();
+  int t = 0;
+  int b = 0;
+
+  bool e1 = true;
+  for(int i = 0; i < p.height(); ++i)
+    {
+      bool e2 = true;
+      for(int j = 0; j < p.width(); ++j)
+        {
+          if(QColor().fromRgb(p.pixel(j, i)) != Qt::white)
+            {
+              r = std::max(j, r);
+              if(e2)
+                {
+                  l = std::min(j - 1, l);
+                }
+              e2 = false;
+              e1 = false;
+            }
+        }
+      if(e2 && e1)
+        {
+          t = i + 1;
+        }
+      if(!e2) b = i;
+    }
+
+  b = (b + MARGIN > p.height() ? p.height() : b + MARGIN);
+  t = (t - MARGIN < 0 ? 0 : t - MARGIN);
+  r = (r + MARGIN > p.width() ? p.width() : r + MARGIN);
+  l = (l - MARGIN < 0 ? 0 : l - MARGIN);
+
+  return QRect(l, t, r-l, b - t);
 }
 
 #undef selectedTool

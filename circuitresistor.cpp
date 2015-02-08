@@ -25,6 +25,7 @@ void CircuitResistor::draw(QPainter &p, float scale)
   p.rotate(this->angle);
   if(angle % 90)
     {
+      p.setRenderHint(QPainter::Antialiasing);
       p.drawLine(-wspr*gs, 0, -2.5*gs, 0);
       p.drawLine(wspr*gs, 0, 2.5*gs, 0);
     }

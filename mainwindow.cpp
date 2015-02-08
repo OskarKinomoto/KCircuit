@@ -75,10 +75,35 @@ void MainWindow::initActions()
   resistorSelectAction->setCheckable(true);
   connect(resistorSelectAction, SIGNAL(triggered()), this, SLOT(resistorSelect()));
 
+  //coilSelectAction
+  coilSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Coil"), nullptr);
+  coilSelectAction->setCheckable(true);
+  connect(coilSelectAction, SIGNAL(triggered()), this, SLOT(coilSelect()));
+
   //capacitorSelectAction
   capacitorSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Capacitor"), nullptr);
   capacitorSelectAction->setCheckable(true);
   connect(capacitorSelectAction, SIGNAL(triggered()), this, SLOT(capacitorSelect()));
+
+  //VDCSelectAction
+  VDCSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("VDC"), nullptr);
+  VDCSelectAction->setCheckable(true);
+  connect(VDCSelectAction, SIGNAL(triggered()), this, SLOT(VDCSelect()));
+
+  //ADCSelectAction
+  ADCSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("ADC"), nullptr);
+  ADCSelectAction->setCheckable(true);
+  connect(ADCSelectAction, SIGNAL(triggered()), this, SLOT(ADCSelect()));
+
+  //diodeSelectAction
+  diodeSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Diode"), nullptr);
+  diodeSelectAction->setCheckable(true);
+  connect(diodeSelectAction, SIGNAL(triggered()), this, SLOT(diodeSelect()));
+
+  //generatorSelectAction
+  generatorSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Generator"), nullptr);
+  generatorSelectAction->setCheckable(true);
+  connect(generatorSelectAction, SIGNAL(triggered()), this, SLOT(generatorSelect()));
 
   //aboutAction
   aboutApplicationAction = new QAction(QIcon::fromTheme("help-about"), tr("About"), nullptr);
@@ -186,6 +211,11 @@ void MainWindow::initToolBars()
   toolBar->addAction(wireSelectAction);
   toolBar->addAction(resistorSelectAction);
   toolBar->addAction(capacitorSelectAction);
+  toolBar->addAction(coilSelectAction);
+  toolBar->addAction(diodeSelectAction);
+  toolBar->addAction(VDCSelectAction);
+  toolBar->addAction(ADCSelectAction);
+  toolBar->addAction(generatorSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
 
   objectSettingsBar = new QToolBar(tr("Object settings"));
@@ -213,6 +243,26 @@ void MainWindow::unselectLastUsed()
       break;
 
     case K::CAPACITOR: capacitorSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::COIL: coilSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::VDC: VDCSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::ADC: ADCSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::DIODE: diodeSelectAction->setChecked(false);
+      this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
+      break;
+
+    case K::GENERATOR: generatorSelectAction->setChecked(false);
       this->mainWidget->getCurrent()->circuitWidget->destroyDrawingObject();
       break;
 
@@ -340,7 +390,11 @@ void MainWindow::resistorSelect()
 
 void MainWindow::coilSelect()
 {
-
+  STOP_ACTION
+      unselectLastUsed();
+  coilSelectAction->setChecked(true);
+  _selectedTool = K::COIL;
+  mainWidget->setMouseTrackingOnTabs(true);
 }
 
 void MainWindow::capacitorSelect()
@@ -349,6 +403,42 @@ void MainWindow::capacitorSelect()
       unselectLastUsed();
   capacitorSelectAction->setChecked(true);
   _selectedTool = K::CAPACITOR;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
+void MainWindow::VDCSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  VDCSelectAction->setChecked(true);
+  _selectedTool = K::VDC;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
+void MainWindow::ADCSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  ADCSelectAction->setChecked(true);
+  _selectedTool = K::ADC;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
+void MainWindow::diodeSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  diodeSelectAction->setChecked(true);
+  _selectedTool = K::DIODE;
+  mainWidget->setMouseTrackingOnTabs(true);
+}
+
+void MainWindow::generatorSelect()
+{
+  STOP_ACTION
+      unselectLastUsed();
+  generatorSelectAction->setChecked(true);
+  _selectedTool = K::GENERATOR;
   mainWidget->setMouseTrackingOnTabs(true);
 }
 

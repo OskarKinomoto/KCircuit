@@ -44,7 +44,7 @@ void CircuitWidget::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
-  painter.setRenderHint(QPainter::HighQualityAntialiasing);
+  //painter.setRenderHint(QPainter::HighQualityAntialiasing);
   painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
   circuit->draw(painter);

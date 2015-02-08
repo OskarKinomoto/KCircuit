@@ -40,6 +40,10 @@ private:
   QAction * resistorSelectAction;
   QAction * coilSelectAction;
   QAction * capacitorSelectAction;
+  QAction * VDCSelectAction;
+  QAction * ADCSelectAction;
+  QAction * diodeSelectAction;
+  QAction * generatorSelectAction;
 
   QAction * zoomInAction;
   QAction * zoomInAction2;
@@ -108,6 +112,10 @@ private slots:
   void resistorSelect();
   void coilSelect();
   void capacitorSelect();
+  void VDCSelect();
+  void ADCSelect();
+  void diodeSelect();
+  void generatorSelect();
 
   void aboutApplication();
   void showGrid(bool b);

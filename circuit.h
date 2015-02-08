@@ -10,12 +10,20 @@
 #include <QDebug>
 
 #include <vector>
+#include <algorithm>
 
 #include "circuitwire.h"
 #include "circuitresistor.h"
 #include "circuitcapacitor.h"
+#include "circuitcoil.h"
+#include "circuitvdc.h"
+#include "circuitadc.h"
+#include "circuitdiode.h"
+#include "circuitgenerator.h"
 
 #include "enum.h"
+
+#define MARGIN 30
 
 class CircuitWidget;
 
@@ -85,6 +93,8 @@ private:
 
   int _width = 1200;
   int _height = 800;
+
+  QRect getRectangle(QImage & p);
 };
 
 #endif // CIRCUIT_H
