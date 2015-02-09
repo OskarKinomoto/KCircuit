@@ -2,7 +2,7 @@
 
 
 #ifndef CONSTEXPR
-  float CircuitCapacitor::wspr = sqrt2;
+  float CircuitADC::wspr = sqrt2;
 #endif
 
 

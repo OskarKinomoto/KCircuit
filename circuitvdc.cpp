@@ -1,7 +1,7 @@
 #include "circuitvdc.h"
 
 #ifndef CONSTEXPR
-float CircuitCapacitor::wspr = sqrt2;
+float CircuitVDC::wspr = sqrt2;
 #endif
 
 CircuitVDC::CircuitVDC(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
