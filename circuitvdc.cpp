@@ -1,5 +1,9 @@
 #include "circuitvdc.h"
 
+#ifndef CONSTEXPR
+float CircuitCapacitor::wspr = sqrt2;
+#endif
+
 CircuitVDC::CircuitVDC(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
 {
   float gs = scale * grid;
@@ -24,9 +28,18 @@ void CircuitVDC::draw(QPainter &p, float scale)
   p.translate(cords.x() * gs, cords.y() * gs);
   p.rotate(this->angle);
   p.drawEllipse(-1.5*gs,-1.5*gs,3*gs,3*gs);
-  p.drawLine(0, -1.5*gs, 0, -3*gs);
-  p.drawLine(0, 1.5*gs, 0, 3*gs);
 
+  if(angle % 90)
+    {
+      p.drawLine(0, -1.5*gs, 0, -2*wspr*gs);
+      p.drawLine(0, 1.5*gs, 0, 2*wspr*gs);
+
+    }
+  else
+    {
+      p.drawLine(0, -1.5*gs, 0, -3*gs);
+      p.drawLine(0, 1.5*gs, 0, 3*gs);
+    }
   p.drawLine(0, gs, 0, -gs);
   p.drawLine(-.3*gs, -.7*gs, 0, -gs);
   p.drawLine(.3*gs, -.7*gs, 0, -gs);
