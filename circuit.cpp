@@ -222,8 +222,11 @@ void Circuit::saveFile()
   out << quint32(MAGICK_NUMBER);
   out << quint32(OBJECT_VERSION);
 
-  out.setVersion(QDataStream::Qt_5_4);
-
+#if QT_VERSION >= 0x050400
+  out.setVersion(QDataStream::Qt_DefaultCompiledVersion);
+#else
+  out.setVersion(QDataStream::Qt_5_3);
+#endif
   quint32 count = 0;
   out << count;
 
