@@ -1,7 +1,7 @@
 #include "circuitcoil.h"
 
 #ifndef CONSTEXPR
-  float CircuitCapacitor::wspr = sqrt2;
+  float CircuitCoil::wspr = sqrt2;
 #endif
 
 CircuitCoil::CircuitCoil(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)

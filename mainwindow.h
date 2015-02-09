@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QtXml>
 #include <QtSvg>
 
 #include "mainwidget.h"
@@ -27,6 +28,11 @@ private:
   //Main Widget
   void initMainWidget();
   MainWidget * mainWidget;
+
+  //Application Icon
+  void initAppIcon();
+  QIcon appIcon;
+
   //Actions
   void initActions();
   QAction * newFileAction;

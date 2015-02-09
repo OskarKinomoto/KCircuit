@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   initFonts();
+  initAppIcon();
   loadSettings();
   initMainWidget();
   initActions();
@@ -30,6 +31,12 @@ void MainWindow::initMainWidget()
 {
   mainWidget = new MainWidget();
   this->setCentralWidget(mainWidget);
+}
+
+void MainWindow::initAppIcon()
+{
+  appIcon = QIcon(":/icons/app.svg");
+  this->setWindowIcon(appIcon);
 }
 
 void MainWindow::initActions()
@@ -100,7 +107,7 @@ void MainWindow::initActions()
   connect(ADCSelectAction, SIGNAL(triggered()), this, SLOT(ADCSelect()));
 
   //diodeSelectAction
-  diodeSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Diode"), nullptr);
+  diodeSelectAction = new QAction(this->appIcon, tr("Diode"), nullptr);
   diodeSelectAction->setCheckable(true);
   connect(diodeSelectAction, SIGNAL(triggered()), this, SLOT(diodeSelect()));
 

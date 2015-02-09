@@ -1,7 +1,7 @@
 #include "circuitgenerator.h"
 
 #ifndef CONSTEXPR
-  float CircuitCapacitor::wspr = sqrt2;
+  float CircuitGenerator::wspr = sqrt2;
 #endif
 
 CircuitGenerator::CircuitGenerator(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)

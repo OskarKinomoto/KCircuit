@@ -5,4 +5,7 @@
     <qresource prefix="/img">
         <file alias="github.png">res/img/github.png</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="app.svg">res/icons/app/app.svg</file>
+    </qresource>
 </RCC>
