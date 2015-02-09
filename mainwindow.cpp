@@ -298,7 +298,7 @@ void MainWindow::initDialogs()
   openFileDialog->setNameFilters(fileList);
   openFileDialog->setDefaultSuffix(QString(".qtc"));
   openFileDialog->setAcceptMode(QFileDialog::AcceptOpen);
-  openFileDialog->setDirectory("/home/oskar/Qt/QtCircuit/SAMPLE/");
+  openFileDialog->setDirectory("/home/oskar/QtCircuit/SAMPLE/");
   connect(openFileAction, SIGNAL(triggered()), openFileDialog, SLOT(exec()));
   connect(openFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(openFile(QString)));
 
@@ -341,7 +341,7 @@ void MainWindow::saveFile()
       return;
     }
 
-  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
   if(fileName == "") return; //Nie wybrano pliku
   circ->saveFileAs(fileName);
 }

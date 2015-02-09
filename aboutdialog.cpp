@@ -11,9 +11,6 @@ AboutDialog::AboutDialog(QWidget *parent) : QWidget(parent)
 
   this->layout()->addWidget(closeButton);
   this->setWindowTitle(tr("About QtCircuit"));
-
-  //TODO treść
-  //TODO pozycja
   this->resize(300,200);
   this->setMinimumSize(300, 200);
 
