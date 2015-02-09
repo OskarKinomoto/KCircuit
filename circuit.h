@@ -87,11 +87,16 @@ private:
   AbstractCircuitObject * _nowDrawing = nullptr;
 
   void drawing(QMouseEvent *event);
-
-  constexpr static int scaleListSize = 9;
-  constexpr static double scaleList[scaleListSize] = {.5, .66, .8, 1, 1.33, 1.66, 2, 2.5, 3};
+#define SCALE_LIST_SIZE 9
+#define SCALE_LIST .5, .66, .8, 1, 1.33, 1.66, 2, 2.5, 3
+#ifdef CONSTEXPR
+  constexpr static int scaleListSize = SCALE_LIST_SIZE;
+  constexpr static float scaleList[scaleListSize] = {SCALE_LIST};
   double _scale = 1;
-
+#else /// MOŻE const?
+  static int scaleListSize;
+  static float scaleList[];
+#endif
   int _width = 1200;
   int _height = 800;
 

@@ -12,7 +12,13 @@ public:
   virtual void draw(QPainter&p, float scale);
   virtual bool save(QDataStream& out);
 private:
-  constexpr static float sqrt2 = sqrt(2);
+#ifdef MATH_CONSTEXPR
+  float constexpr static wspr = sqrt(2);
+#elif defined(CONSTEXPR)
+  float constexpr static wspr = sqrt2;
+#else
+  float static wspr;
+#endif
 };
 
 

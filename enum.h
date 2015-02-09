@@ -4,6 +4,18 @@
 #include <QDataStream>
 #include <QtWidgets>
 
+#ifdef __GNUC__
+  #define CONSTEXPR
+  #define MATH_CONSTEXPR
+#elif defined(__CLANG__)
+  #define CONSTEXPR
+#elif defined(_MSC_VER)
+#endif
+
+#ifndef MATH_CONSTEXPR
+  #define sqrt2 1.4142135623730951
+#endif
+
 class MainWidget;
 
 namespace K
@@ -16,7 +28,5 @@ namespace K
     enum object:quint8{WIRE = 1, RESISTOR = 2, CAPACITOR = 3, COIL = 4, VDC = 5, ADC = 6, DIODE = 7, GENERATOR = 8, OPAMP = 9};
   }
 }
-
-
 #endif // ENUM_H
 

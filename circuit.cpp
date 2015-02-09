@@ -5,8 +5,12 @@
 #define selectedTool MainWindow::selectedTool
 #define MAGICK_NUMBER 0x8a3f98c0
 
-constexpr double Circuit::scaleList[];
-
+#ifdef CONSTEXPR
+  constexpr float Circuit::scaleList[];
+#else
+  int Circuit::scaleListSize = SCALE_LIST_SIZE;
+  float Circuit::scaleList[] = {SCALE_LIST};
+#endif
 Circuit::Circuit(QString path)
 {
   if(!QFile::exists(path)) throw tr("File don't exist");

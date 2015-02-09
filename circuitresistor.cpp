@@ -1,5 +1,9 @@
 #include "circuitresistor.h"
 
+#ifndef CONSTEXPR
+  float CircuitResistor::wspr = 2*sqrt2;
+#endif
+
 CircuitResistor::CircuitResistor(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
 {
   float gs = scale * grid;

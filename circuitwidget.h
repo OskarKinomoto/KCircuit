@@ -40,6 +40,7 @@ public:
   void grabMouse();
   void releaseMouse();
   bool grabedMouse = false;
+  void forceMouseMoveEvent();
 private:
   friend class Circuit;
 

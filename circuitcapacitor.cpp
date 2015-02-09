@@ -1,5 +1,9 @@
 #include "circuitcapacitor.h"
 
+#ifndef CONSTEXPR
+  float CircuitCapacitor::wspr = sqrt2;
+#endif
+
 CircuitCapacitor::~CircuitCapacitor()
 {
 

@@ -13,8 +13,11 @@ CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QSc
   circuit->setWidget(circuitWidget);
 
   corner = new QWidget();
-  corner->setAutoFillBackground(true);
-  corner->setBackgroundRole(QPalette::Base);
+  if(QApplication::style()->objectName() == "breeze")
+    {
+      corner->setAutoFillBackground(true);
+      corner->setBackgroundRole(QPalette::Base);
+    }
 
   //Scrollbars coloring
   this->verticalScrollBar()->setAutoFillBackground(true);
@@ -77,6 +80,7 @@ void CircuitScrollArea::wheelEvent(QWheelEvent *event)
   else
     {
       QScrollArea::wheelEvent(event);
+      this->circuitWidget->forceMouseMoveEvent();
     }
 }
 

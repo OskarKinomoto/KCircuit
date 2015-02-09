@@ -1,5 +1,9 @@
 #include "circuitdiode.h"
 
+#ifndef CONSTEXPR
+  float CircuitDiode::wspr = sqrt2;
+#endif
+
 CircuitDiode::CircuitDiode(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
 {
   float gs = scale * grid;
@@ -32,8 +36,8 @@ void CircuitDiode::draw(QPainter &p, float scale)
 
   if(angle % 90)
     {
-      p.drawLine(-.75*gs, 0, -2*sqrt2*gs, 0);
-      p.drawLine(.75*gs, 0, 2*sqrt2*gs, 0);
+      p.drawLine(-.75*gs, 0, -2*wspr*gs, 0);
+      p.drawLine(.75*gs, 0, 2*wspr*gs, 0);
 
     }
   else

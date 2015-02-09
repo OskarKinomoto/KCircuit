@@ -43,6 +43,8 @@ void CircuitWidget::updateSize()
 
   scroll->verticalScrollBar()->setSliderPosition(scroll->verticalScrollBar()->maximum()*v);
   scroll->horizontalScrollBar()->setSliderPosition(scroll->horizontalScrollBar()->maximum()*h);
+
+  this->forceMouseMoveEvent();
 }
 
 void CircuitWidget::grabMouse()
@@ -55,6 +57,12 @@ void CircuitWidget::releaseMouse()
 {
   grabedMouse = false;
   QWidget::releaseMouse();
+}
+
+void CircuitWidget::forceMouseMoveEvent()
+{
+  QMouseEvent * event = new QMouseEvent(QEvent::MouseMove, this->mapFromGlobal(QCursor::pos()), Qt::NoButton, Qt::NoButton, 0);
+  circuit->mouseEvent(event);
 }
 
 void CircuitWidget::updateName()
