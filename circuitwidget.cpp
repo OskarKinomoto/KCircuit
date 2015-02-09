@@ -47,6 +47,11 @@ void CircuitWidget::updateSize()
   this->forceMouseMoveEvent();
 }
 
+bool CircuitWidget::inVisibleRect(int x, int y)
+{
+  return(x > visibleRect.x() && y > visibleRect.y() && y < visibleRect.y() + visibleRect.height() && x < visibleRect.x() + visibleRect.width());
+}
+
 void CircuitWidget::grabMouse()
 {
   grabedMouse = true;
@@ -70,8 +75,9 @@ void CircuitWidget::updateName()
   scroll->setTitle(circuit->name());
 }
 
-void CircuitWidget::paintEvent(QPaintEvent *)
+void CircuitWidget::paintEvent(QPaintEvent *p)
 {
+  visibleRect = p->rect();
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
   painter.setRenderHint(QPainter::HighQualityAntialiasing);
@@ -89,17 +95,17 @@ void CircuitWidget::mouseMoveEvent(QMouseEvent *event)
 
 void CircuitWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-  int x = event->x();
-  int y = event->y();
-
-  if(x < 0 || y < 0 || y > height() || x > width())
-    {
-      event->ignore();
-      return;
-    }
   if(ignoreMouse)
     {
       ignoreMouse = false;
+      return;
+    }
+  int x = event->x();
+  int y = event->y();
+
+  if(!inVisibleRect(x,y))
+    {
+      event->ignore();
       return;
     }
   circuit->mouseEvent(event);

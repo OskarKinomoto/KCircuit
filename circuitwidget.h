@@ -43,9 +43,10 @@ public:
   void forceMouseMoveEvent();
 private:
   friend class Circuit;
-
+  QRect visibleRect = QRect(0,0,0,0);
   void updateName();
   void updateSize();
+  bool inVisibleRect(int x, int y);
 protected:
   void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
   void mouseMoveEvent ( QMouseEvent * event ) Q_DECL_OVERRIDE;

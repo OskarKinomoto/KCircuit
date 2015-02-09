@@ -316,7 +316,7 @@ void Circuit::drawing(QMouseEvent * event)
     {
       int x = event->x();
       int y = event->y();
-      if((x < 0 || y < 0 || y > _widget->height() || x > _widget->width()) && selectedTool() != K::WIRE)
+      if(!_widget->inVisibleRect(x,y) && selectedTool() != K::WIRE)
         {
           //Out of bonds
           this->destroyDrawingObject();

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-#define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse) return;
+#define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse && _selectedTool == K::WIRE) return;
 
 K::tool MainWindow::_selectedTool = K::MOUSE;
 
