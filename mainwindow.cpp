@@ -3,7 +3,12 @@
 #define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse) return;
 
 K::tool MainWindow::_selectedTool = K::MOUSE;
-extern bool Circuit::showGrid;
+
+#ifdef _MSC_VER
+  bool Circuit::showGrid = true;
+#else
+  extern bool Circuit::showGrid;
+#endif
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
@@ -107,7 +112,7 @@ void MainWindow::initActions()
   connect(generatorSelectAction, SIGNAL(triggered()), this, SLOT(generatorSelect()));
 
   //opAmpSelectAction
-  opAmpSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Generator"), nullptr);
+  opAmpSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Operational Amplifier"), nullptr);
   opAmpSelectAction->setCheckable(true);
   connect(opAmpSelectAction, SIGNAL(triggered()), this, SLOT(opAmpSelect()));
 

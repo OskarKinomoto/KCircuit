@@ -29,7 +29,7 @@ protected:
 private:
   QWidget * corner;
   QTabWidget * parentTabWidget;
-  decltype(QWheelEvent.delta()) delta = 0;
+  int delta = 0;
 
 };
 
