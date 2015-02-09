@@ -9,7 +9,7 @@
 
 #include "aboutdialog.h"
 
-#include "enum.h"
+#include "include.h"
 
 #include "circuit.h"
 

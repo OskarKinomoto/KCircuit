@@ -9,7 +9,7 @@
 #include <QDebug>
 
 #include "coordinate.h"
-#include "enum.h"
+#include "include.h"
 
 #define OBJECT_VERSION 0
 

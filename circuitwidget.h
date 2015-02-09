@@ -4,7 +4,7 @@
 #include <QtWidgets>
 
 #include "circuit.h"
-#include "enum.h"
+#include "include.h"
 
 class CircuitScrollArea;
 

@@ -1,4 +1,5 @@
 /Debug/*
+/DebugClang/*
 .directory
 */.directory
 /SAMPLE/*

@@ -22,7 +22,7 @@
 #include "circuitgenerator.h"
 #include "circuitopamp.h"
 
-#include "enum.h"
+#include "include.h"
 
 #define MARGIN 30
 

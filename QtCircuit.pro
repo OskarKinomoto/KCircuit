@@ -34,7 +34,7 @@ SOURCES += main.cpp\
     circuitopamp.cpp
 
 HEADERS  += mainwindow.h \
-    enum.h \
+    include.h \
     mainwidget.h \
     objectsettingswidget.h \
     aboutdialog.h \
