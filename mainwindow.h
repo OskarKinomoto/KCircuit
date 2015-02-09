@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QtSvg>
 
 #include "mainwidget.h"
 #include "objectsettingswidget.h"
