@@ -5,10 +5,12 @@
 #include <QtWidgets>
 
 #ifdef __GNUC__
+#ifndef __clang__
   #define CONSTEXPR
   #define MATH_CONSTEXPR
-#elif defined(__CLANG__)
+#else
   #define CONSTEXPR
+#endif
 #elif defined(_MSC_VER)
 #endif
 

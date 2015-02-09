@@ -4,7 +4,7 @@
 
 K::tool MainWindow::_selectedTool = K::MOUSE;
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__clang__)
   bool Circuit::showGrid = true;
 #else
   extern bool Circuit::showGrid;
