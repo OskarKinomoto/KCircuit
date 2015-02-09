@@ -2,4 +2,7 @@
     <qresource prefix="/fonts">
         <file alias="oxygen.otf">res/fonts/oxygen/Oxygen.otf</file>
     </qresource>
+    <qresource prefix="/img">
+        <file alias="github.png">res/img/github.png</file>
+    </qresource>
 </RCC>

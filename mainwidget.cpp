@@ -29,6 +29,7 @@ MainWidget::~MainWidget()
 int MainWidget::newTab(Circuit *circuit)
 {
   if(!circuit) throw QString(QString("nullptr in ") + __FILE__ + " line " + QString(__LINE__));
+  CircuitScrollArea * c = new CircuitScrollArea(circuit, tabWidget);
 
   for(int i = 0; i < tabWidget->count(); ++i)
     {
@@ -36,7 +37,7 @@ int MainWidget::newTab(Circuit *circuit)
         closeTabI(i);
     }
 
-  CircuitScrollArea * c = new CircuitScrollArea(circuit, tabWidget);
+
   int i = tabWidget->addTab(c, circuit->name());
   tabWidget->setCurrentIndex(i);
 

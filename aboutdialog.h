@@ -2,6 +2,7 @@
 #define ABOUTDIALOG_H
 
 #include <QtWidgets>
+#include "include.h"
 
 class AboutDialog : public QWidget
 {
@@ -11,6 +12,7 @@ public:
   ~AboutDialog();
 private:
   QPushButton * closeButton;
+  QLabel * l;
 signals:
 
 public slots:

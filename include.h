@@ -4,6 +4,8 @@
 #include <QDataStream>
 #include <QtWidgets>
 
+#define VERSION "0.0.0"
+
 #ifdef __GNUC__
 #ifndef __clang__
   #define CONSTEXPR

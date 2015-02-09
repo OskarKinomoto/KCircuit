@@ -42,7 +42,7 @@ void MainWindow::initActions()
   //openFileAction
   openFileAction = new QAction(QIcon::fromTheme("document-open"), tr("&Open"), nullptr);
   openFileAction->setShortcut(QKeySequence::Open);
-  ///TODO remove back to dialogs
+  connect(openFileAction, SIGNAL(triggered()), this, SLOT(openFile()));
 
   //saveFileAction
   saveFileAction = new QAction(QIcon::fromTheme("document-save"), tr("&Save"), nullptr);
@@ -56,7 +56,7 @@ void MainWindow::initActions()
   //saveFileAsAction
   saveFileAsAction = new QAction(QIcon::fromTheme("document-save-as"), tr("Save as"), nullptr);
   saveFileAsAction->setShortcut(QKeySequence::SaveAs);
-  /// TO MOVE TO DIALOGS connect(saveFileAsAction, SIGNAL(triggered()), this, SLOT(saveFileAs()));
+  connect(saveFileAsAction, SIGNAL(triggered()), this, SLOT(saveFileAs()));
 
   //quitAction
   quitAction = new QAction(QIcon::fromTheme("application-exit"), tr("Quit"), nullptr);
@@ -67,13 +67,11 @@ void MainWindow::initActions()
   mouseSelectAction = new QAction(QIcon::fromTheme("input-mouse"), tr("Mouse"), nullptr);
   mouseSelectAction->setCheckable(true);
   mouseSelectAction->setChecked(true);
-  ///mouseSelectAction->setShortcut(QKeySequence::Quit);
   connect(mouseSelectAction, SIGNAL(triggered()), this, SLOT(mouseSelect()));
 
   //wireSelectAction
   wireSelectAction = new QAction(QIcon::fromTheme("input-keyboard"), tr("Wire"), nullptr);
   wireSelectAction->setCheckable(true);
-  ///wireSelectAction->setShortcut(QKeySequence::Quit);
   connect(wireSelectAction, SIGNAL(triggered()), this, SLOT(wireSelect()));
 
   //resistorSelectAction
@@ -287,28 +285,6 @@ void MainWindow::unselectLastUsed()
 
 void MainWindow::initDialogs()
 {
-  // file dialogs
-  openFileDialog = new QFileDialog(this);
-  saveFileDialog = new QFileDialog(this);
-  saveFileAsDialog = new QFileDialog(this);
-
-  QStringList fileList;
-  fileList << "QtCircuit (*.qtc)" << tr("All filest (*.*)");
-
-  openFileDialog->setNameFilters(fileList);
-  openFileDialog->setDefaultSuffix(QString(".qtc"));
-  openFileDialog->setAcceptMode(QFileDialog::AcceptOpen);
-  openFileDialog->setDirectory("/home/oskar/QtCircuit/SAMPLE/");
-  connect(openFileAction, SIGNAL(triggered()), openFileDialog, SLOT(exec()));
-  connect(openFileDialog, SIGNAL(fileSelected(QString)), this, SLOT(openFile(QString)));
-
-
-  saveFileAsDialog->setNameFilters(fileList);
-  saveFileAsDialog->setDefaultSuffix(QString(".qtc"));
-  saveFileAsDialog->setAcceptMode(QFileDialog::AcceptSave);
-  //connect(saveFileAsAction, SIGNAL(triggered()), saveFileAsDialog, SLOT(exec()));
-  //connect(saveFileAsDialog, SIGNAL(fileSelected(QString)), this, SLOT(saveFileAs(QString)));
-
   // about dialog
   aboutDialog = new AboutDialog(nullptr);
 }
@@ -341,27 +317,36 @@ void MainWindow::saveFile()
       return;
     }
 
-  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
-  if(fileName == "") return; //Nie wybrano pliku
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save..."), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+  if(fileName == "") return;
   circ->saveFileAs(fileName);
 }
 
-void MainWindow::saveFileAs(QString file)
+void MainWindow::saveFileAs()
 {
   STOP_ACTION
-      this->mainWidget->getCurrent()->circuitWidget->saveFileAs(file);
+      auto circ = this->mainWidget->getCurrent()->circuitWidget;
+      QString fileName = QFileDialog::getSaveFileName(this, tr("Save as..."), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+      if(fileName == "") return;
+      circ->saveFileAs(fileName);
 }
 
-void MainWindow::openFile(QString file)
+void MainWindow::openFile()
 {
   STOP_ACTION
-      this->mainWidget->newTab(new Circuit(file));
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open"), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)\n All files (*.*)"), 0, QFileDialog::DontUseNativeDialog);
+      if(fileName == "") return;
+      try{
+      this->mainWidget->newTab(new Circuit(fileName));
+      } catch(QString &s) {
+        QMessageBox::warning(this, tr("KCircuit"), s, QMessageBox::Ok, QMessageBox::Ok);
+      }
 }
 
 void MainWindow::exportFile()
 {
   STOP_ACTION
-      QString fileName = QFileDialog::getSaveFileName(this, tr("Export to"), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("PNG image (*.png)"), 0, QFileDialog::DontUseNativeDialog);
+      QString fileName = QFileDialog::getSaveFileName(this, tr("Export to..."), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("PNG image (*.png)"), 0, QFileDialog::DontUseNativeDialog);
   if(fileName == "") return;
   auto type = QFileInfo(fileName).completeSuffix();
   if(type == "png") // export to png
@@ -374,14 +359,11 @@ void MainWindow::exportFile()
     }
 }
 
-
-
 void MainWindow::quit()
 {
   saveSettings();
   QApplication::quit();
 }
-
 
 void MainWindow::wireSelect()
 {
@@ -521,5 +503,3 @@ void MainWindow::enterEvent(QEvent *event)
     }
   QWidget::enterEvent(event);
 }
-
-

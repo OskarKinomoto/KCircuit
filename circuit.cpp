@@ -13,7 +13,7 @@
 #endif
 Circuit::Circuit(QString path)
 {
-  if(!QFile::exists(path)) throw tr("File don't exist");
+  if(!QFile::exists(path)) throw tr("File doesn't exist");
   _path = path;
 
   QFile file(path);
@@ -27,7 +27,7 @@ Circuit::Circuit(QString path)
 
   quint32 objectVersion;
   in >> objectVersion;
-  if(objectVersion > OBJECT_VERSION) throw tr("File newer than program. Please upgrade QtCircuit.");
+  if(objectVersion > OBJECT_VERSION) throw tr("File from newer version of KCircuit. Please upgrade KCircuit.");
 
   quint32 count;
   in >> count;
@@ -243,7 +243,7 @@ void Circuit::saveFile()
 void Circuit::saveFileAs(QString newPath)
 {
   auto type = QFileInfo(newPath).completeSuffix();
-  if(type != ".qtc") newPath += ".qtc";
+  if(type != "qtc") newPath += ".qtc";
   _path = newPath;
   QFile file(_path);
   _name = QFileInfo(file).fileName();

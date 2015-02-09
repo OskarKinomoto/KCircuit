@@ -92,7 +92,7 @@ private:
 #ifdef CONSTEXPR
   constexpr static int scaleListSize = SCALE_LIST_SIZE;
   constexpr static float scaleList[scaleListSize] = {SCALE_LIST};
-#else /// MOŻE const?
+#else
   static int scaleListSize;
   static float scaleList[];
 #endif

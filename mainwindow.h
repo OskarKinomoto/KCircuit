@@ -104,8 +104,8 @@ private slots:
   void newFileInit();
 
   void saveFile();
-  void saveFileAs(QString file);
-  void openFile(QString file);
+  void saveFileAs();
+  void openFile();
 
   void exportFile();
 
