@@ -6,6 +6,13 @@
 
 QT       += core gui
 
+win{
+QT += winextras
+#icony
+# http://doc.qt.io/qt-5/qtwin.html#details
+# https://stackoverflow.com/questions/6523039/qt-application-and-window-icon-under-windows
+}
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QtCircuit
