@@ -83,7 +83,11 @@ Circuit::Circuit()
 
 Circuit::~Circuit()
 {
-
+  _nowDrawing = nullptr;
+  for( auto itr : _objects)
+    {
+      delete itr;
+    }
 }
 
 void Circuit::draw(QPainter &p)

@@ -45,7 +45,7 @@ private:
   friend class Circuit;
   QRect visibleRect = QRect(0,0,0,0);
   void updateName();
-  void updateSize();
+  void updateSize(bool i = true);
   bool inVisibleRect(int x, int y);
 protected:
   void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;

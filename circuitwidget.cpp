@@ -8,7 +8,7 @@ CircuitWidget::CircuitWidget(Circuit *_circuit, CircuitScrollArea *parent) : QWi
 {
   circuit = _circuit;
   scroll = parent;
-  this->updateSize();
+  this->updateSize(false);
   this->setAutoFillBackground(true);
   this->setBackgroundRole(QPalette::Base);
   this->setFocusPolicy(Qt::StrongFocus);
@@ -16,6 +16,7 @@ CircuitWidget::CircuitWidget(Circuit *_circuit, CircuitScrollArea *parent) : QWi
 
 CircuitWidget::~CircuitWidget()
 {
+  this->releaseMouse();
   delete circuit;
 }
 
@@ -32,7 +33,7 @@ void CircuitWidget::updateTitle()
   ((CircuitScrollArea*)this->parentWidget())->setTitle(circuit->name());
 }
 
-void CircuitWidget::updateSize()
+void CircuitWidget::updateSize(bool i)
 {
   float v = float(scroll->verticalScrollBar()->value())/scroll->verticalScrollBar()->maximum();
   float h = float(scroll->horizontalScrollBar()->value())/scroll->horizontalScrollBar()->maximum();
@@ -43,8 +44,7 @@ void CircuitWidget::updateSize()
 
   scroll->verticalScrollBar()->setSliderPosition(scroll->verticalScrollBar()->maximum()*v);
   scroll->horizontalScrollBar()->setSliderPosition(scroll->horizontalScrollBar()->maximum()*h);
-
-  this->forceMouseMoveEvent();
+  if(i) this->forceMouseMoveEvent();
 }
 
 bool CircuitWidget::inVisibleRect(int x, int y)
