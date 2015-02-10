@@ -66,4 +66,7 @@ QMAKE_CXXFLAGS += -std=c++11
 RESOURCES += \
     resources.qrc
 
+RC_ICONS = app.ico
+ICON = app.icns
+
 DISTFILES +=

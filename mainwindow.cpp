@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   initFonts();
-  initAppIcon();
+  initIcons();
   loadSettings();
   initMainWidget();
   initActions();
@@ -70,10 +70,21 @@ void MainWindow::initMainWidget()
   this->setCentralWidget(mainWidget);
 }
 
-void MainWindow::initAppIcon()
+void MainWindow::initIcons()
 {
   appIcon = QIcon(":/icons/app.svg");
   this->setWindowIcon(appIcon);
+
+  wireIcon = QIcon(":/icons/wire.svg");
+  resistorIcon = QIcon(":/icons/R.svg");
+  coilIcon = QIcon(":/icons/L.svg");
+  capacitorIcon = QIcon(":/icons/C.svg");
+  diodeIcon = QIcon(":/icons/diode.svg");
+  sineIcon = QIcon(":/icons/sine.svg");
+  vdcIcon = QIcon(":/icons/vdc.svg");
+  adcIcon = QIcon(":/icons/adc.svg");
+  opampIcon = QIcon(":/icons/opamp.svg");
+  pointerIcon = QIcon(":/icons/pointer.svg");
 }
 
 void MainWindow::initActions()
@@ -108,53 +119,53 @@ void MainWindow::initActions()
   connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 
   //mouseSelectAction
-  mouseSelectAction = new QAction(QIcon::fromTheme("input-mouse"), tr("Mouse"), nullptr);
+  mouseSelectAction = new QAction(pointerIcon, tr("Mouse"), nullptr);
   mouseSelectAction->setCheckable(true);
   mouseSelectAction->setChecked(true);
   connect(mouseSelectAction, SIGNAL(triggered()), this, SLOT(mouseSelect()));
 
   //wireSelectAction
-  wireSelectAction = new QAction(QIcon::fromTheme("input-keyboard"), tr("Wire"), nullptr);
+  wireSelectAction = new QAction(wireIcon, tr("Wire"), nullptr);
   wireSelectAction->setCheckable(true);
   connect(wireSelectAction, SIGNAL(triggered()), this, SLOT(wireSelect()));
 
   //resistorSelectAction
-  resistorSelectAction = new QAction(QIcon::fromTheme("application-redo"), tr("Resistor"), nullptr);
+  resistorSelectAction = new QAction(resistorIcon, tr("Resistor"), nullptr);
   resistorSelectAction->setCheckable(true);
   connect(resistorSelectAction, SIGNAL(triggered()), this, SLOT(resistorSelect()));
 
   //coilSelectAction
-  coilSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Coil"), nullptr);
+  coilSelectAction = new QAction(coilIcon, tr("Coil"), nullptr);
   coilSelectAction->setCheckable(true);
   connect(coilSelectAction, SIGNAL(triggered()), this, SLOT(coilSelect()));
 
   //capacitorSelectAction
-  capacitorSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Capacitor"), nullptr);
+  capacitorSelectAction = new QAction(capacitorIcon, tr("Capacitor"), nullptr);
   capacitorSelectAction->setCheckable(true);
   connect(capacitorSelectAction, SIGNAL(triggered()), this, SLOT(capacitorSelect()));
 
   //VDCSelectAction
-  VDCSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("VDC"), nullptr);
+  VDCSelectAction = new QAction(vdcIcon, tr("VDC"), nullptr);
   VDCSelectAction->setCheckable(true);
   connect(VDCSelectAction, SIGNAL(triggered()), this, SLOT(VDCSelect()));
 
   //ADCSelectAction
-  ADCSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("ADC"), nullptr);
+  ADCSelectAction = new QAction(adcIcon, tr("ADC"), nullptr);
   ADCSelectAction->setCheckable(true);
   connect(ADCSelectAction, SIGNAL(triggered()), this, SLOT(ADCSelect()));
 
   //diodeSelectAction
-  diodeSelectAction = new QAction(this->appIcon, tr("Diode"), nullptr);
+  diodeSelectAction = new QAction(diodeIcon, tr("Diode"), nullptr);
   diodeSelectAction->setCheckable(true);
   connect(diodeSelectAction, SIGNAL(triggered()), this, SLOT(diodeSelect()));
 
   //generatorSelectAction
-  generatorSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Generator"), nullptr);
+  generatorSelectAction = new QAction(sineIcon, tr("Generator"), nullptr);
   generatorSelectAction->setCheckable(true);
   connect(generatorSelectAction, SIGNAL(triggered()), this, SLOT(generatorSelect()));
 
   //opAmpSelectAction
-  opAmpSelectAction = new QAction(QIcon::fromTheme("application-undo"), tr("Operational Amplifier"), nullptr);
+  opAmpSelectAction = new QAction(opampIcon, tr("Operational Amplifier"), nullptr);
   opAmpSelectAction->setCheckable(true);
   connect(opAmpSelectAction, SIGNAL(triggered()), this, SLOT(opAmpSelect()));
 
@@ -251,6 +262,7 @@ void MainWindow::saveSettings()
 void MainWindow::initToolBars()
 {
   applicationBar = new QToolBar(tr("application"));
+  applicationBar->setMovable(false);
   applicationBar->addAction(newFileAction);
   applicationBar->addAction(openFileAction);
   applicationBar->addAction(saveFileAction);
@@ -261,11 +273,12 @@ void MainWindow::initToolBars()
   this->addToolBar(Qt::TopToolBarArea, applicationBar);
 
   toolBar = new QToolBar(tr("items")); ///TODO nazwa :<
+  toolBar->setMovable(false);
   toolBar->addAction(mouseSelectAction);
   toolBar->addAction(wireSelectAction);
   toolBar->addAction(resistorSelectAction);
-  toolBar->addAction(capacitorSelectAction);
   toolBar->addAction(coilSelectAction);
+  toolBar->addAction(capacitorSelectAction);
   toolBar->addAction(diodeSelectAction);
   toolBar->addAction(VDCSelectAction);
   toolBar->addAction(ADCSelectAction);
