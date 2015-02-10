@@ -1,5 +1,7 @@
 /Debug/*
 /DebugClang/*
+/ReleaseClang/*
+/Release/*
 .directory
 */.directory
 /SAMPLE/*
