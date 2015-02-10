@@ -3,7 +3,7 @@
 AboutDialog::AboutDialog(QWidget *parent) : QWidget(parent)
 {
   this->setLayout(new QVBoxLayout());
-  QString text = tr("<center><b>KCircuit</b><br>Version: ")+QString(VERSION)+tr("<br>Author: Oskar Kinomoto<br><a href='https://kinomoto.me/'>kinomoto.me</a><br><a href='https://github.com/OskarKinomoto/QtCircuit'><img src=':/img/github.png' height=30></a></center>");
+  QString text = tr("<center><b>KCircuit</b><br>Version: ")+QString(VERSION)+tr("<br>Author: Oskar Kinomoto<br><a href='https://kinomoto.me/'>kinomoto.me</a><br><a href='https://github.com/OskarKinomoto/KCircuit'><img src=':/img/github.png' height=30></a></center>");
   this->l = new QLabel(text);
   this->l->setTextInteractionFlags(Qt::TextBrowserInteraction);
   this->l->setOpenExternalLinks(true);

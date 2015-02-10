@@ -362,7 +362,7 @@ void MainWindow::saveFile()
       return;
     }
 
-  QString fileName = QFileDialog::getSaveFileName(this, tr("Save..."), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save..."), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
   if(fileName == "") return;
   circ->saveFileAs(fileName);
 }
@@ -371,7 +371,7 @@ void MainWindow::saveFileAs()
 {
   STOP_ACTION
       auto circ = this->mainWidget->getCurrent()->circuitWidget;
-      QString fileName = QFileDialog::getSaveFileName(this, tr("Save as..."), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+      QString fileName = QFileDialog::getSaveFileName(this, tr("Save as..."), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
       if(fileName == "") return;
       circ->saveFileAs(fileName);
 }
@@ -379,7 +379,7 @@ void MainWindow::saveFileAs()
 void MainWindow::openFile()
 {
   STOP_ACTION
-      QString fileName = QFileDialog::getOpenFileName(this, tr("Open"), "/home/oskar/QtCircuit/SAMPLE/", tr("QtCircuit File (*.qtc)\n All files (*.*)"), 0, QFileDialog::DontUseNativeDialog);
+      QString fileName = QFileDialog::getOpenFileName(this, tr("Open"), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)\n All files (*.*)"), 0, QFileDialog::DontUseNativeDialog);
       if(fileName == "") return;
       try{
       this->mainWidget->newTab(new Circuit(fileName));
@@ -391,7 +391,7 @@ void MainWindow::openFile()
 void MainWindow::exportFile()
 {
   STOP_ACTION
-      QString fileName = QFileDialog::getSaveFileName(this, tr("Export to..."), "/home/oskar/Qt/QtCircuit/SAMPLE/", tr("PNG image (*.png)"), 0, QFileDialog::DontUseNativeDialog);
+      QString fileName = QFileDialog::getSaveFileName(this, tr("Export to..."), "/home/oskar/Qt/KCircuit/SAMPLE/", tr("PNG image (*.png)"), 0, QFileDialog::DontUseNativeDialog);
   if(fileName == "") return;
   auto type = QFileInfo(fileName).completeSuffix();
   if(type == "png") // export to png
