@@ -84,6 +84,7 @@ void MainWindow::initIcons()
   vdcIcon = QIcon(":/icons/vdc.svg");
   adcIcon = QIcon(":/icons/adc.svg");
   opampIcon = QIcon(":/icons/opamp.svg");
+  pointerIcon = QIcon(":/icons/pointer.svg");
 }
 
 void MainWindow::initActions()
@@ -118,7 +119,7 @@ void MainWindow::initActions()
   connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 
   //mouseSelectAction
-  mouseSelectAction = new QAction(QIcon::fromTheme("input-mouse"), tr("Mouse"), nullptr);
+  mouseSelectAction = new QAction(pointerIcon, tr("Mouse"), nullptr);
   mouseSelectAction->setCheckable(true);
   mouseSelectAction->setChecked(true);
   connect(mouseSelectAction, SIGNAL(triggered()), this, SLOT(mouseSelect()));
@@ -261,6 +262,7 @@ void MainWindow::saveSettings()
 void MainWindow::initToolBars()
 {
   applicationBar = new QToolBar(tr("application"));
+  applicationBar->setMovable(false);
   applicationBar->addAction(newFileAction);
   applicationBar->addAction(openFileAction);
   applicationBar->addAction(saveFileAction);
@@ -271,6 +273,7 @@ void MainWindow::initToolBars()
   this->addToolBar(Qt::TopToolBarArea, applicationBar);
 
   toolBar = new QToolBar(tr("items")); ///TODO nazwa :<
+  toolBar->setMovable(false);
   toolBar->addAction(mouseSelectAction);
   toolBar->addAction(wireSelectAction);
   toolBar->addAction(resistorSelectAction);

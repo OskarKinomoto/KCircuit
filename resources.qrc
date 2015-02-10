@@ -16,5 +16,6 @@
         <file alias="adc.svg">res/icons/tools/adc.svg</file>
         <file alias="vdc.svg">res/icons/tools/vdc.svg</file>
         <file alias="opamp.svg">res/icons/tools/opamp.svg</file>
+        <file alias="pointer.svg">res/icons/tools/pointer.svg</file>
     </qresource>
 </RCC>
