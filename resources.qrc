@@ -7,5 +7,7 @@
     </qresource>
     <qresource prefix="/icons">
         <file alias="app.svg">res/icons/app/app.svg</file>
+        <file alias="wire.svg">res/icons/tools/wire.svg</file>
+        <file alias="R.svg">res/icons/tools/R.svg</file>
     </qresource>
 </RCC>

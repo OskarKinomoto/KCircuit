@@ -31,9 +31,19 @@ private:
   void initMainWidget();
   MainWidget * mainWidget;
 
-  //Application Icon
-  void initAppIcon();
+  //Icons
+  void initIcons();
   QIcon appIcon;
+  QIcon wireIcon;
+  QIcon resistorIcon;
+  QIcon coilIcon;
+  QIcon capacitorIcon;
+  QIcon diodeIcon;
+  QIcon vdcIcon;
+  QIcon adcIcon;
+  QIcon sineIcon;
+  QIcon opampIcon;
+  QIcon pointerIcon;
 
   //Actions
   void initActions();

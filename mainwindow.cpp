@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   initFonts();
-  initAppIcon();
+  initIcons();
   loadSettings();
   initMainWidget();
   initActions();
@@ -70,10 +70,13 @@ void MainWindow::initMainWidget()
   this->setCentralWidget(mainWidget);
 }
 
-void MainWindow::initAppIcon()
+void MainWindow::initIcons()
 {
   appIcon = QIcon(":/icons/app.svg");
   this->setWindowIcon(appIcon);
+
+  wireIcon = QIcon(":/icons/wire.svg");
+  resistorIcon = QIcon(":/icons/R.svg");
 }
 
 void MainWindow::initActions()
@@ -114,12 +117,12 @@ void MainWindow::initActions()
   connect(mouseSelectAction, SIGNAL(triggered()), this, SLOT(mouseSelect()));
 
   //wireSelectAction
-  wireSelectAction = new QAction(QIcon::fromTheme("input-keyboard"), tr("Wire"), nullptr);
+  wireSelectAction = new QAction(wireIcon, tr("Wire"), nullptr);
   wireSelectAction->setCheckable(true);
   connect(wireSelectAction, SIGNAL(triggered()), this, SLOT(wireSelect()));
 
   //resistorSelectAction
-  resistorSelectAction = new QAction(QIcon::fromTheme("application-redo"), tr("Resistor"), nullptr);
+  resistorSelectAction = new QAction(resistorIcon, tr("Resistor"), nullptr);
   resistorSelectAction->setCheckable(true);
   connect(resistorSelectAction, SIGNAL(triggered()), this, SLOT(resistorSelect()));
 
