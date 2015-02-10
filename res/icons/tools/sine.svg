@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="wire.svg">
+   sodipodi:docname="sine.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="-64.983274"
-     inkscape:cy="80.420765"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="15.695908"
+     inkscape:cy="57.692106"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -66,13 +66,29 @@
        orientation="1,0"
        id="guide4196" />
     <sodipodi:guide
-       position="-19.999999,99.999995"
-       orientation="0,1"
-       id="guide4217" />
-    <sodipodi:guide
-       position="99.999995,119.99999"
+       position="99.999996,189.99999"
        orientation="1,0"
-       id="guide4219" />
+       id="guide4157" />
+    <sodipodi:guide
+       position="0,99.999996"
+       orientation="0,1"
+       id="guide4159" />
+    <sodipodi:guide
+       position="24.999999,49.999998"
+       orientation="0,1"
+       id="guide4163" />
+    <sodipodi:guide
+       position="-19.999999,149.99999"
+       orientation="0,1"
+       id="guide4165" />
+    <sodipodi:guide
+       position="49.999998,179.99999"
+       orientation="1,0"
+       id="guide4171" />
+    <sodipodi:guide
+       position="149.99999,184.99999"
+       orientation="1,0"
+       id="guide4173" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -92,20 +108,26 @@
      id="layer1"
      transform="translate(0,-852.36227)">
     <circle
-       style="opacity:1;fill:#4d4d4d;fill-opacity:1;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path4224"
-       cx="100"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4161"
+       cx="99.999992"
        cy="952.36224"
-       r="20" />
+       r="72.413788" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 20,952.36227 160,0"
-       id="path4226"
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 100,1042.3623 0,-15"
+       id="path4179"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 100,952.36227 0,80.00003"
-       id="path4228"
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 100,862.36227 0,15"
+       id="path4181"
        inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 150,952.36227 c -9.99999,34.99998 -39.99999,34.99998 -50,0 -9.999989,-35.00001 -39.999979,-35.00001 -49.999999,0"
+       id="path4172"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>

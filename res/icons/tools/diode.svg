@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="wire.svg">
+   sodipodi:docname="diode.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="-64.983274"
-     inkscape:cy="80.420765"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="-118.97689"
+     inkscape:cy="129.01882"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -66,13 +66,29 @@
        orientation="1,0"
        id="guide4196" />
     <sodipodi:guide
-       position="-19.999999,99.999995"
+       position="-129.99999,99.999996"
        orientation="0,1"
-       id="guide4217" />
+       id="guide4138" />
     <sodipodi:guide
-       position="99.999995,119.99999"
+       position="99.999996,89.999996"
        orientation="1,0"
-       id="guide4219" />
+       id="guide4140" />
+    <sodipodi:guide
+       position="49.999998,125"
+       orientation="1,0"
+       id="guide4142" />
+    <sodipodi:guide
+       position="159.99999,199.99999"
+       orientation="1,0"
+       id="guide4144" />
+    <sodipodi:guide
+       position="79.999997,159.99999"
+       orientation="0,1"
+       id="guide4146" />
+    <sodipodi:guide
+       position="69.999997,39.999998"
+       orientation="0,1"
+       id="guide4148" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -82,7 +98,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -91,21 +107,27 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-852.36227)">
-    <circle
-       style="opacity:1;fill:#4d4d4d;fill-opacity:1;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path4224"
-       cx="100"
-       cy="952.36224"
-       r="20" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 20,952.36227 160,0"
-       id="path4226"
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 20,952.36227 20,0 9.999994,0"
+       id="path4150"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 49.999994,1012.3623 0,-120.00003 0,0 110.000006,60 z"
+       id="path4152"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 160,892.36227 0,120.00003"
+       id="path4154"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:19.99999762;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 100,952.36227 0,80.00003"
-       id="path4228"
+       style="fill:none;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:9.99999881;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 160,952.36227 20,0"
+       id="path4156"
        inkscape:connector-curvature="0" />
   </g>
 </svg>

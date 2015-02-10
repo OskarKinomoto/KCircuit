@@ -9,5 +9,12 @@
         <file alias="app.svg">res/icons/app/app.svg</file>
         <file alias="wire.svg">res/icons/tools/wire.svg</file>
         <file alias="R.svg">res/icons/tools/R.svg</file>
+        <file alias="L.svg">res/icons/tools/L.svg</file>
+        <file alias="C.svg">res/icons/tools/C.svg</file>
+        <file alias="diode.svg">res/icons/tools/diode.svg</file>
+        <file alias="sine.svg">res/icons/tools/sine.svg</file>
+        <file alias="adc.svg">res/icons/tools/adc.svg</file>
+        <file alias="vdc.svg">res/icons/tools/vdc.svg</file>
+        <file alias="opamp.svg">res/icons/tools/opamp.svg</file>
     </qresource>
 </RCC>

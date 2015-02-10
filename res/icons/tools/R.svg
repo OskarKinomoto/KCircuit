@@ -86,7 +86,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot4799"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:381.24996948px;line-height:125%;font-family:Sampige;-inkscape-font-specification:Sampige;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:381.24996948px;line-height:125%;font-family:Sampige;-inkscape-font-specification:Sampige;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        transform="translate(0,852.36227)"><flowRegion
          id="flowRegion4801"><rect
            id="rect4803"
@@ -98,7 +98,7 @@
          id="flowPara4805"
          style="font-size:381.24996948px">Rrrrr</flowPara></flowRoot>    <g
        transform="scale(0.99372996,1.0063096)"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:177.2073822px;line-height:125%;font-family:Sampige;-inkscape-font-specification:Sampige;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:177.2073822px;line-height:125%;font-family:Sampige;-inkscape-font-specification:Sampige;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="text4807">
       <path
          d="m 111.57662,955.3831 q 5.62426,1.90359 10.90241,8.13354 5.36467,6.22995 10.72935,17.13235 l 17.73804,35.30301 -18.77636,0 -16.52667,-33.13983 q -6.403,-12.97906 -12.45989,-17.21888 -5.97037,-4.23983 -16.353615,-4.23983 l -19.035949,0 0,54.59854 -17.478462,0 0,-129.18485 39.456331,0 q 22.150925,0 33.053325,9.2584 10.90241,9.25839 10.90241,27.94823 0,12.20031 -5.71078,20.24733 -5.62426,8.04701 -16.44014,11.16199 z m -43.782684,-54.25246 0,45.85933 21.977869,0 q 12.632945,0 19.035945,-5.79731 6.48953,-5.88384 6.48953,-17.21888 0,-11.33504 -6.48953,-17.04583 -6.403,-5.79731 -19.035945,-5.79731 l -21.977869,0 z"
