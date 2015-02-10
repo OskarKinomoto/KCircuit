@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow
 
 public:
   MainWindow(QWidget *parent = 0);
+  /// grep "*" tmp | sed -e 's/[\t ]*[a-zA-Z]* \* /delete /g' -e 's/\/\/[a-zA-Z ]*//g'
+  ~MainWindow();
 
   inline static K::tool selectedTool(){return MainWindow::_selectedTool;}
 
@@ -90,9 +92,6 @@ private:
 
   //Dialogs
   void initDialogs();
-  QFileDialog * openFileDialog;
-  QFileDialog * saveFileDialog;
-  QFileDialog * saveFileAsDialog;
   AboutDialog * aboutDialog;
 
   //Fonts

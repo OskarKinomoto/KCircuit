@@ -27,6 +27,43 @@ MainWindow::MainWindow(QWidget *parent)
   newFileInit();
 }
 
+MainWindow::~MainWindow()
+{
+  delete newFileAction;
+  delete saveFileAction;
+  delete saveFileAsAction;
+  delete openFileAction;
+  delete exportToAction;
+  delete quitAction;
+  delete mouseSelectAction;
+  delete wireSelectAction;
+  delete resistorSelectAction;
+  delete coilSelectAction;
+  delete capacitorSelectAction;
+  delete VDCSelectAction;
+  delete ADCSelectAction;
+  delete diodeSelectAction;
+  delete generatorSelectAction;
+  delete opAmpSelectAction;
+  delete zoomInAction;
+  delete zoomInAction2;
+  delete zoomInAction3;
+  delete zoomOutAction;
+  delete showGridAction;
+  delete rotateAction;
+  delete smallRotateAction;
+  delete aboutApplicationAction;
+  delete fileMenu;
+  delete editMenu;
+  delete viewMenu;
+  delete helpMenu;
+  delete applicationBar;
+  delete toolBar;
+  delete objectSettingsBar;
+  ///delete objectSettingsWidget;
+  delete aboutDialog;
+}
+
 void MainWindow::initMainWidget()
 {
   mainWidget = new MainWidget();
@@ -176,6 +213,7 @@ void MainWindow::initMenus()
   fileMenu->addAction(quitAction);
 
   //editMenu
+  editMenu = this->menuBar()->addMenu(tr("&Edit"));
 
   //viewMenu
   viewMenu = this->menuBar()->addMenu(tr("&View"));
