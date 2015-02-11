@@ -6,10 +6,10 @@
 #define MAGICK_NUMBER 0x8a3f98c0
 
 #ifdef CONSTEXPR
-  constexpr float Circuit::scaleList[];
+constexpr float Circuit::scaleList[];
 #else
-  int Circuit::scaleListSize = SCALE_LIST_SIZE;
-  float Circuit::scaleList[] = {SCALE_LIST};
+int Circuit::scaleListSize = SCALE_LIST_SIZE;
+float Circuit::scaleList[] = {SCALE_LIST};
 #endif
 Circuit::Circuit(QString path)
 {
@@ -31,7 +31,6 @@ Circuit::Circuit(QString path)
 
   quint32 count;
   in >> count;
-  _objects.reserve(count);
 
   for(quint32 i = 0; i < count; ++i)
     {
@@ -72,6 +71,10 @@ Circuit::Circuit(QString path)
           break;
         }
     }
+
+  in >> num;
+
+  this->updateInfoBox();
 }
 
 Circuit::Circuit()
@@ -79,6 +82,7 @@ Circuit::Circuit()
   _name = tr("new");
   _path = "";
   newFile = true;
+  this->updateInfoBox();
 }
 
 Circuit::~Circuit()
@@ -231,15 +235,15 @@ void Circuit::saveFile()
 #else
   out.setVersion(QDataStream::Qt_5_3);
 #endif
-  quint32 count = 0;
-  out << count;
+
+  out << quint32(_objects.size());
 
   for(auto object : _objects)
     {
-      if(object->save(out)) ++count;
+      object->save(out);
     }
-  out.device()->seek(8);
-  out << count;
+
+  out << num;
 
   setModyfied(false);
 }
@@ -264,6 +268,7 @@ void Circuit::destroyDrawingObject()
       _nowDrawing = nullptr;
       _objects.pop_back();
       _widget->releaseMouse();
+      --num;
     }
 }
 
@@ -271,7 +276,7 @@ void Circuit::drawing(QMouseEvent * event)
 {
   if(_nowDrawing == nullptr && event->button() == Qt::LeftButton && selectedTool() == K::WIRE)
     {
-      _nowDrawing = new CircuitWire(Coordinate(event->x(),event->y()), _scale);
+      _nowDrawing = new CircuitWire(Coordinate(event->x(),event->y()), _scale, ++num);
       _objects.push_back(_nowDrawing);
       _widget->grabMouse();
     }
@@ -280,28 +285,28 @@ void Circuit::drawing(QMouseEvent * event)
       switch(selectedTool())
         {
         case K::RESISTOR:
-          _nowDrawing = new CircuitResistor(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitResistor(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::CAPACITOR:
-          _nowDrawing = new CircuitCapacitor(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitCapacitor(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::COIL:
-          _nowDrawing = new CircuitCoil(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitCoil(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::VDC:
-          _nowDrawing = new CircuitVDC(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitVDC(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::ADC:
-          _nowDrawing = new CircuitADC(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitADC(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::DIODE:
-          _nowDrawing = new CircuitDiode(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitDiode(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::GENERATOR:
-          _nowDrawing = new CircuitGenerator(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitGenerator(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::OPAMP:
-          _nowDrawing = new CircuitOpAmp(Coordinate(event->x(),event->y()), _scale, rotation);
+          _nowDrawing = new CircuitOpAmp(Coordinate(event->x(),event->y()), _scale, rotation, ++num);
           break;
         case K::MOUSE:
         case K::WIRE:
@@ -340,6 +345,11 @@ void Circuit::drawing(QMouseEvent * event)
     }
 
   _widget->update();
+}
+
+void Circuit::updateInfoBox()
+{
+  MainWindow::infoUpdate(this);
 }
 
 QRect Circuit::getRectangle(QImage &p)

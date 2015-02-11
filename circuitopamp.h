@@ -6,7 +6,7 @@
 class CircuitOpAmp : public CircuitObject
 {
 public:
-  CircuitOpAmp(Coordinate begin, float scale, quint16 rotation);
+  CircuitOpAmp(Coordinate begin, float scale, quint16 rotation, quint32 num);
   CircuitOpAmp(QDataStream& in);
   ~CircuitOpAmp();
   virtual void draw(QPainter&p, float scale);
@@ -14,6 +14,7 @@ public:
   virtual void smallRotate(){}
   virtual bool isSmallRotate() { return false; }
   static QFont oxy;
+  virtual K::info info();
 };
 
 #endif // CIRCUITOPAMP_H

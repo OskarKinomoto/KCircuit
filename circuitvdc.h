@@ -6,11 +6,12 @@
 class CircuitVDC : public CircuitObject
 {
 public:
-  CircuitVDC(Coordinate begin, float scale, quint16 rotation);
+  CircuitVDC(Coordinate begin, float scale, quint16 rotation, quint32 num);
   CircuitVDC(QDataStream& in);
   ~CircuitVDC();
   virtual void draw(QPainter&p, float scale);
   virtual bool save(QDataStream& out);
+  virtual K::info info();
 private:
 #ifdef MATH_CONSTEXPR
   float constexpr static wspr = sqrt(2);

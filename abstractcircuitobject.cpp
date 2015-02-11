@@ -5,4 +5,11 @@
 
 AbstractCircuitObject::~AbstractCircuitObject()
 {
+  qDebug() << "dekontruktor";
+}
+
+
+AbstractCircuitObject::AbstractCircuitObject(QDataStream &in)
+{
+  in >> num;
 }

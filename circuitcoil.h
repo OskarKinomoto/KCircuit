@@ -7,12 +7,13 @@
 class CircuitCoil : public CircuitObject
 {
 public:
-  CircuitCoil(Coordinate begin, float scale, quint16 rotation);
+  CircuitCoil(Coordinate begin, float scale, quint16 rotation, quint32 num);
   CircuitCoil(QDataStream& in);
   ~CircuitCoil();
 
   virtual void draw(QPainter&p, float scale);
   virtual bool save(QDataStream& out);
+  virtual K::info info();
 private:
 #ifdef MATH_CONSTEXPR
   float constexpr static wspr = sqrt(2);

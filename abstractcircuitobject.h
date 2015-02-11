@@ -17,8 +17,11 @@ const int grid = 20;
 
 class AbstractCircuitObject
 {
-private:
+protected:
+  quint32 num;
 public:
+  AbstractCircuitObject(quint32 _num) { num = _num; }
+  AbstractCircuitObject(QDataStream& in);
   virtual ~AbstractCircuitObject() = 0;
   virtual bool isSmallRotate() = 0;
   virtual void draw(QPainter&, float scale) = 0;
@@ -28,6 +31,7 @@ public:
   virtual bool save(QDataStream& out) = 0;
   enum status{DRAWING, END_DRAWING, DESTROY};
   virtual K::status doubleClick() = 0;
+  virtual K::info info() = 0;
 };
 
 #endif // ABSTRACTCIRCUITOBJECT_H

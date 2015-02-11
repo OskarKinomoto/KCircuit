@@ -24,7 +24,7 @@ void CircuitObject::setAngle(qint16 a)
   this->normAngle();
 }
 
-CircuitObject::CircuitObject(quint16 beginRotation)
+CircuitObject::CircuitObject(quint16 beginRotation, quint32 num) : AbstractCircuitObject(num)
 {
   angle = beginRotation;
   this->normAngle();
@@ -43,7 +43,7 @@ K::status CircuitObject::mouseEvent(QMouseEvent *event, float scale)
   return K::DRAWING;
 }
 
-CircuitObject::CircuitObject(QDataStream &in)
+CircuitObject::CircuitObject(QDataStream &in) : AbstractCircuitObject(in)
 {
   cords = Coordinate(in);
   in >> angle;

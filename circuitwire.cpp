@@ -1,6 +1,6 @@
 #include "circuitwire.h"
 
-CircuitWire::CircuitWire(Coordinate begin, float scale)
+CircuitWire::CircuitWire(Coordinate begin, float scale, quint32 num) : AbstractCircuitObject(num)
 {
   float gs = scale * grid;
   Coordinate tmp(begin.x() / gs + .5, begin.y() / gs + .5);
@@ -9,7 +9,7 @@ CircuitWire::CircuitWire(Coordinate begin, float scale)
   drawing = true;
 }
 
-CircuitWire::CircuitWire(QDataStream &in)
+CircuitWire::CircuitWire(QDataStream &in) : AbstractCircuitObject(in)
 {
   quint16 t;
   in >> t;
@@ -63,8 +63,8 @@ K::status CircuitWire::mouseEvent(QMouseEvent *event, float scale)
 
 bool CircuitWire::save(QDataStream &out)
 {
-  // TYP
   out << quint32(K::Object::WIRE);
+  out << num;
   out << quint16(cords.size());
 
   for(auto itr : cords)
@@ -80,4 +80,9 @@ K::status CircuitWire::doubleClick()
   cords.pop_back();
   if(cords.size() < 2) return K::DESTROY;
   return K::DRAWED;
+}
+
+K::info CircuitWire::info()
+{
+
 }

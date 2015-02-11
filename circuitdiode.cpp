@@ -4,7 +4,7 @@
   float CircuitDiode::wspr = sqrt2;
 #endif
 
-CircuitDiode::CircuitDiode(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
+CircuitDiode::CircuitDiode(Coordinate begin, float scale, quint16 rotation, quint32 num) : CircuitObject(rotation, num)
 {
   float gs = scale * grid;
   cords = Coordinate(begin.x() / gs + .5, begin.y() / gs + .5);
@@ -51,8 +51,14 @@ void CircuitDiode::draw(QPainter &p, float scale)
 bool CircuitDiode::save(QDataStream &out)
 {
   out << quint32(K::Object::DIODE);
+  out << num;
   out << cords;
   out << angle;
   return true;
+}
+
+K::info CircuitDiode::info()
+{
+
 }
 

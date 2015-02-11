@@ -16,7 +16,7 @@ private:
   bool drawing = false;
 
 public:
-  CircuitWire(Coordinate begin, float scale);
+  CircuitWire(Coordinate begin, float scale, quint32 num);
   CircuitWire(QDataStream& in);
   ~CircuitWire();
   virtual bool isSmallRotate() { return false; }
@@ -24,6 +24,7 @@ public:
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
   virtual bool save(QDataStream& out);
   virtual K::status doubleClick();
+  virtual K::info info();
 };
 
 #endif // CIRCUITWIRE_H

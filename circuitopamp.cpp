@@ -2,7 +2,7 @@
 
 QFont CircuitOpAmp::oxy;
 
-CircuitOpAmp::CircuitOpAmp(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
+CircuitOpAmp::CircuitOpAmp(Coordinate begin, float scale, quint16 rotation, quint32 num) : CircuitObject(rotation, num)
 {
   float gs = scale * grid;
   if(rotation % 90) setAngle(rotation - 45);
@@ -43,8 +43,14 @@ void CircuitOpAmp::draw(QPainter &p, float scale)
 bool CircuitOpAmp::save(QDataStream &out)
 {
   out << quint32(K::Object::OPAMP);
+  out << num;
   out << cords;
   out << angle;
   return true;
+}
+
+K::info CircuitOpAmp::info()
+{
+
 }
 

@@ -9,7 +9,7 @@
 
 #include <QDebug>
 
-#include <vector>
+#include <list>
 #include <algorithm>
 
 #include "circuitwire.h"
@@ -74,19 +74,26 @@ public:
 
   bool newFile = false;
 
+   std::list<AbstractCircuitObject*>* lista() { return &_objects; }
+
 private:
   QString _name;
   QString _path;
+  quint32 num = 0;
 
   bool modyfied = false;
   quint16 rotation = 0;
 
   CircuitWidget * _widget;
 
-  std::vector<AbstractCircuitObject*> _objects;
+  std::list<AbstractCircuitObject*> _objects;
   AbstractCircuitObject * _nowDrawing = nullptr;
 
   void drawing(QMouseEvent *event);
+
+  void updateInfoBox();
+
+
 #define SCALE_LIST_SIZE 9
 #define SCALE_LIST .5, .66, .8, 1, 1.33, 1.66, 2, 2.5, 3
 #ifdef CONSTEXPR
@@ -96,6 +103,8 @@ private:
   static int scaleListSize;
   static float scaleList[];
 #endif
+
+
   double _scale = 1;
   int _width = 1200;
   int _height = 800;

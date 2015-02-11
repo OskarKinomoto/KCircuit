@@ -19,7 +19,7 @@ protected:
   void setAngle(qint16 a);
   virtual K::status doubleClick() { return K::DRAWING;}
 public:
-  CircuitObject(quint16 beginRotation);
+  CircuitObject(quint16 beginRotation, quint32 num);
   CircuitObject(QDataStream& in);
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
   virtual ~CircuitObject();

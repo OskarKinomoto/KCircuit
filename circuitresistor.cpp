@@ -4,7 +4,7 @@
   float CircuitResistor::wspr = 2*sqrt2;
 #endif
 
-CircuitResistor::CircuitResistor(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
+CircuitResistor::CircuitResistor(Coordinate begin, float scale, quint16 rotation, quint32 num) : CircuitObject(rotation, num)
 {
   float gs = scale * grid;
   cords = Coordinate(begin.x() / gs + .5, begin.y() / gs + .5);
@@ -49,8 +49,14 @@ bool CircuitResistor::save(QDataStream &out)
 {
   //TYP
   out << quint32(K::Object::RESISTOR);
+  out << num;
   out << cords;
   out << angle;
   return true;
+}
+
+K::info CircuitResistor::info()
+{
+
 }
 

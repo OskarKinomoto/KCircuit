@@ -22,7 +22,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
 	mainwindow.cpp \
     mainwidget.cpp \
-    objectsettingswidget.cpp \
     aboutdialog.cpp \
     circuit.cpp \
     circuitscrollarea.cpp \
@@ -38,12 +37,13 @@ SOURCES += main.cpp\
     circuitadc.cpp \
     circuitdiode.cpp \
     circuitgenerator.cpp \
-    circuitopamp.cpp
+    circuitopamp.cpp \
+    infowidget.cpp \
+    objectlistwidget.cpp
 
 HEADERS  += mainwindow.h \
     include.h \
     mainwidget.h \
-    objectsettingswidget.h \
     aboutdialog.h \
     circuit.h \
     circuitscrollarea.h \
@@ -59,7 +59,9 @@ HEADERS  += mainwindow.h \
     circuitadc.h \
     circuitdiode.h \
     circuitgenerator.h \
-    circuitopamp.h
+    circuitopamp.h \
+    infowidget.h \
+    objectlistwidget.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

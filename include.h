@@ -21,6 +21,7 @@
 #endif
 
 class MainWidget;
+class AbstractCircuitObject;
 
 namespace K
 {
@@ -31,6 +32,12 @@ namespace K
   {
     enum object:quint8{WIRE = 1, RESISTOR = 2, CAPACITOR = 3, COIL = 4, VDC = 5, ADC = 6, DIODE = 7, GENERATOR = 8, OPAMP = 9};
   }
+
+  struct info {
+    K::Object::object type;
+    QString name;
+    AbstractCircuitObject * ptr;
+  };
 }
 #endif // ENUM_H
 

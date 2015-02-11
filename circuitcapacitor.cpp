@@ -36,14 +36,20 @@ void CircuitCapacitor::draw(QPainter &p, float scale)
 bool CircuitCapacitor::save(QDataStream &out)
 {
   out << quint32(K::Object::CAPACITOR);
+  out << num;
   out << cords;
   out << angle;
   return true;
 }
 
+K::info CircuitCapacitor::info()
+{
+
+}
 
 
-CircuitCapacitor::CircuitCapacitor(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
+
+CircuitCapacitor::CircuitCapacitor(Coordinate begin, float scale, quint16 rotation, quint32 num) : CircuitObject(rotation, num)
 {
   float gs = scale * grid;
   cords = Coordinate(begin.x() / gs + .5, begin.y() / gs + .5);

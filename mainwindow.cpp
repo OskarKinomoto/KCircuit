@@ -3,11 +3,12 @@
 #define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse && _selectedTool == K::WIRE) return;
 
 K::tool MainWindow::_selectedTool = K::MOUSE;
+InfoWidget * MainWindow::objectSettingsWidget = nullptr;
 
 #if defined(_MSC_VER) || defined(__clang__)
-  bool Circuit::showGrid = true;
+bool Circuit::showGrid = true;
 #else
-  extern bool Circuit::showGrid;
+extern bool Circuit::showGrid;
 #endif
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,11 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
   initFonts();
   initIcons();
+  initObjectSettingsWidget();
   loadSettings();
   initMainWidget();
   initActions();
   initMenus();
-  initObjectSettingsWidget();
   initToolBars();
   initDialogs();
 
@@ -293,7 +294,12 @@ void MainWindow::initToolBars()
 
 void MainWindow::initObjectSettingsWidget()
 {
-  objectSettingsWidget = new ObjectSettingsWidget();
+  objectSettingsWidget = new InfoWidget();
+}
+
+void MainWindow::infoUpdate(Circuit * c)
+{
+  objectSettingsWidget->update(c);
 }
 
 void MainWindow::unselectLastUsed()
@@ -384,21 +390,21 @@ void MainWindow::saveFileAs()
 {
   STOP_ACTION
       auto circ = this->mainWidget->getCurrent()->circuitWidget;
-      QString fileName = QFileDialog::getSaveFileName(this, tr("Save as..."), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
-      if(fileName == "") return;
-      circ->saveFileAs(fileName);
+  QString fileName = QFileDialog::getSaveFileName(this, tr("Save as..."), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)"), 0, QFileDialog::DontUseNativeDialog);
+  if(fileName == "") return;
+  circ->saveFileAs(fileName);
 }
 
 void MainWindow::openFile()
 {
   STOP_ACTION
       QString fileName = QFileDialog::getOpenFileName(this, tr("Open"), "/home/oskar/KCircuit/SAMPLE/", tr("KCircuit File (*.qtc)\n All files (*.*)"), 0, QFileDialog::DontUseNativeDialog);
-      if(fileName == "") return;
-      try{
-      this->mainWidget->newTab(new Circuit(fileName));
-      } catch(QString &s) {
-        QMessageBox::warning(this, tr("KCircuit"), s, QMessageBox::Ok, QMessageBox::Ok);
-      }
+  if(fileName == "") return;
+  try{
+    this->mainWidget->newTab(new Circuit(fileName));
+  } catch(QString &s) {
+    QMessageBox::warning(this, tr("KCircuit"), s, QMessageBox::Ok, QMessageBox::Ok);
+  }
 }
 
 void MainWindow::exportFile()

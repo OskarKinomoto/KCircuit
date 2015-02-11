@@ -4,7 +4,7 @@
 float CircuitVDC::wspr = sqrt2;
 #endif
 
-CircuitVDC::CircuitVDC(Coordinate begin, float scale, quint16 rotation) : CircuitObject(rotation)
+CircuitVDC::CircuitVDC(Coordinate begin, float scale, quint16 rotation, quint32 num) : CircuitObject(rotation, num)
 {
   float gs = scale * grid;
   cords = Coordinate(begin.x() / gs + .5, begin.y() / gs + .5);
@@ -49,8 +49,14 @@ void CircuitVDC::draw(QPainter &p, float scale)
 bool CircuitVDC::save(QDataStream &out)
 {
   out << quint32(K::Object::VDC);
+  out << num;
   out << cords;
   out << angle;
   return true;
+}
+
+K::info CircuitVDC::info()
+{
+
 }
 

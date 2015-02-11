@@ -7,7 +7,7 @@
 #include <QtSvg>
 
 #include "mainwidget.h"
-#include "objectsettingswidget.h"
+#include "infowidget.h"
 
 #include "aboutdialog.h"
 
@@ -89,13 +89,15 @@ private:
   //Tool Bars
   void initToolBars();
   QToolBar * applicationBar;
-  QToolBar * toolBar; // Toolbar with resistors etc
+  QToolBar * toolBar;
   QToolBar * objectSettingsBar;
 
   //Object settings
   void initObjectSettingsWidget();
-  ObjectSettingsWidget * objectSettingsWidget;
-
+  static InfoWidget * objectSettingsWidget;
+public:
+  static void infoUpdate(Circuit *c);
+private:
   //Selected tool;
   static K::tool _selectedTool;
   void unselectLastUsed();
@@ -106,6 +108,7 @@ private:
 
   //Fonts
   void initFonts();
+
 
 protected:
   void closeEvent (QCloseEvent * event);

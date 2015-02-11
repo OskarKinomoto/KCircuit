@@ -7,12 +7,14 @@ class CircuitResistor : public CircuitObject
 {
 
 public:
-  CircuitResistor(Coordinate begin, float scale, quint16 rotation);
+  CircuitResistor(Coordinate begin, float scale, quint16 rotation, quint32 num);
   CircuitResistor(QDataStream& in);
   ~CircuitResistor();
 
   virtual void draw(QPainter&p, float scale);
   virtual bool save(QDataStream& out);
+
+  virtual K::info info();
 
 private:
 #ifdef MATH_CONSTEXPR
