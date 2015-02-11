@@ -18,9 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
   initFonts();
   initIcons();
-  initObjectSettingsWidget();
   loadSettings();
-  initMainWidget();
+  initWidgets();
   initActions();
   initMenus();
   initToolBars();
@@ -65,7 +64,7 @@ MainWindow::~MainWindow()
   delete aboutDialog;
 }
 
-void MainWindow::initMainWidget()
+void MainWindow::initWidgets()
 {
   splitter = new QSplitter();
   mainWidget = new MainWidget(splitter);
@@ -293,11 +292,6 @@ void MainWindow::initToolBars()
   toolBar->addAction(generatorSelectAction);
   toolBar->addAction(opAmpSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
-}
-
-void MainWindow::initObjectSettingsWidget()
-{
-  //infoWidget = new InfoWidget();
 }
 
 void MainWindow::infoUpdate(Circuit * c)

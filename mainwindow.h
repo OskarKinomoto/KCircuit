@@ -31,7 +31,7 @@ private:
 
   QSplitter * splitter;
 
-  void initMainWidget();
+  void initWidgets();
   MainWidget * mainWidget;
 
   //Icons
