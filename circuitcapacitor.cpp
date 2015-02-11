@@ -45,6 +45,7 @@ bool CircuitCapacitor::save(QDataStream &out)
 K::info CircuitCapacitor::info()
 {
 
+  return {K::Object::CAPACITOR, QString("Capacitor ") + QString::number(num), this};
 }
 
 
@@ -57,5 +58,4 @@ CircuitCapacitor::CircuitCapacitor(Coordinate begin, float scale, quint16 rotati
 
 CircuitCapacitor::CircuitCapacitor(QDataStream &in) : CircuitObject(in)
 {
-
 }

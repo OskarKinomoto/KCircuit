@@ -51,6 +51,6 @@ bool CircuitOpAmp::save(QDataStream &out)
 
 K::info CircuitOpAmp::info()
 {
-
+  return {K::Object::OPAMP, QString("OpAmp ") + QString::number(num), this};
 }
 

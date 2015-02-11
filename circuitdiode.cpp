@@ -59,6 +59,6 @@ bool CircuitDiode::save(QDataStream &out)
 
 K::info CircuitDiode::info()
 {
-
+  return {K::Object::DIODE, QString("Diode ") + QString::number(num), this};
 }
 

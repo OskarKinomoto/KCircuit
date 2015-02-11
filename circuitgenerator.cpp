@@ -63,6 +63,6 @@ bool CircuitGenerator::save(QDataStream &out)
 
 K::info CircuitGenerator::info()
 {
-
+  return {K::Object::GENERATOR, QString("Generator ") + QString::number(num), this};
 }
 

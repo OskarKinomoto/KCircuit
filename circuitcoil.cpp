@@ -56,6 +56,6 @@ bool CircuitCoil::save(QDataStream &out)
 
 K::info CircuitCoil::info()
 {
-
+  return {K::Object::COIL, QString("Coil ") + QString::number(num), this};
 }
 

@@ -47,7 +47,6 @@ void CircuitResistor::draw(QPainter &p, float scale)
 
 bool CircuitResistor::save(QDataStream &out)
 {
-  //TYP
   out << quint32(K::Object::RESISTOR);
   out << num;
   out << cords;
@@ -57,6 +56,6 @@ bool CircuitResistor::save(QDataStream &out)
 
 K::info CircuitResistor::info()
 {
-
+  return {K::Object::RESISTOR, QString("Resistor ") + QString::number(num), this};
 }
 

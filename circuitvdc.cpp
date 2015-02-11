@@ -57,6 +57,6 @@ bool CircuitVDC::save(QDataStream &out)
 
 K::info CircuitVDC::info()
 {
-
+  return {K::Object::VDC, QString("VDC ") + QString::number(num), this};
 }
 

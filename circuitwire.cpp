@@ -84,5 +84,5 @@ K::status CircuitWire::doubleClick()
 
 K::info CircuitWire::info()
 {
-
+  return {K::Object::WIRE, QString("Wire ") + QString::number(num), this};
 }
