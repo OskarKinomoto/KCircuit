@@ -3,13 +3,15 @@
 #define STOP_ACTION if(this->mainWidget->getCurrent()->circuitWidget->grabedMouse && _selectedTool == K::WIRE) return;
 
 K::tool MainWindow::_selectedTool = K::MOUSE;
-InfoWidget * MainWindow::objectSettingsWidget = nullptr;
+InfoWidget * MainWindow::infoWidget = nullptr;
 
 #if defined(_MSC_VER) || defined(__clang__)
 bool Circuit::showGrid = true;
 #else
 extern bool Circuit::showGrid;
 #endif
+
+#define infoWidgetSize 100
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
@@ -60,15 +62,20 @@ MainWindow::~MainWindow()
   delete helpMenu;
   delete applicationBar;
   delete toolBar;
-  delete objectSettingsBar;
-  ///delete objectSettingsWidget;
   delete aboutDialog;
 }
 
 void MainWindow::initMainWidget()
 {
-  mainWidget = new MainWidget();
-  this->setCentralWidget(mainWidget);
+  splitter = new QSplitter();
+  mainWidget = new MainWidget(splitter);
+  infoWidget = new InfoWidget(splitter);
+  splitter->setCollapsible(0, false);
+  splitter->setCollapsible(1, false);
+  splitter->setStretchFactor(0, 10);
+  splitter->setStretchFactor(1, 0);
+  splitter->setSizes(QList<int>({splitter->width() - infoWidgetSize,infoWidgetSize}));
+  this->setCentralWidget(splitter);
 }
 
 void MainWindow::initIcons()
@@ -286,20 +293,16 @@ void MainWindow::initToolBars()
   toolBar->addAction(generatorSelectAction);
   toolBar->addAction(opAmpSelectAction);
   this->addToolBar(Qt::LeftToolBarArea, toolBar);
-
-  objectSettingsBar = new QToolBar(tr("Object settings"));
-  objectSettingsBar->addWidget(objectSettingsWidget);
-  this->addToolBar(Qt::RightToolBarArea, objectSettingsBar);
 }
 
 void MainWindow::initObjectSettingsWidget()
 {
-  objectSettingsWidget = new InfoWidget();
+  //infoWidget = new InfoWidget();
 }
 
 void MainWindow::infoUpdate(Circuit * c)
 {
-  objectSettingsWidget->update(c);
+  infoWidget->update(c);
 }
 
 void MainWindow::unselectLastUsed()

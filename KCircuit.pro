@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     circuitgenerator.cpp \
     circuitopamp.cpp \
     infowidget.cpp \
-    objectlistwidget.cpp
+    objectlistwidget.cpp \
+    objectlistwidgetitem.cpp
 
 HEADERS  += mainwindow.h \
     include.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     circuitgenerator.h \
     circuitopamp.h \
     infowidget.h \
-    objectlistwidget.h
+    objectlistwidget.h \
+    objectlistwidgetitem.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

@@ -12,17 +12,18 @@ CircuitScrollArea::CircuitScrollArea(Circuit *circuit, QTabWidget *parent) : QSc
   this->setWidget(circuitWidget);
   circuit->setWidget(circuitWidget);
 
-  corner = new QWidget();
+#ifdef __linux__
+
   if(QApplication::style()->objectName() == "breeze")
     {
+      corner = new QWidget();
       corner->setAutoFillBackground(true);
       corner->setBackgroundRole(QPalette::Base);
     }
-
-  //Scrollbars coloring
   this->verticalScrollBar()->setAutoFillBackground(true);
   this->horizontalScrollBar()->setAutoFillBackground(true);
   this->recolorScrollBars();
+#endif
 
   parentTabWidget = parent;
 
@@ -32,18 +33,16 @@ CircuitScrollArea::~CircuitScrollArea()
 {
 
 }
-
+#ifdef __linux__
 void CircuitScrollArea::recolorScrollBars()
 {
-  bool w = this->parentWidget()->width() - this->verticalScrollBar()->width() - 5 < this->circuitWidget->width();
-  bool h = this->parentWidget()->height() - this->horizontalScrollBar()->height() - 5 < this->circuitWidget->height();
-  bool wh = w && h;
+  bool wh = this->verticalScrollBar()->maximum() != 0 && this->horizontalScrollBar()->maximum() != 0;
 
   this->verticalScrollBar()->setBackgroundRole(wh ? QPalette::Base : QPalette::Dark);
   this->horizontalScrollBar()->setBackgroundRole(wh ? QPalette::Base : QPalette::Dark);
   this->setCornerWidget(wh ? corner : nullptr);
 }
-
+#endif
 void CircuitScrollArea::setMouseTrackingCircuit(bool enable)
 {
   this->circuitWidget->setMouseTracking(enable);

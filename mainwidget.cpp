@@ -12,6 +12,7 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
   tabWidget->setDocumentMode(true);
 
   connect(tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+  connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(changedIndex(int)));
 
   statusBar = new QLabel(tr("TODO"));
   vBox->addWidget(tabWidget,1);
@@ -74,8 +75,14 @@ void MainWidget::closeTabI(int i)
 void MainWidget::closeTab(int i)
 {
   if(((CircuitScrollArea*)tabWidget->widget(i))->circuitWidget)
-  tabWidget->removeTab(i);
+    tabWidget->removeTab(i);
   if(!tabWidget->count()) this->newTab(new Circuit());
+}
+
+void MainWidget::changedIndex(int i)
+{
+  if(i > -1)
+    this->getCurrent()->circuitWidget->updateInfoBox();
 }
 
 void MainWidget::rotate()

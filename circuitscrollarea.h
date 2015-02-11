@@ -27,7 +27,9 @@ protected:
   virtual void wheelEvent(QWheelEvent * event);
 
 private:
-  QWidget * corner;
+#ifdef __linux__
+  QWidget * corner = nullptr;
+#endif
   QTabWidget * parentTabWidget;
   int delta = 0;
 

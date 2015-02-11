@@ -34,6 +34,7 @@ signals:
 
 public slots:
   void closeTab(int i);
+  void changedIndex(int i);
   void rotate();
   void smallRotate();
 };

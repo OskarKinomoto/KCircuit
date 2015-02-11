@@ -3,16 +3,25 @@
 
 #include <QtWidgets>
 #include "circuit.h"
+#include "objectlistwidgetitem.h"
 #include <vector>
 
 class ObjectListWidget : public QListWidget
 {
+  Q_OBJECT
 public:
   ObjectListWidget(QWidget * parent);
   ~ObjectListWidget();
   void update(Circuit * c);
+public slots:
+  void ShowContextMenu(const QPoint &pos);
+  void activated ( QListWidgetItem * item );
 private:
-  std::vector<K::info> lista;
+  ObjectListWidgetItem * current = nullptr;
+  ObjectListWidgetItem * prev = nullptr;
+protected:
+  void mousePressEvent ( QMouseEvent * event );
+  void mouseReleaseEvent ( QMouseEvent * event );
 };
 
 #endif // OBJECTLISTWIDGET_H

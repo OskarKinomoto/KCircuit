@@ -9,7 +9,7 @@ class InfoWidget : public QSplitter
 {
   Q_OBJECT
 public:
-  explicit InfoWidget(QWidget *parent = 0);
+  explicit InfoWidget(QWidget *parent);
   ~InfoWidget();
 
   void update(Circuit * c);

@@ -33,6 +33,7 @@ public:
   inline bool isModyfied() { return circuit->isModyfied(); }
   inline bool isNew() { return circuit->newFile; }
   inline void destroyDrawingObject() { circuit->destroyDrawingObject(); }
+  inline void updateInfoBox() { circuit->updateInfoBox(); }
 
   void centering();
 

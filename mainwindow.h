@@ -28,6 +28,9 @@ public:
 
 private:
   //Main Widget
+
+  QSplitter * splitter;
+
   void initMainWidget();
   MainWidget * mainWidget;
 
@@ -90,11 +93,10 @@ private:
   void initToolBars();
   QToolBar * applicationBar;
   QToolBar * toolBar;
-  QToolBar * objectSettingsBar;
 
   //Object settings
   void initObjectSettingsWidget();
-  static InfoWidget * objectSettingsWidget;
+  static InfoWidget * infoWidget;
 public:
   static void infoUpdate(Circuit *c);
 private:
