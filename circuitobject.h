@@ -23,6 +23,7 @@ public:
   CircuitObject(QDataStream& in);
   virtual K::status mouseEvent(QMouseEvent * event, float scale);
   virtual ~CircuitObject();
+  virtual bool isDrawing() { return drawing; }
 };
 
 #endif // CIRCUITOBJECT_H

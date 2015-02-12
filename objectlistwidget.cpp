@@ -8,6 +8,9 @@ ObjectListWidget::ObjectListWidget(QWidget *parent) : QListWidget(parent)
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
           this, SLOT(ShowContextMenu(const QPoint&)));
   connect(this, SIGNAL(itemPressed(QListWidgetItem*)), this, SLOT(activated(QListWidgetItem*)));
+
+  remove = new QAction(QIcon::fromTheme("window-close"), "Remove", nullptr);
+  contextMenu.addActions({remove});
 }
 
 ObjectListWidget::~ObjectListWidget()
@@ -19,13 +22,21 @@ void ObjectListWidget::update(Circuit *c)
 {
   auto * l = c->lista();
   this->clear();
+  circuit = c;
 
   for(auto itr = l->begin(); itr != l->end(); itr++)
     {
-      K::info info = (*itr)->info();
-      //lista.push_back(info);
-      new ObjectListWidgetItem(info, this);
+      if(!(*itr)->isDrawing())
+        {
+          K::info info = (*itr)->info();
+          new ObjectListWidgetItem(info, this);
+        }
     }
+}
+
+void ObjectListWidget::add(K::info &info)
+{
+  new ObjectListWidgetItem(info, this);
 }
 
 void ObjectListWidget::ShowContextMenu(const QPoint& pos) // this is a slot
@@ -35,20 +46,18 @@ void ObjectListWidget::ShowContextMenu(const QPoint& pos) // this is a slot
   QPoint globalPos = this->mapToGlobal(pos);
   // for QAbstractScrollArea and derived classes you would use:
   /// QPoint globalPos = myWidget->viewport()->mapToGlobal(pos);
-  QMenu myMenu;
-  myMenu.addAction("Menu Item 1");
-  // ...
-  qDebug() << current->name;
-  QAction* selectedItem = myMenu.exec(globalPos);
-  if (selectedItem)
+
+  QAction* selectedItem = contextMenu.exec(globalPos);
+  if(selectedItem)
     {
-      // something was chosen, do stuff
+      if(selectedItem == remove)
+        {
+          circuit->removeObject(current->ptr);
+          delete current;
+          prev = nullptr;
+          current = nullptr;
+        }
     }
-  else
-    {
-      // nothing was chosen
-    }
-  QWidget::update();
 }
 
 void ObjectListWidget::activated(QListWidgetItem *item)

@@ -74,6 +74,8 @@ Circuit::Circuit(QString path)
 
   in >> num;
 
+  history = new CircuitHistory(this);
+
   this->updateInfoBox();
 }
 
@@ -82,6 +84,7 @@ Circuit::Circuit()
   _name = tr("new");
   _path = "";
   newFile = true;
+  history = new CircuitHistory(this);
   this->updateInfoBox();
 }
 
@@ -162,9 +165,7 @@ void Circuit::doubleClick()
       auto status = _nowDrawing->doubleClick();
       if(status == K::DRAWED)
         {
-          _nowDrawing = nullptr;
-          _widget->releaseMouse();
-          setModyfied();
+          this->addDrawingObject();
         }
     }
 }
@@ -222,6 +223,16 @@ void Circuit::smallRotate()
     }
 }
 
+void Circuit::undo()
+{
+  this->history->undo();
+}
+
+void Circuit::redo()
+{
+  this->history->redo();
+}
+
 void Circuit::saveFile()
 {
   QFile file(_path);
@@ -235,6 +246,8 @@ void Circuit::saveFile()
 #else
   out.setVersion(QDataStream::Qt_5_3);
 #endif
+
+  this->destroyDrawingObject();
 
   out << quint32(_objects.size());
 
@@ -265,11 +278,36 @@ void Circuit::destroyDrawingObject()
   if(_nowDrawing != nullptr)
     {
       delete _nowDrawing;
+      _objects.remove(_nowDrawing);
       _nowDrawing = nullptr;
-      _objects.pop_back();
       _widget->releaseMouse();
       --num;
     }
+}
+
+void Circuit::addDrawingObject()
+{
+  MainWindow::infoAdd(_nowDrawing->info());
+  history->addHistory(new HistoryNodeNewObject(_nowDrawing));
+  _nowDrawing = nullptr;
+  _widget->releaseMouse();
+  setModyfied();
+}
+
+void Circuit::removeObject(AbstractCircuitObject *object, bool hist)
+{
+  if(hist){history->addHistory(new HistoryNodeDeleteObject(object));}
+  _objects.remove(object);
+  if(!hist) { this->updateInfoBox(); }
+  _widget->update();
+}
+
+void Circuit::addObject(AbstractCircuitObject *object, bool hist)
+{
+  if(hist) {}
+  MainWindow::infoAdd(object->info());
+  _objects.push_back(object);
+  _widget->update();
 }
 
 void Circuit::drawing(QMouseEvent * event)
@@ -335,9 +373,7 @@ void Circuit::drawing(QMouseEvent * event)
           auto status = _nowDrawing->mouseEvent(event, _scale);
           if(status == K::DRAWED)
             {
-              _nowDrawing = nullptr;
-              _widget->releaseMouse();
-              setModyfied();
+              this->addDrawingObject();
             }
           if(status == K::DESTROY)
             this->destroyDrawingObject();

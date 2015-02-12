@@ -215,16 +215,22 @@ void MainWindow::initActions()
   smallRotateAction->setShortcut(tr("Alt+R"));
   this->addAction(smallRotateAction);
   connect(smallRotateAction, SIGNAL(triggered()), mainWidget, SLOT(smallRotate()));
+
+  undoAction = new QAction(QIcon::fromTheme("edit-undo"), tr("Undo"), nullptr);
+  undoAction->setShortcut(QKeySequence::Undo);
+  connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
+
+  redoAction = new QAction(QIcon::fromTheme("edit-redo"), tr("Redo"), nullptr);
+  redoAction->setShortcut(QKeySequence::Redo);
+  connect(redoAction, SIGNAL(triggered()), this, SLOT(redo()));
+
 }
 
 void MainWindow::initMenus()
 {
   //fileMenu
   fileMenu = this->menuBar()->addMenu(tr("&File"));
-  fileMenu->addAction(newFileAction);
-  fileMenu->addAction(openFileAction);
-  fileMenu->addAction(saveFileAction);
-  fileMenu->addAction(saveFileAsAction);
+  fileMenu->addActions({newFileAction, openFileAction, saveFileAction, saveFileAsAction});
   fileMenu->addSeparator();
   fileMenu->addAction(exportToAction);
   fileMenu->addSeparator();
@@ -232,11 +238,11 @@ void MainWindow::initMenus()
 
   //editMenu
   editMenu = this->menuBar()->addMenu(tr("&Edit"));
+  editMenu->addActions({undoAction, redoAction});
 
   //viewMenu
   viewMenu = this->menuBar()->addMenu(tr("&View"));
-  viewMenu->addAction(zoomInAction);
-  viewMenu->addAction(zoomOutAction);
+  viewMenu->addActions({zoomInAction, zoomOutAction});
   viewMenu->addSeparator();
   viewMenu->addAction(showGridAction);
 
@@ -270,13 +276,11 @@ void MainWindow::initToolBars()
 {
   applicationBar = new QToolBar(tr("application"));
   applicationBar->setMovable(false);
-  applicationBar->addAction(newFileAction);
-  applicationBar->addAction(openFileAction);
-  applicationBar->addAction(saveFileAction);
-  applicationBar->addAction(saveFileAsAction);
+  applicationBar->addActions({newFileAction, openFileAction, saveFileAction});
   applicationBar->addSeparator();
-  applicationBar->addAction(zoomInAction);
-  applicationBar->addAction(zoomOutAction);
+  applicationBar->addActions({undoAction, redoAction});
+  applicationBar->addSeparator();
+  applicationBar->addActions({zoomInAction, zoomOutAction});
   this->addToolBar(Qt::TopToolBarArea, applicationBar);
 
   toolBar = new QToolBar(tr("items")); ///TODO nazwa :<
@@ -297,6 +301,11 @@ void MainWindow::initToolBars()
 void MainWindow::infoUpdate(Circuit * c)
 {
   infoWidget->update(c);
+}
+
+void MainWindow::infoAdd(K::info info)
+{
+  infoWidget->addInfo(info);
 }
 
 void MainWindow::unselectLastUsed()
@@ -539,6 +548,16 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
   this->mainWidget->getCurrent()->circuitWidget->scaleDown();
+}
+
+void MainWindow::undo()
+{
+  this->mainWidget->getCurrent()->circuitWidget->undo();
+}
+
+void MainWindow::redo()
+{
+  this->mainWidget->getCurrent()->circuitWidget->redo();
 }
 
 void MainWindow::closeEvent(QCloseEvent * event)

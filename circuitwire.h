@@ -25,6 +25,7 @@ public:
   virtual bool save(QDataStream& out);
   virtual K::status doubleClick();
   virtual K::info info();
+  virtual bool isDrawing() { return false; }
 };
 
 #endif // CIRCUITWIRE_H

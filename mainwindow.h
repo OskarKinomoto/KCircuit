@@ -76,6 +76,9 @@ private:
   QAction * rotateAction;
   QAction * smallRotateAction;
 
+  QAction * undoAction;
+  QAction * redoAction;
+
   QAction * aboutApplicationAction;
 
   //Menu
@@ -99,6 +102,7 @@ private:
   static InfoWidget * infoWidget;
 public:
   static void infoUpdate(Circuit *c);
+  static void infoAdd(K::info info);
 private:
   //Selected tool;
   static K::tool _selectedTool;
@@ -147,6 +151,9 @@ private slots:
   void showGrid(bool b);
   void zoomIn();
   void zoomOut();
+
+  void undo();
+  void redo();
 };
 
 #endif // MAINWINDOW_H

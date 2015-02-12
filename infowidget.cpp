@@ -15,3 +15,8 @@ void InfoWidget::update(Circuit *c)
   list->update(c);
 }
 
+void InfoWidget::addInfo(K::info &info)
+{
+  list->add(info);
+}
+

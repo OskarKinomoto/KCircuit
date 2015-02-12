@@ -24,6 +24,8 @@
 
 #include "include.h"
 
+#include "history.h"
+
 #define MARGIN 30
 
 class CircuitWidget;
@@ -60,6 +62,9 @@ public:
   void rotate();
   void smallRotate();
 
+  void undo();
+  void redo();
+
   static bool showGrid;
 
   void saveFile();
@@ -71,6 +76,9 @@ public:
   inline void resetRotation() {rotation = 0;}
 
   void destroyDrawingObject();
+  void addDrawingObject();
+  void removeObject(AbstractCircuitObject* object, bool hist = true);
+  void addObject(AbstractCircuitObject* object, bool hist = true);
 
   bool newFile = false;
 
@@ -88,6 +96,8 @@ private:
 
   std::list<AbstractCircuitObject*> _objects;
   AbstractCircuitObject * _nowDrawing = nullptr;
+
+  CircuitHistory * history;
 
   void drawing(QMouseEvent *event);
 

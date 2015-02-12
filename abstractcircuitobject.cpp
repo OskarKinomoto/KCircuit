@@ -5,7 +5,6 @@
 
 AbstractCircuitObject::~AbstractCircuitObject()
 {
-  qDebug() << "dekontruktor";
 }
 
 

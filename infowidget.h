@@ -13,6 +13,7 @@ public:
   ~InfoWidget();
 
   void update(Circuit * c);
+  void addInfo(K::info& info);
   Circuit * current;
 private:
   ObjectListWidget * list;

@@ -34,6 +34,8 @@ public:
   inline bool isNew() { return circuit->newFile; }
   inline void destroyDrawingObject() { circuit->destroyDrawingObject(); }
   inline void updateInfoBox() { circuit->updateInfoBox(); }
+  inline void undo() { circuit->undo(); }
+  inline void redo() { circuit->redo(); }
 
   void centering();
 

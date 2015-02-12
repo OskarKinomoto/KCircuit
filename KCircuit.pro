@@ -40,7 +40,11 @@ SOURCES += main.cpp\
     circuitopamp.cpp \
     infowidget.cpp \
     objectlistwidget.cpp \
-    objectlistwidgetitem.cpp
+    objectlistwidgetitem.cpp \
+    circuithistory.cpp \
+    abstracthistorynode.cpp \
+    historynodenewobject.cpp \
+    historynodedeleteobject.cpp
 
 HEADERS  += mainwindow.h \
     include.h \
@@ -63,7 +67,12 @@ HEADERS  += mainwindow.h \
     circuitopamp.h \
     infowidget.h \
     objectlistwidget.h \
-    objectlistwidgetitem.h
+    objectlistwidgetitem.h \
+    circuithistory.h \
+    abstracthistorynode.h \
+    historynodenewobject.h \
+    history.h \
+    historynodedeleteobject.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

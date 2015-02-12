@@ -32,6 +32,7 @@ public:
   enum status{DRAWING, END_DRAWING, DESTROY};
   virtual K::status doubleClick() = 0;
   virtual K::info info() = 0;
+  virtual bool isDrawing() = 0;
 };
 
 #endif // ABSTRACTCIRCUITOBJECT_H
