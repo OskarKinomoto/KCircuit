@@ -1,0 +1,307 @@
+#include "circuitmodel.h"
+
+#include <QDataStream>
+#include "tabwidget.h"
+#include "global.h"
+
+#include "listobjects.h"
+
+CircuitModel::CircuitModel(QString Path)
+{
+  if(!QFile::exists(Path)) throw QString("File doesn't exist!");
+  path = Path;
+
+  QFile file(path);
+  name = QFileInfo(file).fileName();
+
+  file.open(QIODevice::ReadOnly);
+  if(!file.isReadable())
+    {
+      throw QString("File is not readable!");
+    }
+
+  QDataStream in(&file);
+
+  quint32 magick;
+  in >> magick;
+  if(magick != K::magicknumber) throw QString("Wrong file type!");
+
+  quint16 version;
+  in >> version;
+  if(version != K::objectversion) throw QString("Unsuported version of file.");
+
+
+  in >> widthG;
+  in >> heightG;
+
+  quint32 size;
+  in >> size;
+  quint32 type;
+
+  for(quint32 i = 0; i < size; ++i)
+    {
+      in >> type;
+      switch(type)
+        {
+        case K::objectType::RESISTOR: objects.push_back(new ObjectResistor(in));
+        }
+    }
+
+}
+
+CircuitModel::CircuitModel(CircuitSettings s)
+{
+  path = "";
+  name = "new";
+  widthG = s.widthG;
+  heightG = s.heightG;
+}
+
+CircuitModel::~CircuitModel()
+{
+  delete history;
+  for( auto itr : objects)
+    {
+      delete itr;
+    }
+}
+
+QSize CircuitModel::size()
+{
+  return {int(widthG*K::grid*scale), int(heightG*K::grid*scale)};
+}
+
+bool CircuitModel::mouseMoved(QPoint p)
+{
+  if(current)
+    {
+      //
+    }
+  else if(drawing)
+    {
+      return drawing->move(p);
+    }
+  else if(tool != K::tool::POINTER)
+    {
+      newDrawing(p);
+      return true;
+    }
+  return false;
+}
+
+void CircuitModel::scaleUp()
+{
+  if(scale < 6)
+    scale *= 1.2;
+}
+
+void CircuitModel::scaleDown()
+{
+  if(scale > 0.5)
+    scale /= 1.2;
+}
+
+bool CircuitModel::rotate45()
+{
+  angle += 45;
+  angle %= 360;
+  if(drawing) return drawing->rotate45();
+  return false;
+}
+
+bool CircuitModel::rotate90()
+{
+  angle += 90;
+  angle %= 360;
+  if(drawing) return drawing->rotate90();
+  return false;
+}
+
+void CircuitModel::paint(QPainter & p)
+{
+  K::gs = K::grid * scale;
+  if(K::showGrid) this->paintGrid(p);
+
+  for(auto itr = objects.begin(); itr != objects.end(); itr++)
+    {
+      if(*itr == drawing)
+        p.setPen(drawingPen);
+      else if(*itr == current)
+        p.setPen(currentPen);
+      else
+        p.setPen(stdPen);
+      (*itr)->draw(p);
+    }
+}
+
+void CircuitModel::paintGrid(QPainter &p)
+{
+  p.save();
+  {
+    QPen pen(Qt::darkGreen);
+    p.setPen(pen);
+    auto s = this->size();
+    int w = s.width();
+    int h = s.height();
+    for(float i = K::gs; i < w; i += K::gs)
+      for(float j = K::gs; j < h; j += K::gs)
+        p.drawPoint(i, j);
+  }
+  p.restore();
+}
+
+void CircuitModel::destroyDrawing()
+{
+  if(drawing)
+    {
+      delete drawing;
+      objects.remove(drawing);
+      drawing = nullptr;
+      --ID;
+    }
+}
+
+bool CircuitModel::release()
+{
+  if(!drawing) return false;
+  if(drawing->release())
+    this->drawed();
+  return true;
+}
+
+bool CircuitModel::press(QMouseEvent *e)
+{
+  if(tool != K::tool::POINTER)
+    return(current = nullptr, false);
+  for(auto itr : objects)
+    if(itr->isPointOverObject(e->pos()))
+      return(current = itr, e->button() == Qt::RightButton);
+  return(current = nullptr, false);
+}
+
+void CircuitModel::newDrawing(QPoint p)
+{
+  switch (tool) {
+    case K::tool::RESISTOR: objects.push_back(new ObjectResistor(p, angle, ++ID)); break;
+    default: qDebug() << "not implemented" << __FILE__ << __LINE__; break;
+    }
+  drawing = objects.back();
+}
+
+void CircuitModel::drawed()
+{
+  history->add(new HistoryNodeNew(drawing));
+  setModyfied();
+  drawing = nullptr;
+  listObjects->load();
+}
+
+void CircuitModel::initPens()
+{
+  stdPen = QPen(Qt::black);
+  stdPen.setWidth(2);
+  drawingPen = QPen(QColor::fromRgb(244,119,80)); //#f47750
+  drawingPen.setWidth(2);
+  currentPen = QPen(QColor::fromRgb(29,153,243)); //#1d99f3
+  currentPen.setWidth(2);
+}
+
+void CircuitModel::setModyfied()
+{
+  if(!modyfied)
+    {
+      modyfied = true;
+      updateTitle();
+    }
+}
+
+void CircuitModel::updateTitle()
+{
+  QString tmp;
+  if(modyfied) tmp += "*";
+  tmp += name;
+  K::tabWidget->changeTitle(tmp, index);
+}
+
+void CircuitModel::addObject(ObjectAbstract *o)
+{
+  objects.push_back(o);
+  setModyfied();
+  listObjects->load();
+}
+
+void CircuitModel::removeObject(ObjectAbstract *o, bool history)
+{
+  if(history) this->history->add(new HistoryNodeRemove(o));
+  objects.remove(o);
+  setModyfied();
+  listObjects->load();
+}
+
+void CircuitModel::removeCurrent()
+{
+  this->removeObject(current, true);
+  current = nullptr;
+}
+
+void CircuitModel::saveAs(QString _path)
+{
+  if(QFileInfo(_path).suffix() != "ktc") _path += ".ktc";
+  path = _path;
+  name = QFileInfo(path).fileName();
+  save();
+}
+
+void CircuitModel::save()
+{
+  QFile file(path);
+  file.open(QIODevice::WriteOnly);
+
+  if(!file.isWritable())
+    {
+      path = "";
+      name = "unwritable";
+      updateTitle();
+      throw QString("File is not writable!");
+    }
+
+  QDataStream out(&file);
+  out << K::magicknumber;
+  out << K::objectversion;
+
+  //size
+  out << widthG;
+  out << heightG;
+
+  out << quint32(objects.size());
+
+  for(auto itr = objects.begin(); itr != objects.end(); ++itr)
+    {
+      if(*itr != drawing)
+        (*itr)->save(out);
+    }
+
+  modyfied = false;
+  updateTitle();
+}
+
+bool CircuitModel::hasPath()
+{
+  return path != "";
+}
+
+bool CircuitModel::isModyfied()
+{
+  return modyfied;
+}
+
+std::list<ObjectAbstract *> &CircuitModel::list()
+{
+  return objects;
+}
+
+void CircuitModel::setList(ListObjects *l)
+{
+  listObjects = l;
+}
+

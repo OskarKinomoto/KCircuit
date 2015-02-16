@@ -18,61 +18,61 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = KCircuit
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
 	mainwindow.cpp \
+    mainwindowview.cpp \
+    global.cpp \
+    mainwidgetview.cpp \
     mainwidget.cpp \
-    aboutdialog.cpp \
+    tabwidgetview.cpp \
+    tabwidget.cpp \
+    circuitview.cpp \
+    circuitmodel.cpp \
     circuit.cpp \
-    circuitscrollarea.cpp \
-    circuitwidget.cpp \
-    coordinate.cpp \
-    abstractcircuitobject.cpp \
-    circuitobject.cpp \
-    circuitwire.cpp \
-    circuitresistor.cpp \
-    circuitcapacitor.cpp \
-    circuitcoil.cpp \
-    circuitvdc.cpp \
-    circuitadc.cpp \
-    circuitdiode.cpp \
-    circuitgenerator.cpp \
-    circuitopamp.cpp \
-    infowidget.cpp \
-    objectlistwidget.cpp \
-    objectlistwidgetitem.cpp \
-    circuithistory.cpp \
-    abstracthistorynode.cpp \
-    historynodenewobject.cpp \
-    historynodedeleteobject.cpp
+    mainwindowmodel.cpp \
+    objectabstract.cpp \
+    statusbar.cpp \
+    scrollarea.cpp \
+    objectbase.cpp \
+    objectresistor.cpp \
+    circuitdata.cpp \
+    history.cpp \
+    historynodeabstract.cpp \
+    historynodenew.cpp \
+    rightwidgetview.cpp \
+    rightwidget.cpp \
+    listobjects.cpp \
+    listobjectsitem.cpp \
+    historynoderemove.cpp
 
 HEADERS  += mainwindow.h \
-    include.h \
+    mainwindowview.h \
+    global.h \
+    mainwidgetview.h \
     mainwidget.h \
-    aboutdialog.h \
+    tabwidgetview.h \
+    tabwidget.h \
+    circuitview.h \
+    circuitmodel.h \
     circuit.h \
-    circuitscrollarea.h \
-    circuitwidget.h \
-    coordinate.h \
-    abstractcircuitobject.h \
-    circuitobject.h \
-    circuitwire.h \
-    circuitresistor.h \
-    circuitcapacitor.h \
-    circuitcoil.h \
-    circuitvdc.h \
-    circuitadc.h \
-    circuitdiode.h \
-    circuitgenerator.h \
-    circuitopamp.h \
-    infowidget.h \
-    objectlistwidget.h \
-    objectlistwidgetitem.h \
-    circuithistory.h \
-    abstracthistorynode.h \
-    historynodenewobject.h \
+    mainwindowmodel.h \
+    objectabstract.h \
+    objects.h \
+    statusbar.h \
+    scrollarea.h \
+    circuitsettings.h \
+    objectbase.h \
+    objectresistor.h \
+    circuitdata.h \
+    tools.h \
     history.h \
-    historynodedeleteobject.h
+    historynodeabstract.h \
+    historynodenew.h \
+    rightwidgetview.h \
+    rightwidget.h \
+    listobjects.h \
+    listobjectsitem.h \
+    historynoderemove.h
 
 QMAKE_CXXFLAGS += -std=c++11
 
