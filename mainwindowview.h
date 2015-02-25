@@ -40,9 +40,13 @@ protected: /** VARIABLES **/
 
   QAction * rotate90A;
   QAction * rotate45A;
+  QAction * rotate270A;
+  QAction * rotate315A;
 
   QAction * undoA;
   QAction * redoA;
+
+  QAction * delA;
 
   /** MENUS **/
   QMenu * fileM;
@@ -51,6 +55,12 @@ protected: /** VARIABLES **/
 
   /** TOOLBAR **/
   QToolBar * toolBar;
+
+  /** ActionGroup - Wire type **/
+  QActionGroup * ag;
+
+  QAction * wireShortest;
+  QAction * wireTaxi;
 
   /** CENTRAL WIDGET **/
   TabWidget * tabWidget;

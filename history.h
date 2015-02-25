@@ -4,6 +4,8 @@
 #include "historynodeabstract.h"
 #include "historynodenew.h"
 #include "historynoderemove.h"
+#include "historynoderotate.h"
+#include "historynodemove.h"
 
 #include <list>
 

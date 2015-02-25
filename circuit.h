@@ -16,6 +16,8 @@ public:
 
   void rotate45();
   void rotate90();
+  void rotate270();
+  void rotate315();
 
   bool undo();
   bool redo();
@@ -24,6 +26,7 @@ public slots:
   void scale(bool s);
   void paint(QPaintEvent *p);
   void mouseMoved(QPoint p);
+  void mouseDraged(QPoint d);
   void leave();
   void release();
   void press(QMouseEvent *e);

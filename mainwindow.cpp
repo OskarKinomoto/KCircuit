@@ -4,18 +4,23 @@
 MainWindow::MainWindow(QWidget *parent) : MainWindowView(parent), MainWindowModel()
 {
   MainWindowView::init();
-  connect(rotate45A, SIGNAL(triggered(bool)), this, SLOT(rotate45()));
-  connect(rotate90A, SIGNAL(triggered(bool)), this, SLOT(rotate90()));
-  connect(undoA, SIGNAL(triggered(bool)), this, SLOT(undo()));
-  connect(redoA, SIGNAL(triggered(bool)), this, SLOT(redo()));
-  connect(saveAllA, SIGNAL(triggered()), tabWidget, SLOT(saveAll()));
-  connect(saveAsA, SIGNAL(triggered()), tabWidget, SLOT(saveAs()));
-  connect(saveA, SIGNAL(triggered()), tabWidget, SLOT(save()));
-  connect(openA, SIGNAL(triggered()), tabWidget, SLOT(open()));
-  connect(newA, SIGNAL(triggered()), tabWidget, SLOT(newDefaultTab()));
-  connect(zoomInA, SIGNAL(triggered()), tabWidget, SLOT(zoomIn()));
-  connect(zoomIn2A, SIGNAL(triggered()), tabWidget, SLOT(zoomIn()));
-  connect(zoomOutA, SIGNAL(triggered()), tabWidget, SLOT(zoomOut()));
+  connect(rotate45A, &QAction::triggered, this, &MainWindow::rotate45);
+  connect(rotate90A, &QAction::triggered, this, &MainWindow::rotate90);
+  connect(rotate315A, &QAction::triggered, this, &MainWindow::rotate315);
+  connect(rotate270A, &QAction::triggered, this, &MainWindow::rotate270);
+  connect(undoA, &QAction::triggered, this, &MainWindow::undo);
+  connect(redoA, &QAction::triggered, this, &MainWindow::redo);
+  connect(saveAllA, &QAction::triggered, tabWidget, &TabWidget::saveAll);
+  connect(saveAsA, &QAction::triggered, tabWidget, &TabWidget::saveAs);
+  connect(saveA, &QAction::triggered, tabWidget, &TabWidget::save);
+  connect(openA, &QAction::triggered, tabWidget, &TabWidget::open);
+  connect(newA, &QAction::triggered, tabWidget, &TabWidget::newDefaultTab);
+  connect(zoomInA, &QAction::triggered, tabWidget, &TabWidget::zoomIn);
+  connect(zoomIn2A, &QAction::triggered, tabWidget, &TabWidget::zoomIn);
+  connect(zoomOutA, &QAction::triggered, tabWidget, &TabWidget::zoomOut);
+  connect(delA, &QAction::triggered, this, &MainWindow::del);
+  connect(wireTaxi, &QAction::triggered, this, &MainWindow::wireModeT);
+  connect(wireShortest, &QAction::triggered, this, &MainWindow::wireModeS);
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +54,16 @@ void MainWindow::rotate45()
   this->circuit()->rotate45();
 }
 
+void MainWindow::rotate270()
+{
+  this->circuit()->rotate270();
+}
+
+void MainWindow::rotate315()
+{
+  this->circuit()->rotate315();
+}
+
 void MainWindow::undo()
 {
   this->circuit()->undo();
@@ -57,4 +72,19 @@ void MainWindow::undo()
 void MainWindow::redo()
 {
   this->circuit()->redo();
+}
+
+void MainWindow::del()
+{
+  this->circuit()->removeCurrent();
+}
+
+void MainWindow::wireModeT()
+{
+  K::wireMode = K::WIRE_TAXI;
+}
+
+void MainWindow::wireModeS()
+{
+  K::wireMode = K::WIRE_SHORTEST;
 }

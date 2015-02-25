@@ -14,6 +14,8 @@
 #include "history.h"
 #include <QMouseEvent>
 
+
+class RightWidget;
 class ListObjects;
 
 class CircuitModel: public virtual CircuitData
@@ -26,6 +28,7 @@ public:
   QSize size();
 
   bool mouseMoved(QPoint p);
+  void mouseDraged(QPoint d);
 
   void updateTitle();
 
@@ -44,6 +47,12 @@ public:
   inline bool isDrawing(ObjectAbstract * d) { return d == drawing; }
 
   void setList(ListObjects* l);
+  void setRightWidget(RightWidget * r);
+
+  void setCurrent(ObjectAbstract * o);
+
+  ListObjects * listObjects;
+  void setModyfied();
 
 protected:
   QString path;
@@ -62,20 +71,21 @@ protected:
 
   bool rotate45();
   bool rotate90();
+  bool rotate315();
+  bool rotate270();
 
   void paint(QPainter & p);
   void paintGrid(QPainter & p);
 
   void destroyDrawing();
 
-  bool release();
+  void release();
 
   bool press(QMouseEvent * e);
 
   void initPens();
 
   bool modyfied = false;
-  void setModyfied();
 
 private:
   std::list<ObjectAbstract *> objects;
@@ -89,8 +99,7 @@ private:
   QPen currentPen;
 
   quint32 ID = 0;
-
-  ListObjects * listObjects;
+  RightWidget * rightWidget;
 };
 
 #endif // CIRCUITMODEL_H

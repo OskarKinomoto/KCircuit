@@ -6,12 +6,13 @@
 #include <QtGlobal>
 #include <QString>
 #include <QPainter>
+#include "objectsettingsabstract.h"
 
 class ObjectAbstract;
 
 namespace K
 {
-  enum objectType : quint32 {RESISTOR = 1};
+  enum objectType : quint32 {WIRE = 0, RESISTOR = 1};
   struct objectInfo
   {
     K::objectType type;
@@ -33,10 +34,22 @@ public:
   virtual bool release() = 0;
   virtual bool rotate45();
   virtual bool rotate90();
+  virtual bool rotate315();
+  virtual bool rotate270();
 
   virtual bool isPointOverObject(QPointF p) = 0;
 
+  virtual void moveBy(QPoint d) = 0;
+  virtual void moveByGS(QPoint gs) = 0;
+  virtual QPoint acceptMove() = 0;
+  virtual void dropMove() = 0;
+
+  virtual ObjectSettingsAbstract * settings(Circuit * c) = 0;
+
   K::objectInfo info();
+
+  inline QString getName() { return name; }
+  inline void setName(QString n) { name = n; }
 protected:
   K::objectType type;
   QString name;

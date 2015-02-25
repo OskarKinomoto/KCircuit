@@ -11,6 +11,7 @@
 class QFont;
 class QIcon;
 class TabWidget;
+class QColor;
 
 namespace K
 {
@@ -23,15 +24,30 @@ namespace K
 #endif
   extern QString home;
   extern QFont oxygen;
+  extern int oxygenAscent;
+  extern int oxygenDescent;
+  extern int oxygenHeight;
   extern bool breeze;
   extern int grid;
   extern bool showGrid;
   extern float gs;
 
   extern QIcon pointerI;
+  extern QIcon wireI;
   extern QIcon resistorI;
 
   extern TabWidget * tabWidget;
+
+  extern QColor baseC;
+
+  enum WIRE_MODE : quint8{WIRE_TAXI, WIRE_SHORTEST};
+  extern WIRE_MODE wireMode;
+
+  template<class T>
+  T abs(T a)
+  {
+    return a < 0 ? -a : a;
+  }
 
   const float sqrt2 = 1.414213;
 

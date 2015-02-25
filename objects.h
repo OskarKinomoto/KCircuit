@@ -4,6 +4,7 @@
 #include "objectabstract.h"
 #include "objectbase.h"
 #include "objectresistor.h"
+#include "objectwire.h"
 
 #endif // OBJECTS_H
 

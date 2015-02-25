@@ -5,14 +5,24 @@
 
 namespace K {
   QFont oxygen;
+  int oxygenAscent;
+  int oxygenDescent;
+  int oxygenHeight;
   bool breeze;
   int grid;
   bool showGrid = true;
   float gs = 20;
+
   QIcon pointerI;
+  QIcon wireI;
   QIcon resistorI;
+
   TabWidget * tabWidget;
+  QColor baseC;
   QString home;
+
+  WIRE_MODE wireMode = WIRE_TAXI;
+
   namespace degrees
   {
     double sine[degreeSize] = {0, .707106, 1, .707106, 0, -.707106, -1, -.707106};
@@ -35,4 +45,5 @@ namespace K {
     }
 
   }
+
 }

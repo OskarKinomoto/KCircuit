@@ -49,6 +49,12 @@ void CircuitView::mouseMoveEvent(QMouseEvent *event)
       emitMoveMiddle();
     }
   emit mouseMove(event->pos());
+
+  if(event->buttons() == Qt::LeftButton)
+    {
+      emit mouseDrag(event->pos() - curPos);
+      curPos = event->pos();
+    }
 }
 
 void CircuitView::mouseReleaseEvent(QMouseEvent *event)
@@ -72,7 +78,10 @@ void CircuitView::mousePressEvent(QMouseEvent *event)
       posStart = event->pos(), middleButton = true;
     }
   else
-    emit press(event);
+    {
+      emit press(event);
+      curPos = event->pos();
+    }
   event->ignore();
 }
 

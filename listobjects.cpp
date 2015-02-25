@@ -9,6 +9,7 @@ ListObjects::ListObjects(Circuit *circuit)
   c = circuit;
   c->setList(this);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
+  this->setMaximumHeight(250);
 
   remove = new QAction(QIcon::fromTheme("window-close"), "Remove", nullptr);
   contextMenu.addActions({remove});
@@ -23,6 +24,14 @@ ListObjects::ListObjects(Circuit *circuit)
 ListObjects::~ListObjects()
 {
 
+}
+
+void ListObjects::setCurrent(ObjectAbstract *o)
+{
+  if(o)
+    this->setCurrentItem(this->findItems(o->getName(), Qt::MatchExactly)[0]);
+  else
+    this->clearSelection();
 }
 
 void ListObjects::load()
@@ -59,24 +68,16 @@ void ListObjects::ShowContextMenu(const QPoint &pos)
 void ListObjects::activated(QListWidgetItem *item)
 {
   cur = static_cast<ListObjectsItem*>(item);
+  c->setCurrent(cur->ptr);
+  c->update();
 }
 
 void ListObjects::mousePressEvent(QMouseEvent *event)
 {
   prev = cur;
   cur = nullptr;
-  //this->clearSelection();
+  this->clearSelection();
+  c->setCurrent(nullptr);
+  c->update();
   QListWidget::mousePressEvent(event);
 }
-
-void ListObjects::mouseReleaseEvent(QMouseEvent *event)
-{
-  if(!cur)
-    if(prev)
-      {
-        cur = prev;
-        this->setCurrentItem(prev);
-      }
-  QListWidget::mouseReleaseEvent(event);
-}
-

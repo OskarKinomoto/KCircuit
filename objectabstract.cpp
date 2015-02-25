@@ -17,7 +17,6 @@ ObjectAbstract::ObjectAbstract(K::objectType t, QDataStream &in) : type(t)
 
 ObjectAbstract::~ObjectAbstract()
 {
-
   counter--;
   qDebug() << counter;
 }
@@ -25,6 +24,16 @@ ObjectAbstract::~ObjectAbstract()
 bool ObjectAbstract::rotate45() { return false; }
 
 bool ObjectAbstract::rotate90() { return false; }
+
+bool ObjectAbstract::rotate315()
+{
+  return false;
+}
+
+bool ObjectAbstract::rotate270()
+{
+  return false;
+}
 
 K::objectInfo ObjectAbstract::info()
 {

@@ -33,6 +33,18 @@ void Circuit::rotate90()
     this->update();
 }
 
+void Circuit::rotate270()
+{
+  if(CircuitModel::rotate270())
+    this->update();
+}
+
+void Circuit::rotate315()
+{
+  if(CircuitModel::rotate315())
+    this->update();
+}
+
 bool Circuit::undo()
 {
   history->undo();
@@ -73,6 +85,12 @@ void Circuit::mouseMoved(QPoint p)
   if(CircuitModel::mouseMoved(p)) this->update();
 }
 
+void Circuit::mouseDraged(QPoint d)
+{
+  CircuitModel::mouseDraged(d);
+  this->update();
+}
+
 void Circuit::leave()
 {
   this->destroyDrawing();
@@ -81,6 +99,7 @@ void Circuit::leave()
 void Circuit::release()
 {
   CircuitModel::release();
+  this->update();
 }
 
 void Circuit::press(QMouseEvent *e)
@@ -119,6 +138,8 @@ void Circuit::init()
   connect(this, SIGNAL(leave()), this, SLOT(leave()));
   connect(this, SIGNAL(release()), this, SLOT(release()));
   connect(this, SIGNAL(press(QMouseEvent*)), this, SLOT(press(QMouseEvent*)));
+
+  connect(this, SIGNAL(mouseDrag(QPoint)), this, SLOT(mouseDraged(QPoint)));
 
   removeCurrentA = new QAction(QIcon::fromTheme("window-close"), tr("Remove"), nullptr);
   connect(removeCurrentA, SIGNAL(triggered()), this, SLOT(removeCurrent()));

@@ -17,6 +17,7 @@ protected:
 
 private slots:
   void setPointer();
+  void setWire();
   void setResistor();
 private:
   void init();

@@ -73,11 +73,7 @@ QSize CircuitModel::size()
 
 bool CircuitModel::mouseMoved(QPoint p)
 {
-  if(current)
-    {
-      //
-    }
-  else if(drawing)
+  if(drawing)
     {
       return drawing->move(p);
     }
@@ -89,9 +85,15 @@ bool CircuitModel::mouseMoved(QPoint p)
   return false;
 }
 
+void CircuitModel::mouseDraged(QPoint d)
+{
+  if(current)
+    current->moveBy(d);
+}
+
 void CircuitModel::scaleUp()
 {
-  if(scale < 6)
+  if(scale < 3)
     scale *= 1.2;
 }
 
@@ -106,6 +108,12 @@ bool CircuitModel::rotate45()
   angle += 45;
   angle %= 360;
   if(drawing) return drawing->rotate45();
+  if(current)
+    {
+      history->add(new HistoryNodeRotate(current, 45));
+      setModyfied();
+      return current->rotate45();
+    }
   return false;
 }
 
@@ -114,6 +122,40 @@ bool CircuitModel::rotate90()
   angle += 90;
   angle %= 360;
   if(drawing) return drawing->rotate90();
+  if(current)
+    {
+      history->add(new HistoryNodeRotate(current, 90));
+      setModyfied();
+      return current->rotate90();
+    }
+  return false;
+}
+
+bool CircuitModel::rotate315()
+{
+  angle += 315;
+  angle %= 360;
+  if(drawing) return drawing->rotate315();
+  if(current)
+    {
+      history->add(new HistoryNodeRotate(current, 315));
+      setModyfied();
+      return current->rotate315();
+    }
+  return false;
+}
+
+bool CircuitModel::rotate270()
+{
+  angle += 270;
+  angle %= 360;
+  if(drawing) return drawing->rotate270();
+  if(current)
+    {
+      history->add(new HistoryNodeRotate(current, 270));
+      setModyfied();
+      return current->rotate270();
+    }
   return false;
 }
 
@@ -161,12 +203,19 @@ void CircuitModel::destroyDrawing()
     }
 }
 
-bool CircuitModel::release()
+void CircuitModel::release()
 {
-  if(!drawing) return false;
-  if(drawing->release())
+  if(current)
+    {
+      QPoint tmp = current->acceptMove();
+      if(tmp != QPoint(0,0))
+        {
+          history->add(new HistoryNodeMove(current, tmp));
+          setModyfied();
+        }
+    }
+  if(drawing && drawing->release())
     this->drawed();
-  return true;
 }
 
 bool CircuitModel::press(QMouseEvent *e)
@@ -175,8 +224,8 @@ bool CircuitModel::press(QMouseEvent *e)
     return(current = nullptr, false);
   for(auto itr : objects)
     if(itr->isPointOverObject(e->pos()))
-      return(current = itr, e->button() == Qt::RightButton);
-  return(current = nullptr, false);
+      return(current = itr, listObjects->setCurrent(current), rightWidget->setObjectSettings(current->settings(static_cast<Circuit*>(this))),  e->button() == Qt::RightButton);
+  return(current = nullptr, listObjects->setCurrent(nullptr), rightWidget->setObjectSettings(nullptr), false);
 }
 
 void CircuitModel::newDrawing(QPoint p)
@@ -192,13 +241,15 @@ void CircuitModel::drawed()
 {
   history->add(new HistoryNodeNew(drawing));
   setModyfied();
+  setCurrent(drawing);
   drawing = nullptr;
   listObjects->load();
+  listObjects->setCurrent(current);
 }
 
 void CircuitModel::initPens()
 {
-  stdPen = QPen(Qt::black);
+  stdPen = QPen(K::baseC); //#4d4d4d
   stdPen.setWidth(2);
   drawingPen = QPen(QColor::fromRgb(244,119,80)); //#f47750
   drawingPen.setWidth(2);
@@ -303,5 +354,19 @@ std::list<ObjectAbstract *> &CircuitModel::list()
 void CircuitModel::setList(ListObjects *l)
 {
   listObjects = l;
+}
+
+void CircuitModel::setRightWidget(RightWidget *r)
+{
+  rightWidget = r;
+}
+
+void CircuitModel::setCurrent(ObjectAbstract *o)
+{
+  current = o;
+  if(o)
+    {
+      rightWidget->setObjectSettings(o->settings(static_cast<Circuit*>(this)));
+    }
 }
 

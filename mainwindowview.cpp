@@ -48,6 +48,12 @@ void MainWindowView::actionInit()
   rotate45A = new QAction(nullptr);
   rotate45A->setShortcut(QKeySequence(QString("Alt+R")));
 
+  rotate270A = new QAction(nullptr);
+  rotate270A->setShortcut(QKeySequence(QString("Shift+R")));
+
+  rotate315A = new QAction(nullptr);
+  rotate315A->setShortcut(QKeySequence(QString("Shift+Alt+R")));
+
   zoomInA = new QAction(QIcon::fromTheme("zoom-in"), tr("Zoom in"), nullptr);
   zoomInA->setShortcut(QKeySequence::ZoomIn);
 
@@ -64,7 +70,10 @@ void MainWindowView::actionInit()
   redoA = new QAction(QIcon::fromTheme("edit-redo"), tr("Redo"), nullptr);
   redoA->setShortcut(QKeySequence::Redo);
 
-  this->addActions({rotate90A, rotate45A});
+  delA = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), nullptr);
+  delA->setShortcut(QKeySequence::Delete);
+
+  this->addActions({rotate90A, rotate45A, rotate270A, rotate315A});
 }
 
 void MainWindowView::menuInit()
@@ -78,6 +87,8 @@ void MainWindowView::menuInit()
 
   editM = this->menuBar()->addMenu(tr("Edit"));
   editM->addActions({undoA, redoA});
+  editM->addSeparator();
+  editM->addActions({delA});
 
   viewM = this->menuBar()->addMenu(tr("View"));
   viewM->addActions({zoomInA, zoomOutA});
@@ -85,7 +96,23 @@ void MainWindowView::menuInit()
 
 void MainWindowView::toolBarInit()
 {
+  toolBar = new QToolBar(tr("Base"), this);
+  toolBar->addActions({newA, openA, saveA});
+  toolBar->addSeparator();
+  toolBar->addActions({zoomInA, zoomOutA});
+  toolBar->addSeparator();
 
+  ag = new QActionGroup(toolBar);
+  wireShortest = new QAction(K::pointerI, tr("Wire ?mode?"), ag);
+  wireTaxi = new QAction(K::resistorI, tr("Wire ?taxi mode?"), ag);
+  wireShortest->setCheckable(true);
+  wireTaxi->setCheckable(true);
+  wireTaxi->setChecked(true);
+
+  toolBar->addActions({wireShortest, wireTaxi});
+
+  toolBar->setMovable(false);
+  this->addToolBar(Qt::TopToolBarArea, toolBar);
 }
 
 void MainWindowView::centralWidgetInit()

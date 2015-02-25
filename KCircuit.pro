@@ -43,7 +43,14 @@ SOURCES += main.cpp\
     rightwidget.cpp \
     listobjects.cpp \
     listobjectsitem.cpp \
-    historynoderemove.cpp
+    historynoderemove.cpp \
+    historynoderotate.cpp \
+    historynodemove.cpp \
+    objectsettingsabstract.cpp \
+    objectsettingsresistor.cpp \
+    textpainter.cpp \
+    colorcombobox.cpp \
+    objectwire.cpp
 
 HEADERS  += mainwindow.h \
     mainwindowview.h \
@@ -72,7 +79,14 @@ HEADERS  += mainwindow.h \
     rightwidget.h \
     listobjects.h \
     listobjectsitem.h \
-    historynoderemove.h
+    historynoderemove.h \
+    historynoderotate.h \
+    historynodemove.h \
+    objectsettingsabstract.h \
+    objectsettingsresistor.h \
+    textpainter.h \
+    colorcombobox.h \
+    objectwire.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

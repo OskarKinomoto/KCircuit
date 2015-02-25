@@ -27,8 +27,13 @@ protected: /** REIMPLEMENTATIONS **/
 private slots:
   void rotate90();
   void rotate45();
+  void rotate270();
+  void rotate315();
   void undo();
   void redo();
+  void del();
+  void wireModeT();
+  void wireModeS();
 };
 
 #endif // MAINWINDOW_H

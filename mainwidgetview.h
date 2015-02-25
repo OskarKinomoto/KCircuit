@@ -35,6 +35,7 @@ private:
   QActionGroup * ac;
 protected:
   QAction * selectA;
+  QAction * wireA;
   QAction * resistorA;
 private:
   QVBoxLayout * vBox;

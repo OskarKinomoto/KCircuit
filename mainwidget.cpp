@@ -25,6 +25,11 @@ void MainWidget::setPointer()
   circuit->setTool(K::tool::POINTER);
 }
 
+void MainWidget::setWire()
+{
+  circuit->setTool(K::tool::WIRE);
+}
+
 void MainWidget::setResistor()
 {
   circuit->setTool(K::tool::RESISTOR);

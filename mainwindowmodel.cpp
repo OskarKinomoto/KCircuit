@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QStyle>
 #include <QSettings>
+#include <QFontMetrics>
+#include <QColor>
 
 MainWindowModel::MainWindowModel()
 {
@@ -16,6 +18,7 @@ MainWindowModel::MainWindowModel()
 MainWindowModel::~MainWindowModel()
 {
   K::pointerI = QIcon();
+  K::wireI = QIcon();
   K::resistorI = QIcon();
 }
 
@@ -24,11 +27,18 @@ void MainWindowModel::globalInit()
   QSettings set;
   QFontDatabase::addApplicationFont(":/fonts/oxygen.otf");
   K::oxygen = QFont("oxygen");
+  QFontMetrics fm(K::oxygen);
+  K::oxygenHeight = fm.height();
+  K::oxygenAscent = fm.ascent();
+  K::oxygenDescent = fm.descent();
   K::breeze = QApplication::style()->objectName() == "breeze";
   K::grid = set.value("gridSize", 20).toInt();
 
   K::pointerI = QIcon(":/icons/pointer.svg");
+  K::wireI = QIcon(":/icons/wire.svg");
   K::resistorI = QIcon(":/icons/R.svg");
   K::home = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+  K::baseC = QColor::fromRgb(77,77,77);
 }
 

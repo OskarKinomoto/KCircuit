@@ -26,6 +26,7 @@ protected:
 signals:
   void paint(QPaintEvent * p);
   void mouseMove(QPoint p);
+  void mouseDrag(QPoint d);
   void leave();
   void release();
   void doubleClick();
@@ -39,6 +40,7 @@ private:
   bool ignoreRelease = false;
   QPoint posStart;
   QPoint posNow;
+  QPoint curPos;
   bool middleButton = false;
   bool startAtCenter = true;
   void emitMoveMiddle();

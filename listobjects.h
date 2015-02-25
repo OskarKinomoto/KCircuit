@@ -14,6 +14,8 @@ class ListObjects : public QListWidget
 public:
   ListObjects(Circuit * circuit);
   ~ListObjects();
+
+  void setCurrent(ObjectAbstract * o);
 public slots:
   void load();
 
@@ -31,7 +33,6 @@ public slots:
 
 protected:
   void mousePressEvent ( QMouseEvent * event );
-  void mouseReleaseEvent ( QMouseEvent * event );
 };
 
 #endif // LISTOBJECTS_H
