@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="wire_mode_taxi.svg">
+   sodipodi:docname="wire_mode_taxi.svg"
+   inkscape:export-filename="/home/oskar/KCircuit/res/icons/tools/wire_mode_taxi.png"
+   inkscape:export-xdpi="28.799999"
+   inkscape:export-ydpi="28.799999">
   <defs
      id="defs4">
     <marker
@@ -519,9 +522,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="-44.423025"
-     inkscape:cy="135.02004"
+     inkscape:zoom="2"
+     inkscape:cx="56.500518"
+     inkscape:cy="91.471222"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"

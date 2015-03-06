@@ -34,6 +34,8 @@ namespace K
 
   extern QIcon pointerI;
   extern QIcon wireI;
+  extern QIcon wireTaxiI;
+  extern QIcon wireShortestI;
   extern QIcon resistorI;
   extern QIcon capacitorI;
   extern QIcon coilI;

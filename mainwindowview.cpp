@@ -103,8 +103,8 @@ void MainWindowView::toolBarInit()
   toolBar->addSeparator();
 
   ag = new QActionGroup(toolBar);
-  wireShortest = new QAction(K::pointerI, tr("Wire ?mode?"), ag);
-  wireTaxi = new QAction(K::resistorI, tr("Wire ?taxi mode?"), ag);
+  wireShortest = new QAction(K::wireShortestI, tr("Wire ?mode?"), ag);
+  wireTaxi = new QAction(K::wireTaxiI, tr("Wire ?taxi mode?"), ag);
   wireShortest->setCheckable(true);
   wireTaxi->setCheckable(true);
   wireTaxi->setChecked(true);

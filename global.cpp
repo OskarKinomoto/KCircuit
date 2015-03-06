@@ -15,6 +15,8 @@ namespace K {
 
   QIcon pointerI;
   QIcon wireI;
+  QIcon wireTaxiI;
+  QIcon wireShortestI;
   QIcon resistorI;
   QIcon capacitorI;
   QIcon coilI;

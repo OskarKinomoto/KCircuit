@@ -19,6 +19,8 @@ MainWindowModel::~MainWindowModel()
 {
   K::pointerI = QIcon();
   K::wireI = QIcon();
+  K::wireTaxiI = QIcon();
+  K::wireShortestI = QIcon();
   K::resistorI = QIcon();
   K::capacitorI = QIcon();
   K::coilI = QIcon();
@@ -38,6 +40,8 @@ void MainWindowModel::globalInit()
 
   K::pointerI = QIcon(":/icons/pointer.svg");
   K::wireI = QIcon(":/icons/wire.svg");
+  K::wireTaxiI = QIcon(":/icons/wire_taxi");
+  K::wireShortestI = QIcon(":/icons/wire_shortest");
   K::resistorI = QIcon(":/icons/R.svg");
   K::capacitorI = QIcon(":/icons/C.svg");
   K::coilI = QIcon(":/icons/L.svg");

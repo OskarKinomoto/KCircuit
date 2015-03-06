@@ -17,5 +17,7 @@
         <file alias="vdc.svg">res/icons/tools/vdc.svg</file>
         <file alias="opamp.svg">res/icons/tools/opamp.svg</file>
         <file alias="pointer.svg">res/icons/tools/pointer.svg</file>
+        <file alias="wire_taxi">res/icons/tools/wire_mode_taxi.png</file>
+        <file alias="wire_shortest">res/icons/tools/wire_mode_shortest.png</file>
     </qresource>
 </RCC>
