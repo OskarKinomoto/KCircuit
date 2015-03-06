@@ -37,6 +37,8 @@ protected:
   QAction * selectA;
   QAction * wireA;
   QAction * resistorA;
+  QAction * capacitorA;
+  QAction * coilA;
 private:
   QVBoxLayout * vBox;
   QHBoxLayout * hBox;

@@ -16,6 +16,8 @@ namespace K {
   QIcon pointerI;
   QIcon wireI;
   QIcon resistorI;
+  QIcon capacitorI;
+  QIcon coilI;
 
   TabWidget * tabWidget;
   QColor baseC;

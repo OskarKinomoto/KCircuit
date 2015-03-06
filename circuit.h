@@ -32,6 +32,7 @@ public slots:
   void press(QMouseEvent *e);
   void removeCurrent();
   void showContextMenu(const QPoint &pos);
+  void doubleClick();
 
 private:
   void updateSize();

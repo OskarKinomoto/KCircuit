@@ -35,6 +35,8 @@ namespace K
   extern QIcon pointerI;
   extern QIcon wireI;
   extern QIcon resistorI;
+  extern QIcon capacitorI;
+  extern QIcon coilI;
 
   extern TabWidget * tabWidget;
 

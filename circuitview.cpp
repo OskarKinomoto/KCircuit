@@ -30,9 +30,7 @@ void CircuitView::paintEvent(QPaintEvent *p)
 void CircuitView::enterEvent(QEvent *)
 {
   if(tool != K::tool::POINTER)
-    {
-      this->setMouseTracking(true);
-    }
+    this->setMouseTracking(true);
 }
 
 void CircuitView::leaveEvent(QEvent *)

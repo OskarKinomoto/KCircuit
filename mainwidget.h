@@ -19,6 +19,8 @@ private slots:
   void setPointer();
   void setWire();
   void setResistor();
+  void setCoil();
+  void setCapacitor();
 private:
   void init();
 };

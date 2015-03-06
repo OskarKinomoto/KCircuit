@@ -92,7 +92,14 @@ void TabWidget::open()
 {
   QString fileName = QFileDialog::getOpenFileName(this->parentWidget(), tr("Save as..."), K::home + "/KCircuit/SAMPLE/", tr("KCircuit File (*.ktc)"), 0, QFileDialog::DontUseNativeDialog);
   if(fileName == "") return;
-  this->newTab(fileName);
+  try
+  {
+    this->newTab(fileName);
+  }
+  catch(QString &s)
+  {
+    QMessageBox::warning(this, tr("KCircuit"), s, QMessageBox::Ok, QMessageBox::Ok);
+  }
 }
 
 bool TabWidget::closeTab(int i, bool *saveAll, bool close)

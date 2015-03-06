@@ -87,6 +87,7 @@ protected:
 
   bool modyfied = false;
 
+  void doubleClick();
 private:
   std::list<ObjectAbstract *> objects;
   ObjectAbstract * drawing = nullptr;
@@ -98,7 +99,9 @@ private:
   QPen drawingPen;
   QPen currentPen;
 
-  quint32 ID = 0;
+  QPoint p;
+
+  quint32 ID;
   RightWidget * rightWidget;
 };
 

@@ -43,8 +43,6 @@ ObjectSettingsAbstract *ObjectResistor::settings(Circuit * c)
 
 void ObjectResistor::drawObject(QPainter &p)
 {
-  QPen pen = p.pen();
-
   if(angle % 90) // angle = 45
     {
       p.drawLine(-2*K::sqrt2*K::gs, 0, -2*K::gs, 0);
@@ -58,7 +56,7 @@ void ObjectResistor::drawObject(QPainter &p)
   p.drawRect(-2*K::gs, -.75*K::gs, 4*K::gs, 1.5*K::gs);
 
 
-  if(typ == POTENTIOMETR) // potencjometr
+  if(typ == POTENTIOMETR)
     {
       p.drawLine(0, -2*K::gs, 0, -.75*K::gs);
       p.drawLine(.5*K::gs, -1.25*K::gs, 0, -.75*K::gs);
@@ -67,7 +65,7 @@ void ObjectResistor::drawObject(QPainter &p)
   else if(typ == DECADE)
     {
       p.drawLine(-1.5*K::gs, 1.5*K::gs, 1.5*K::gs, -1.5*K::gs);
-      p.drawLine(1.8*K::gs, -1.2*K::gs, 1.2*K::gs, -1.8*K::gs); ///TODO!! zmie
+      p.drawLine(1.8*K::gs, -1.2*K::gs, 1.2*K::gs, -1.8*K::gs);
     }
   else if(typ == THREMISTOR)
     {

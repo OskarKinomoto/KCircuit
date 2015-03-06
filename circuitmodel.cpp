@@ -34,6 +34,8 @@ CircuitModel::CircuitModel(QString Path)
   in >> widthG;
   in >> heightG;
 
+  in >> ID;
+
   quint32 size;
   in >> size;
   quint32 type;
@@ -43,7 +45,9 @@ CircuitModel::CircuitModel(QString Path)
       in >> type;
       switch(type)
         {
-        case K::objectType::RESISTOR: objects.push_back(new ObjectResistor(in));
+        case K::objectType::RESISTOR: objects.push_back(new ObjectResistor(in)); break;
+        case K::objectType::WIRE: objects.push_back(new ObjectWire(in)); break;
+        default: throw QString("Type not implemented");
         }
     }
 
@@ -51,6 +55,7 @@ CircuitModel::CircuitModel(QString Path)
 
 CircuitModel::CircuitModel(CircuitSettings s)
 {
+  ID = 0;
   path = "";
   name = "new";
   widthG = s.widthG;
@@ -214,6 +219,11 @@ void CircuitModel::release()
           setModyfied();
         }
     }
+  if(!drawing && tool == K::tool::WIRE)
+    {
+      objects.push_back(new ObjectWire(p, ++ID));
+      drawing = objects.back();
+    }
   if(drawing && drawing->release())
     this->drawed();
 }
@@ -230,11 +240,15 @@ bool CircuitModel::press(QMouseEvent *e)
 
 void CircuitModel::newDrawing(QPoint p)
 {
+  bool draw = true;
   switch (tool) {
     case K::tool::RESISTOR: objects.push_back(new ObjectResistor(p, angle, ++ID)); break;
+    case K::tool::WIRE: draw = false; this->p = p; break;
+    case K::tool::CAPACITOR: objects.push_back(new ObjectCapacitor(p, angle, ++ID)); break;
     default: qDebug() << "not implemented" << __FILE__ << __LINE__; break;
     }
-  drawing = objects.back();
+  if(draw)
+    drawing = objects.back();
 }
 
 void CircuitModel::drawed()
@@ -263,6 +277,15 @@ void CircuitModel::setModyfied()
     {
       modyfied = true;
       updateTitle();
+    }
+}
+
+void CircuitModel::doubleClick()
+{
+  if(drawing && tool == K::tool::WIRE)
+    {
+      static_cast<ObjectResistor*>(drawing)->doubleClick();
+      this->drawed();
     }
 }
 
@@ -323,6 +346,9 @@ void CircuitModel::save()
   //size
   out << widthG;
   out << heightG;
+
+  out << ID;
+  qDebug() << ID;
 
   out << quint32(objects.size());
 

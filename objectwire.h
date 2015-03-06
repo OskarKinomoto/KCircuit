@@ -15,7 +15,7 @@ public:
   virtual bool move(QPoint p);
   virtual bool release();
 
-  virtual bool isPointOverObject(QPointF p) = 0;
+  virtual bool isPointOverObject(QPointF p);
 
   virtual void moveBy(QPoint d);
   virtual void moveByGS(QPoint gs);
@@ -23,10 +23,16 @@ public:
   virtual void dropMove();
   virtual void doubleClick();
 
+  virtual bool rotate90();
+
   virtual ObjectSettingsAbstract * settings(Circuit * c);
 private:
   std::vector<QPoint> points;
+  std::vector<bool> typ;
   K::WIRE_MODE mode;
+  QPoint moved = QPoint(0,0);
+
+  static bool isPointOverWirePart(QPoint &a, QPoint &b, QPointF &c, float dist);
 };
 
 #endif // OBJECTWIRE_H

@@ -121,6 +121,12 @@ void Circuit::showContextMenu(const QPoint &pos)
   contextMenu.exec(globalPos);
 }
 
+void Circuit::doubleClick()
+{
+  CircuitModel::doubleClick();
+  this->update();
+}
+
 void Circuit::updateSize()
 {
   this->setSize(CircuitModel::size());
@@ -140,6 +146,8 @@ void Circuit::init()
   connect(this, SIGNAL(press(QMouseEvent*)), this, SLOT(press(QMouseEvent*)));
 
   connect(this, SIGNAL(mouseDrag(QPoint)), this, SLOT(mouseDraged(QPoint)));
+
+  connect(this, SIGNAL(doubleClick()), this, SLOT(doubleClick()));
 
   removeCurrentA = new QAction(QIcon::fromTheme("window-close"), tr("Remove"), nullptr);
   connect(removeCurrentA, SIGNAL(triggered()), this, SLOT(removeCurrent()));

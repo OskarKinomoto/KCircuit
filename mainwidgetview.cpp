@@ -51,13 +51,17 @@ void MainWidgetView::initToolbar()
   selectA = new QAction(K::pointerI, tr("Select"), ac);
   wireA = new QAction(K::wireI, tr("Wire"), ac);
   resistorA = new QAction(K::resistorI, tr("Resitor"), ac);
+  capacitorA = new QAction(K::capacitorI, tr("Capasitor"), ac);
+  coilA = new QAction(K::coilI, tr("Coil"), ac);
 
   selectA->setCheckable(true);
   wireA->setCheckable(true);
   resistorA->setCheckable(true);
+  capacitorA->setCheckable(true);
+  coilA->setCheckable(true);
 
   selectA->setChecked(true);
 
-  toolBar->addActions({selectA, wireA, resistorA});
+  toolBar->addActions({selectA, wireA, resistorA, capacitorA, coilA});
 }
 

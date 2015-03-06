@@ -7,7 +7,9 @@ namespace K {
   enum tool {
     POINTER,
     WIRE,
-    RESISTOR
+    RESISTOR,
+    COIL,
+    CAPACITOR
   };
   }
 }

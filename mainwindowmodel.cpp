@@ -20,6 +20,8 @@ MainWindowModel::~MainWindowModel()
   K::pointerI = QIcon();
   K::wireI = QIcon();
   K::resistorI = QIcon();
+  K::capacitorI = QIcon();
+  K::coilI = QIcon();
 }
 
 void MainWindowModel::globalInit()
@@ -37,6 +39,8 @@ void MainWindowModel::globalInit()
   K::pointerI = QIcon(":/icons/pointer.svg");
   K::wireI = QIcon(":/icons/wire.svg");
   K::resistorI = QIcon(":/icons/R.svg");
+  K::capacitorI = QIcon(":/icons/C.svg");
+  K::coilI = QIcon(":/icons/L.svg");
   K::home = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
   K::baseC = QColor::fromRgb(77,77,77);
