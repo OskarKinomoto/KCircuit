@@ -76,7 +76,8 @@ void ObjectWire::save(QDataStream &out)
   out << ID;
   out << quint16(points.size());
   for(QPoint& point : points)
-      out << point;
+    out << point;
+
   for(bool b : typ)
     out << b;
   out << quint8(mode);
@@ -94,6 +95,7 @@ bool ObjectWire::release()
 {
   if(points[points.size() - 1] != points[points.size() - 2])
     points.push_back(points.back()), typ.push_back(typ.back());
+
   return false;
 }
 
@@ -159,6 +161,7 @@ void ObjectWire::dropMove()
 void ObjectWire::doubleClick()
 {
   points.pop_back();
+  typ.pop_back();
 }
 
 bool ObjectWire::rotate90()

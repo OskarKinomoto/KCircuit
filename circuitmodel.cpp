@@ -47,9 +47,11 @@ CircuitModel::CircuitModel(QString Path)
         {
         case K::objectType::RESISTOR: objects.push_back(new ObjectResistor(in)); break;
         case K::objectType::WIRE: objects.push_back(new ObjectWire(in)); break;
+        case K::objectType::CAPACITOR: objects.push_back(new ObjectCapacitor(in)); break;
         default: throw QString("Type not implemented");
         }
     }
+
 
 }
 
@@ -106,6 +108,8 @@ void CircuitModel::scaleDown()
 {
   if(scale > 0.5)
     scale /= 1.2;
+
+  this->exportToPng("/home/oskar/test.png");
 }
 
 bool CircuitModel::rotate45()
@@ -162,6 +166,33 @@ bool CircuitModel::rotate270()
       return current->rotate270();
     }
   return false;
+}
+
+void CircuitModel::exportToPng(QString path)
+{
+  auto scaleTmp = scale;
+  scale = 1;
+
+  K::gs = K::grid;
+
+  QImage pixmap(size().width(), size().height(), QImage::Format_ARGB32);
+  pixmap.fill(Qt::white);
+  QPainter p(&pixmap);
+
+  for(auto itr = objects.begin(); itr != objects.end(); itr++)
+    {
+      if(*itr == drawing)
+        p.setPen(drawingPen);
+      else if(*itr == current)
+        p.setPen(currentPen);
+      else
+        p.setPen(stdPen);
+      (*itr)->draw(p);
+    }
+
+  QImage croped = pixmap.copy(this->getRectangle(&pixmap));
+  croped.save(path);
+  scale = scaleTmp;
 }
 
 void CircuitModel::paint(QPainter & p)
@@ -245,7 +276,8 @@ void CircuitModel::newDrawing(QPoint p)
     case K::tool::RESISTOR: objects.push_back(new ObjectResistor(p, angle, ++ID)); break;
     case K::tool::WIRE: draw = false; this->p = p; break;
     case K::tool::CAPACITOR: objects.push_back(new ObjectCapacitor(p, angle, ++ID)); break;
-    default: qDebug() << "not implemented" << __FILE__ << __LINE__; break;
+    case K::tool::COIL: objects.push_back(new ObjectCoil(p, angle, ++ID)); break;
+    default: qDebug() << "not implemented" << __FILE__ << __LINE__; draw=false; break;
     }
   if(draw)
     drawing = objects.back();
@@ -396,3 +428,39 @@ void CircuitModel::setCurrent(ObjectAbstract *o)
     }
 }
 
+QRect CircuitModel::getRectangle(QImage * p)
+{
+  int r = 0;
+  int l = p->width();
+  int t = 0;
+  int b = 0;
+  bool e1 = true;
+  for(int i = 0; i < p->height(); ++i)
+    {
+      bool e2 = true;
+      for(int j = 0; j < p->width(); ++j)
+        {
+          if(QColor().fromRgb(p->pixel(j, i)) != Qt::white)
+            {
+              r = std::max(j, r);
+              if(e2)
+                {
+                  l = std::min(j - 1, l);
+                }
+              e2 = false;
+              e1 = false;
+            }
+        }
+      if(e2 && e1)
+        {
+          t = i + 1;
+        }
+      if(!e2) b = i;
+    }
+  int MARGIN = 50;
+  b = (b + MARGIN > p->height() ? p->height() : b + MARGIN);
+  t = (t - MARGIN < 0 ? 0 : t - MARGIN);
+  r = (r + MARGIN > p->width() ? p->width() : r + MARGIN);
+  l = (l - MARGIN < 0 ? 0 : l - MARGIN);
+  return QRect(l, t, r-l, b - t);
+}

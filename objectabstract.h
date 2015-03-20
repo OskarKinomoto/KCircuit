@@ -12,7 +12,7 @@ class ObjectAbstract;
 
 namespace K
 {
-  enum objectType : quint32 {WIRE = 0, RESISTOR = 1, COIL = 2};
+  enum objectType : quint32 {WIRE = 0, RESISTOR = 1, COIL = 2, CAPACITOR = 3};
   struct objectInfo
   {
     K::objectType type;

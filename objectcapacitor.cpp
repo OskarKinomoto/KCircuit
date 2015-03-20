@@ -1,12 +1,12 @@
 #include "objectcapacitor.h"
 #include "textpainter.h"
 
-ObjectCapacitor::ObjectCapacitor(QPoint p, quint16 a, quint32 id) : ObjectBase(p, a, K::COIL, id)
+ObjectCapacitor::ObjectCapacitor(QPoint p, quint16 a, quint32 id) : ObjectBase(p, a, K::CAPACITOR, id)
 {
   name = "Capacitor " + QString::number(id);
 }
 
-ObjectCapacitor::ObjectCapacitor(QDataStream &in): ObjectBase(in, K::COIL)
+ObjectCapacitor::ObjectCapacitor(QDataStream &in): ObjectBase(in, K::CAPACITOR)
 {
   loadSettings(in);
 }

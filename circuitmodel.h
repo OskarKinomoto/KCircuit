@@ -74,6 +74,9 @@ protected:
   bool rotate315();
   bool rotate270();
 
+
+  void exportToPng(QString path);
+
   void paint(QPainter & p);
   void paintGrid(QPainter & p);
 
@@ -103,6 +106,7 @@ private:
 
   quint32 ID;
   RightWidget * rightWidget;
+  QRect getRectangle(QImage *p);
 };
 
 #endif // CIRCUITMODEL_H

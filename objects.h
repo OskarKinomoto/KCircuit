@@ -6,6 +6,7 @@
 #include "objectresistor.h"
 #include "objectwire.h"
 #include "objectcapacitor.h"
+#include "objectcoil.h"
 
 #endif // OBJECTS_H
 

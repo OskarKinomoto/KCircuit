@@ -44,7 +44,7 @@ namespace K
 
   extern QColor baseC;
 
-  enum WIRE_MODE : quint8{WIRE_TAXI, WIRE_SHORTEST};
+  enum WIRE_MODE : quint8{WIRE_TAXI = 0, WIRE_SHORTEST = 1};
   extern WIRE_MODE wireMode;
 
   template<class T>

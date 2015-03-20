@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     textpainter.cpp \
     colorcombobox.cpp \
     objectwire.cpp \
-    objectcapacitor.cpp
+    objectcapacitor.cpp \
+    objectcoil.cpp
 
 HEADERS  += mainwindow.h \
     mainwindowview.h \
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h \
     textpainter.h \
     colorcombobox.h \
     objectwire.h \
-    objectcapacitor.h
+    objectcapacitor.h \
+    objectcoil.h
 
 QMAKE_CXXFLAGS += -std=c++11
 
