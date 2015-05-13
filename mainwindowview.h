@@ -32,6 +32,7 @@ protected: /** VARIABLES **/
   QAction * saveA;
   QAction * saveAsA;
   QAction * saveAllA;
+  QAction * exportA;
   QAction * quitA;
 
   QAction * zoomInA;

@@ -48,6 +48,7 @@ CircuitModel::CircuitModel(QString Path)
         case K::objectType::RESISTOR: objects.push_back(new ObjectResistor(in)); break;
         case K::objectType::WIRE: objects.push_back(new ObjectWire(in)); break;
         case K::objectType::CAPACITOR: objects.push_back(new ObjectCapacitor(in)); break;
+        case K::objectType::COIL: objects.push_back(new ObjectCoil(in)); break;
         default: throw QString("Type not implemented");
         }
     }

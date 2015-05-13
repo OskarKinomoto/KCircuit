@@ -1,11 +1,11 @@
 #include "objectcoil.h"
 
-ObjectCoil::ObjectCoil(QPoint p, quint16 a, quint32 id) : ObjectBase(p, a, K::RESISTOR, id)
+ObjectCoil::ObjectCoil(QPoint p, quint16 a, quint32 id) : ObjectBase(p, a, K::COIL, id)
 {
   name = "Coil " + QString::number(id);
 }
 
-ObjectCoil::ObjectCoil(QDataStream &in) : ObjectBase(in, K::RESISTOR)
+ObjectCoil::ObjectCoil(QDataStream &in) : ObjectBase(in, K::COIL)
 {
   loadSettings(in);
 }
@@ -39,17 +39,21 @@ ObjectSettingsAbstract *ObjectCoil::settings(Circuit * c)
 
 void ObjectCoil::drawObject(QPainter &p)
 {
-  if(angle % 90) // angle = 45
+  p.drawArc(-2.5*K::gs, -.75*K::gs, K::gs,1.5*K::gs, 0, 180*16);
+  p.drawArc(-1.5*K::gs, -.75*K::gs, K::gs,1.5*K::gs, 0, 180*16);
+  p.drawArc(-.5*K::gs, -.75*K::gs, K::gs,1.5*K::gs, 0, 180*16);
+  p.drawArc(.5*K::gs, -.75*K::gs, K::gs,1.5*K::gs, 0, 180*16);
+  p.drawArc(1.5*K::gs, -.75*K::gs, K::gs,1.5*K::gs, 0, 180*16);
+  if(angle % 90)
     {
-      p.drawLine(-2*K::sqrt2*K::gs, 0, -2*K::gs, 0);
-      p.drawLine(2*K::sqrt2*K::gs, 0, 2*K::gs, 0);
+      p.drawLine(-2*K::sqrt2*K::gs,0,-2.5*K::gs,0);
+      p.drawLine(2*K::sqrt2*K::gs,0,2.5*K::gs,0);
     }
-  else // angle = 90
+  else
     {
-      p.drawLine(-3*K::gs, 0, -2*K::gs, 0);
-      p.drawLine(3*K::gs, 0, 2*K::gs, 0);
+      p.drawLine(-3*K::gs,0,-2.5*K::gs,0);
+      p.drawLine(3*K::gs,0,2.5*K::gs,0);
     }
-  p.drawRect(-2*K::gs, -.75*K::gs, 4*K::gs, 1.5*K::gs);
 }
 
 void ObjectCoil::saveSettings(QDataStream &out)

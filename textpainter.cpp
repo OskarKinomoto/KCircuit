@@ -7,12 +7,55 @@ TextPainter::TextPainter(QString t, float s)
   img = new QImage(300*s, 50*s, QImage::Format_ARGB32_Premultiplied);
   img->fill(Qt::transparent);
 
-  t.replace(QRegExp("_([^{])"), "<sub>\\1</sub>");
-  t.replace(QRegExp("_\\{([^}]*)\\}"), "<sub>\\1</sub>");
-
   t.replace(QRegExp("\\^([^{])"), "<sup>\\1</sup>");
   t.replace(QRegExp("\\^\\{([^}]*)\\}"), "<sup>\\1</sup>");
   t.replace(QRegExp("\\\\(Omega|ohm|Ohm)"), "Ω");
+  t.replace(QRegExp("\\\\(omega)"), "ω");
+  t.replace(QRegExp("\\\\(alpha)"), "α");
+  t.replace(QRegExp("\\\\(Αlpha)"), "Α");
+  t.replace(QRegExp("\\\\(beta)"), "β");
+  t.replace(QRegExp("\\\\(Beta)"), "Β");
+  t.replace(QRegExp("\\\\(gamma)"), "γ");
+  t.replace(QRegExp("\\\\(Gamma)"), "Γ");
+  t.replace(QRegExp("\\\\(delta)"), "δ");
+  t.replace(QRegExp("\\\\(Delta)"), "Δ");
+  t.replace(QRegExp("\\\\(epsilon)"), "ε");
+  t.replace(QRegExp("\\\\(Epsilon)"), "Ε");
+  t.replace(QRegExp("\\\\(rho)"), "ρ");
+  t.replace(QRegExp("\\\\(Rho)"), "Ρ");
+  t.replace(QRegExp("\\\\(tau)"), "τ");
+  t.replace(QRegExp("\\\\(Tau)"), "Τ");
+  t.replace(QRegExp("\\\\(tetha)"), "θ");
+  t.replace(QRegExp("\\\\(Tetha)"), "Θ");
+  t.replace(QRegExp("\\\\(jota)"), "ι");
+  t.replace(QRegExp("\\\\(Jota)"), "Ι");
+  t.replace(QRegExp("\\\\(pi)"), "π");
+  t.replace(QRegExp("\\\\(Pi)"), "Π");
+  t.replace(QRegExp("\\\\(sigma)"), "σ");
+  t.replace(QRegExp("\\\\(Sigma)"), "Σ");
+  t.replace(QRegExp("\\\\(phi)"), "φ");
+  t.replace(QRegExp("\\\\(Phi)"), "Φ");
+  t.replace(QRegExp("\\\\(etha)"), "η");
+  t.replace(QRegExp("\\\\(Etha)"), "Η");
+  t.replace(QRegExp("\\\\(xi)"), "ξ");
+  t.replace(QRegExp("\\\\(Xi)"), "Ξ");
+  t.replace(QRegExp("\\\\(kappa)"), "κ");
+  t.replace(QRegExp("\\\\(Kappa)"), "Κ");
+  t.replace(QRegExp("\\\\(lambda)"), "λ");
+  t.replace(QRegExp("\\\\(Lambda)"), "Λ");
+  t.replace(QRegExp("\\\\(zeta)"), "ζ");
+  t.replace(QRegExp("\\\\(Zeta)"), "Ζ");
+  t.replace(QRegExp("\\\\(chi)"), "χ");
+  t.replace(QRegExp("\\\\(Chi)"), "Χ");
+  t.replace(QRegExp("\\\\(psi)"), "ψ");
+  t.replace(QRegExp("\\\\(Psi)"), "Ψ");
+  t.replace(QRegExp("\\\\(nu)"), "ν");
+  t.replace(QRegExp("\\\\(Nu)"), "Ν");
+  t.replace(QRegExp("\\\\(mu)"), "μ");
+  t.replace(QRegExp("\\\\(Mu)"), "Μ");
+
+  t.replace(QRegExp("_([^{])"), "<sub>\\1</sub>");
+  t.replace(QRegExp("_\\{([^}]*)\\}"), "<sub>\\1</sub>");
 
   QPainter *p = new QPainter(img);
   p->scale(s,s);

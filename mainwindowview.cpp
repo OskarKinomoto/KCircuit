@@ -39,6 +39,9 @@ void MainWindowView::actionInit()
   saveAllA = new QAction(QIcon::fromTheme("document-save-all"), tr("Save all"), nullptr);
   //saveAllA->setShortcut();
 
+  exportA = new QAction(QIcon::fromTheme("document-export"), tr("Export..."), nullptr);
+  //saveAllA->setShortcut();
+
   quitA = new QAction(QIcon::fromTheme("application-exit"), tr("Quit"), nullptr);
   quitA->setShortcut(QKeySequence::Quit);
 
@@ -82,6 +85,8 @@ void MainWindowView::menuInit()
   fileM->addActions({newA, openA});
   fileM->addSeparator();
   fileM->addActions({saveA, saveAsA, saveAllA});
+  fileM->addSeparator();
+  fileM->addActions({exportA});
   fileM->addSeparator();
   fileM->addActions({quitA});
 
