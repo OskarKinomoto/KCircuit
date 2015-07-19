@@ -4,8 +4,7 @@
 #include <QListWidgetItem>
 #include <objectabstract.h>
 
-class ListObjectsItem : public QListWidgetItem, public K::objectInfo
-{
+class ListObjectsItem : public QListWidgetItem, public K::objectInfo {
 public:
   ListObjectsItem(K::objectInfo info, QListWidget *parent);
   ~ListObjectsItem();

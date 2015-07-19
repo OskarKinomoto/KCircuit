@@ -10,26 +10,25 @@
 
 class Circuit;
 
-class RightWidgetView : public QWidget
-{
+class RightWidgetView : public QWidget {
   Q_OBJECT
 public:
   explicit RightWidgetView(Circuit *circuit, QWidget *parent = 0);
   ~RightWidgetView();
 
-  ListObjects * a;
+  ListObjects *a;
 
-  void setObjectSettings(ObjectSettingsAbstract * osa);
+  void setObjectSettings(ObjectSettingsAbstract *osa);
 
 signals:
 
 public slots:
 
 protected:
-  QLayout * l;
-  QSplitter * s;
-  Circuit * c;
-  ObjectSettingsAbstract * b;
+  QLayout *l;
+  QSplitter *s;
+  Circuit *c;
+  ObjectSettingsAbstract *b;
 };
 
 #endif // RIGHTWIDGETVIEW_H

@@ -11,18 +11,18 @@
 
 class Circuit;
 
-class History
-{
+class History {
 public:
-  History(Circuit * circuit);
+  History(Circuit *circuit);
   ~History();
-  void add(HistoryNodeAbstract * node);
+  void add(HistoryNodeAbstract *node);
   void undo();
   void redo();
   bool backable();
   bool forwardable();
+
 private:
-  Circuit * c;
+  Circuit *c;
   std::list<HistoryNodeAbstract *> history;
   std::list<HistoryNodeAbstract *>::iterator now;
 };

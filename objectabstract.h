@@ -10,25 +10,22 @@
 
 class ObjectAbstract;
 
-namespace K
-{
-  enum objectType : quint32 {WIRE = 0, RESISTOR = 1, COIL = 2, CAPACITOR = 3};
-  struct objectInfo
-  {
-    K::objectType type;
-    QString name;
-    ObjectAbstract *  ptr;
-  };
+namespace K {
+enum objectType : quint32 { WIRE = 0, RESISTOR = 1, COIL = 2, CAPACITOR = 3 };
+struct objectInfo {
+  K::objectType type;
+  QString name;
+  ObjectAbstract *ptr;
+};
 }
 
-class ObjectAbstract
-{
+class ObjectAbstract {
 public:
   ObjectAbstract(K::objectType t, quint32 id);
   ObjectAbstract(K::objectType t, QDataStream &in);
   virtual ~ObjectAbstract();
 
-  virtual void draw(QPainter& p) = 0;
+  virtual void draw(QPainter &p) = 0;
   virtual void save(QDataStream &out) = 0;
   virtual bool move(QPoint p) = 0;
   virtual bool release() = 0;
@@ -44,12 +41,13 @@ public:
   virtual QPoint acceptMove() = 0;
   virtual void dropMove() = 0;
 
-  virtual ObjectSettingsAbstract * settings(Circuit * c) = 0;
+  virtual ObjectSettingsAbstract *settings(Circuit *c) = 0;
 
   K::objectInfo info();
 
   inline QString getName() { return name; }
   inline void setName(QString n) { name = n; }
+
 protected:
   K::objectType type;
   QString name;

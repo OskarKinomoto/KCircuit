@@ -8,15 +8,15 @@ class ObjectAbstract;
 #include <QtGlobal>
 #include <QPoint>
 
-class HistoryNodeMove : public HistoryNodeAbstract
-{
+class HistoryNodeMove : public HistoryNodeAbstract {
 public:
-  HistoryNodeMove(ObjectAbstract * o, QPoint moved);
+  HistoryNodeMove(ObjectAbstract *o, QPoint moved);
   ~HistoryNodeMove();
-  virtual void undo(Circuit * c);
-  virtual void redo(Circuit * c);
+  virtual void undo(Circuit *c);
+  virtual void redo(Circuit *c);
+
 private:
-  ObjectAbstract * object;
+  ObjectAbstract *object;
   QPoint move;
 };
 

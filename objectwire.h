@@ -3,14 +3,13 @@
 
 #include "objectabstract.h"
 
-class ObjectWire : public ObjectAbstract
-{
+class ObjectWire : public ObjectAbstract {
 public:
   ObjectWire(QPoint p, quint32 id);
   ObjectWire(QDataStream &in);
   ~ObjectWire();
 
-  virtual void draw(QPainter& p);
+  virtual void draw(QPainter &p);
   virtual void save(QDataStream &out);
   virtual bool move(QPoint p);
   virtual bool release();
@@ -25,12 +24,13 @@ public:
 
   virtual bool rotate90();
 
-  virtual ObjectSettingsAbstract * settings(Circuit * c);
+  virtual ObjectSettingsAbstract *settings(Circuit *c);
+
 private:
   std::vector<QPoint> points;
   std::vector<bool> typ;
   K::WIRE_MODE mode;
-  QPoint moved = QPoint(0,0);
+  QPoint moved = QPoint(0, 0);
 
   static bool isPointOverWirePart(QPoint &a, QPoint &b, QPointF &c, float dist);
 };

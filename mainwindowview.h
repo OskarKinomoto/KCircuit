@@ -8,8 +8,7 @@
 #include "global.h"
 #include "tabwidget.h"
 
-class MainWindowView : public QMainWindow
-{
+class MainWindowView : public QMainWindow {
   Q_OBJECT
 public:
   MainWindowView(QWidget *parent = 0);
@@ -22,49 +21,48 @@ protected: /** INITS **/
   void toolBarInit();
   void centralWidgetInit();
   void sizePositionInit();
-  void keyPressEvent (QKeyEvent * event);
+  void keyPressEvent(QKeyEvent *event);
 
 protected: /** VARIABLES **/
-
   /** ACTIONS **/
-  QAction * newA;
-  QAction * openA;
-  QAction * saveA;
-  QAction * saveAsA;
-  QAction * saveAllA;
-  QAction * exportA;
-  QAction * quitA;
+  QAction *newA;
+  QAction *openA;
+  QAction *saveA;
+  QAction *saveAsA;
+  QAction *saveAllA;
+  QAction *exportA;
+  QAction *quitA;
 
-  QAction * zoomInA;
-  QAction * zoomIn2A;
-  QAction * zoomOutA;
+  QAction *zoomInA;
+  QAction *zoomIn2A;
+  QAction *zoomOutA;
 
-  QAction * rotate90A;
-  QAction * rotate45A;
-  QAction * rotate270A;
-  QAction * rotate315A;
+  QAction *rotate90A;
+  QAction *rotate45A;
+  QAction *rotate270A;
+  QAction *rotate315A;
 
-  QAction * undoA;
-  QAction * redoA;
+  QAction *undoA;
+  QAction *redoA;
 
-  QAction * delA;
+  QAction *delA;
 
   /** MENUS **/
-  QMenu * fileM;
-  QMenu * editM;
-  QMenu * viewM;
+  QMenu *fileM;
+  QMenu *editM;
+  QMenu *viewM;
 
   /** TOOLBAR **/
-  QToolBar * toolBar;
+  QToolBar *toolBar;
 
   /** ActionGroup - Wire type **/
-  QActionGroup * ag;
+  QActionGroup *ag;
 
-  QAction * wireShortest;
-  QAction * wireTaxi;
+  QAction *wireShortest;
+  QAction *wireTaxi;
 
   /** CENTRAL WIDGET **/
-  TabWidget * tabWidget;
+  TabWidget *tabWidget;
 };
 
 #endif // MAINWINDOWVIEW_H

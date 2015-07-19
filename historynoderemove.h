@@ -5,15 +5,15 @@
 
 class ObjectAbstract;
 
-class HistoryNodeRemove : public HistoryNodeAbstract
-{
+class HistoryNodeRemove : public HistoryNodeAbstract {
 public:
-  HistoryNodeRemove(ObjectAbstract * o);
+  HistoryNodeRemove(ObjectAbstract *o);
   ~HistoryNodeRemove();
-  virtual void undo(Circuit * c);
-  virtual void redo(Circuit * c);
+  virtual void undo(Circuit *c);
+  virtual void redo(Circuit *c);
+
 private:
-  ObjectAbstract * object;
+  ObjectAbstract *object;
   bool removed = true;
 };
 

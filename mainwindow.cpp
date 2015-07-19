@@ -1,8 +1,7 @@
 #include "mainwindow.h"
 
-
-MainWindow::MainWindow(QWidget *parent) : MainWindowView(parent), MainWindowModel()
-{
+MainWindow::MainWindow(QWidget *parent)
+    : MainWindowView(parent), MainWindowModel() {
   MainWindowView::init();
   connect(rotate45A, &QAction::triggered, this, &MainWindow::rotate45);
   connect(rotate90A, &QAction::triggered, this, &MainWindow::rotate90);
@@ -23,68 +22,33 @@ MainWindow::MainWindow(QWidget *parent) : MainWindowView(parent), MainWindowMode
   connect(wireShortest, &QAction::triggered, this, &MainWindow::wireModeS);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {}
 
+void MainWindow::leaveEvent(QEvent *event) {}
+
+void MainWindow::enterEvent(QEvent *event) {}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+  if (tabWidget->closeAllTab())
+    event->accept();
+  else
+    event->ignore();
 }
 
-void MainWindow::leaveEvent(QEvent *event)
-{
+void MainWindow::rotate90() { this->circuit()->rotate90(); }
 
-}
+void MainWindow::rotate45() { this->circuit()->rotate45(); }
 
-void MainWindow::enterEvent(QEvent *event)
-{
+void MainWindow::rotate270() { this->circuit()->rotate270(); }
 
-}
+void MainWindow::rotate315() { this->circuit()->rotate315(); }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-  if(tabWidget->closeAllTab()) event->accept();
-  else  event->ignore();
-}
+void MainWindow::undo() { this->circuit()->undo(); }
 
-void MainWindow::rotate90()
-{
-  this->circuit()->rotate90();
-}
+void MainWindow::redo() { this->circuit()->redo(); }
 
-void MainWindow::rotate45()
-{
-  this->circuit()->rotate45();
-}
+void MainWindow::del() { this->circuit()->removeCurrent(); }
 
-void MainWindow::rotate270()
-{
-  this->circuit()->rotate270();
-}
+void MainWindow::wireModeT() { K::wireMode = K::WIRE_TAXI; }
 
-void MainWindow::rotate315()
-{
-  this->circuit()->rotate315();
-}
-
-void MainWindow::undo()
-{
-  this->circuit()->undo();
-}
-
-void MainWindow::redo()
-{
-  this->circuit()->redo();
-}
-
-void MainWindow::del()
-{
-  this->circuit()->removeCurrent();
-}
-
-void MainWindow::wireModeT()
-{
-  K::wireMode = K::WIRE_TAXI;
-}
-
-void MainWindow::wireModeS()
-{
-  K::wireMode = K::WIRE_SHORTEST;
-}
+void MainWindow::wireModeS() { K::wireMode = K::WIRE_SHORTEST; }

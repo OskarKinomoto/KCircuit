@@ -14,12 +14,10 @@
 #include "history.h"
 #include <QMouseEvent>
 
-
 class RightWidget;
 class ListObjects;
 
-class CircuitModel: public virtual CircuitData
-{
+class CircuitModel : public virtual CircuitData {
 public:
   CircuitModel(QString path);
   CircuitModel(CircuitSettings setings);
@@ -32,8 +30,8 @@ public:
 
   void updateTitle();
 
-  void addObject(ObjectAbstract * o);
-  void removeObject(ObjectAbstract * o, bool history = false);
+  void addObject(ObjectAbstract *o);
+  void removeObject(ObjectAbstract *o, bool history = false);
   void removeCurrent();
 
   void saveAs(QString path);
@@ -43,21 +41,21 @@ public:
 
   bool isModyfied();
 
-  std::list<ObjectAbstract *>& list();
-  inline bool isDrawing(ObjectAbstract * d) { return d == drawing; }
+  std::list<ObjectAbstract *> &list();
+  inline bool isDrawing(ObjectAbstract *d) { return d == drawing; }
 
-  void setList(ListObjects* l);
-  void setRightWidget(RightWidget * r);
+  void setList(ListObjects *l);
+  void setRightWidget(RightWidget *r);
 
-  void setCurrent(ObjectAbstract * o);
+  void setCurrent(ObjectAbstract *o);
 
-  ListObjects * listObjects;
+  ListObjects *listObjects;
   void setModyfied();
 
 protected:
   QString path;
   QString name;
-  History * history;
+  History *history;
 
   int widthG;
   int heightG;
@@ -74,27 +72,27 @@ protected:
   bool rotate315();
   bool rotate270();
 
-
   void exportToPng(QString path);
 
-  void paint(QPainter & p);
-  void paintGrid(QPainter & p);
+  void paint(QPainter &p);
+  void paintGrid(QPainter &p);
 
   void destroyDrawing();
 
   void release();
 
-  bool press(QMouseEvent * e);
+  bool press(QMouseEvent *e);
 
   void initPens();
 
   bool modyfied = false;
 
   void doubleClick();
+
 private:
   std::list<ObjectAbstract *> objects;
-  ObjectAbstract * drawing = nullptr;
-  ObjectAbstract * current = nullptr;
+  ObjectAbstract *drawing = nullptr;
+  ObjectAbstract *current = nullptr;
 
   void newDrawing(QPoint p);
   void drawed();
@@ -105,7 +103,7 @@ private:
   QPoint p;
 
   quint32 ID;
-  RightWidget * rightWidget;
+  RightWidget *rightWidget;
   QRect getRectangle(QImage *p);
 };
 

@@ -1,11 +1,8 @@
 #include "mainwindowview.h"
 
-MainWindowView::MainWindowView(QWidget *parent) : QMainWindow(parent)
-{
-}
+MainWindowView::MainWindowView(QWidget *parent) : QMainWindow(parent) {}
 
-void MainWindowView::init()
-{
+void MainWindowView::init() {
   actionInit();
   menuInit();
   toolBarInit();
@@ -13,8 +10,7 @@ void MainWindowView::init()
   sizePositionInit();
 }
 
-MainWindowView::~MainWindowView()
-{
+MainWindowView::~MainWindowView() {
   QSettings settings;
   settings.beginGroup("MainWindow");
   settings.setValue("size", this->size());
@@ -22,8 +18,7 @@ MainWindowView::~MainWindowView()
   settings.endGroup();
 }
 
-void MainWindowView::actionInit()
-{
+void MainWindowView::actionInit() {
   newA = new QAction(QIcon::fromTheme("document-new"), tr("New file"), nullptr);
   newA->setShortcut(QKeySequence::New);
 
@@ -33,16 +28,20 @@ void MainWindowView::actionInit()
   saveA = new QAction(QIcon::fromTheme("document-save"), tr("Save"), nullptr);
   saveA->setShortcut(QKeySequence::Save);
 
-  saveAsA = new QAction(QIcon::fromTheme("document-save-as"), tr("Save as..."), nullptr);
+  saveAsA = new QAction(QIcon::fromTheme("document-save-as"), tr("Save as..."),
+                        nullptr);
   saveAsA->setShortcut(QKeySequence::SaveAs);
 
-  saveAllA = new QAction(QIcon::fromTheme("document-save-all"), tr("Save all"), nullptr);
-  //saveAllA->setShortcut();
+  saveAllA = new QAction(QIcon::fromTheme("document-save-all"), tr("Save all"),
+                         nullptr);
+  // saveAllA->setShortcut();
 
-  exportA = new QAction(QIcon::fromTheme("document-export"), tr("Export..."), nullptr);
-  //saveAllA->setShortcut();
+  exportA = new QAction(QIcon::fromTheme("document-export"), tr("Export..."),
+                        nullptr);
+  // saveAllA->setShortcut();
 
-  quitA = new QAction(QIcon::fromTheme("application-exit"), tr("Quit"), nullptr);
+  quitA =
+      new QAction(QIcon::fromTheme("application-exit"), tr("Quit"), nullptr);
   quitA->setShortcut(QKeySequence::Quit);
 
   rotate90A = new QAction(nullptr);
@@ -79,8 +78,7 @@ void MainWindowView::actionInit()
   this->addActions({rotate90A, rotate45A, rotate270A, rotate315A});
 }
 
-void MainWindowView::menuInit()
-{
+void MainWindowView::menuInit() {
   fileM = this->menuBar()->addMenu(tr("File"));
   fileM->addActions({newA, openA});
   fileM->addSeparator();
@@ -99,8 +97,7 @@ void MainWindowView::menuInit()
   viewM->addActions({zoomInA, zoomOutA});
 }
 
-void MainWindowView::toolBarInit()
-{
+void MainWindowView::toolBarInit() {
   toolBar = new QToolBar(tr("Base"), this);
   toolBar->addActions({newA, openA, saveA});
   toolBar->addSeparator();
@@ -120,15 +117,15 @@ void MainWindowView::toolBarInit()
   this->addToolBar(Qt::TopToolBarArea, toolBar);
 }
 
-void MainWindowView::centralWidgetInit()
-{
+void MainWindowView::centralWidgetInit() {
   tabWidget = new TabWidget();
   this->setCentralWidget(tabWidget);
-  this->setStyleSheet("QMainWindow { background: auto; }"); /// strange fix for strange line, really strange!
+  this->setStyleSheet("QMainWindow { background: auto; }"); /// strange fix for
+                                                            /// strange line,
+                                                            /// really strange!
 }
 
-void MainWindowView::sizePositionInit()
-{
+void MainWindowView::sizePositionInit() {
   QSettings settings;
   settings.beginGroup("MainWindow");
   this->resize(settings.value("size", QSize(800, 600)).toSize());
@@ -136,19 +133,22 @@ void MainWindowView::sizePositionInit()
   settings.endGroup();
 }
 
-void MainWindowView::keyPressEvent(QKeyEvent *event)
-{
-  if(event->modifiers() == 0x24000000)
-    {
-      if(event->key() == 0x2b) zoomInA->trigger();
-      else if(event->key())
-        switch(event->key())
-          {
-          case 0x2b: zoomInA->trigger(); break;
-          case 0x2d: zoomOutA->trigger(); break;
-          default: QMainWindow::keyPressEvent(event); break;
-          }
-    }
-  else QMainWindow::keyPressEvent(event);
+void MainWindowView::keyPressEvent(QKeyEvent *event) {
+  if (event->modifiers() == 0x24000000) {
+    if (event->key() == 0x2b)
+      zoomInA->trigger();
+    else if (event->key())
+      switch (event->key()) {
+      case 0x2b:
+        zoomInA->trigger();
+        break;
+      case 0x2d:
+        zoomOutA->trigger();
+        break;
+      default:
+        QMainWindow::keyPressEvent(event);
+        break;
+      }
+  } else
+    QMainWindow::keyPressEvent(event);
 }
-

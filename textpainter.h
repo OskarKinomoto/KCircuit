@@ -7,15 +7,14 @@
 
 #include "global.h"
 
-
-class TextPainter
-{
+class TextPainter {
 public:
   TextPainter(QString ktext, float s);
   ~TextPainter();
-  QImage * getCropedImage();
+  QImage *getCropedImage();
+
 private:
-  QImage * img;
+  QImage *img;
   QRect getRectangle(QImage *p);
 };
 

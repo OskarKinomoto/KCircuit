@@ -10,8 +10,7 @@
 #include "scrollarea.h"
 #include "rightwidget.h"
 
-class MainWidgetView : public QWidget
-{
+class MainWidgetView : public QWidget {
   Q_OBJECT
 public:
   explicit MainWidgetView(CircuitSettings settings, QWidget *parent = 0);
@@ -19,30 +18,34 @@ public:
   virtual ~MainWidgetView();
 
 public:
-  Circuit * circuit;
-protected:
-  StatusBar * statusBar;
+  Circuit *circuit;
 
-  QToolBar * toolBar;
-  RightWidget * rightWidget;
+protected:
+  StatusBar *statusBar;
+
+  QToolBar *toolBar;
+  RightWidget *rightWidget;
+
 public:
-  ScrollArea * scroll;
+  ScrollArea *scroll;
 
 private:
   void initView();
   void initToolbar();
 
-  QActionGroup * ac;
+  QActionGroup *ac;
+
 protected:
-  QAction * selectA;
-  QAction * wireA;
-  QAction * resistorA;
-  QAction * capacitorA;
-  QAction * coilA;
+  QAction *selectA;
+  QAction *wireA;
+  QAction *resistorA;
+  QAction *capacitorA;
+  QAction *coilA;
+
 private:
-  QVBoxLayout * vBox;
-  QHBoxLayout * hBox;
-  QWidget * layoutCointerner;
+  QVBoxLayout *vBox;
+  QHBoxLayout *hBox;
+  QWidget *layoutCointerner;
 
 signals:
 

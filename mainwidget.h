@@ -3,9 +3,7 @@
 
 #include "mainwidgetview.h"
 
-
-class MainWidget : public MainWidgetView
-{
+class MainWidget : public MainWidgetView {
   Q_OBJECT
 public:
   MainWidget(CircuitSettings settings);
@@ -14,13 +12,13 @@ public:
   void setIndex(int index);
 
 protected:
-
 private slots:
   void setPointer();
   void setWire();
   void setResistor();
   void setCoil();
   void setCapacitor();
+
 private:
   void init();
 };

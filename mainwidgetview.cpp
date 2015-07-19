@@ -1,19 +1,18 @@
 #include "mainwidgetview.h"
 
-MainWidgetView::MainWidgetView(QString path, QWidget *parent) : QWidget(parent)
-{
+MainWidgetView::MainWidgetView(QString path, QWidget *parent)
+    : QWidget(parent) {
   circuit = new Circuit(path);
   this->initView();
 }
 
-MainWidgetView::MainWidgetView(CircuitSettings settings, QWidget *parent) : QWidget(parent)
-{
+MainWidgetView::MainWidgetView(CircuitSettings settings, QWidget *parent)
+    : QWidget(parent) {
   circuit = new Circuit(settings);
   this->initView();
 }
 
-MainWidgetView::~MainWidgetView()
-{
+MainWidgetView::~MainWidgetView() {
   delete circuit;
   delete statusBar;
   delete toolBar;
@@ -21,8 +20,7 @@ MainWidgetView::~MainWidgetView()
   delete scroll;
 }
 
-void MainWidgetView::initView()
-{
+void MainWidgetView::initView() {
   this->initToolbar();
 
   vBox = new QVBoxLayout(this);
@@ -38,12 +36,11 @@ void MainWidgetView::initView()
   rightWidget = new RightWidget(circuit);
   hBox->addWidget(rightWidget);
 
-  hBox->setContentsMargins(0,0,0,0);
-  vBox->setContentsMargins(0,0,0,0);
+  hBox->setContentsMargins(0, 0, 0, 0);
+  vBox->setContentsMargins(0, 0, 0, 0);
 }
 
-void MainWidgetView::initToolbar()
-{
+void MainWidgetView::initToolbar() {
   toolBar = new QToolBar(tr("Tools"));
   toolBar->setOrientation(Qt::Vertical);
   ac = new QActionGroup(toolBar);
@@ -64,4 +61,3 @@ void MainWidgetView::initToolbar()
 
   toolBar->addActions({selectA, wireA, resistorA, capacitorA, coilA});
 }
-

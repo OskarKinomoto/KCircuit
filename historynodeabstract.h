@@ -3,13 +3,12 @@
 
 class Circuit;
 
-class HistoryNodeAbstract
-{
+class HistoryNodeAbstract {
 public:
   HistoryNodeAbstract();
   virtual ~HistoryNodeAbstract();
-  virtual void undo(Circuit * c) = 0;
-  virtual void redo(Circuit * c) = 0;
+  virtual void undo(Circuit *c) = 0;
+  virtual void redo(Circuit *c) = 0;
 };
 
 #endif // HISTORYNODEABSTRACT_H

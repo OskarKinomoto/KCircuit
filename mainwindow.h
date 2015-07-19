@@ -9,8 +9,7 @@
 #include "mainwindowview.h"
 #include "mainwindowmodel.h"
 
-class MainWindow : public MainWindowView, public MainWindowModel
-{
+class MainWindow : public MainWindowView, public MainWindowModel {
   Q_OBJECT
 
 public:
@@ -18,11 +17,11 @@ public:
   virtual ~MainWindow();
 
 protected: /** REIMPLEMENTATIONS **/
-  void leaveEvent ( QEvent * event );
-  void enterEvent ( QEvent * event );
-  void closeEvent ( QCloseEvent * event );
+  void leaveEvent(QEvent *event);
+  void enterEvent(QEvent *event);
+  void closeEvent(QCloseEvent *event);
 
-  inline Circuit * circuit() { return tabWidget->circuit(); }
+  inline Circuit *circuit() { return tabWidget->circuit(); }
 
 private slots:
   void rotate90();

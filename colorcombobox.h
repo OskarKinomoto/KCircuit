@@ -4,8 +4,7 @@
 #include <QComboBox>
 #include <QColor>
 
-class ColorComboBox : public QComboBox
-{
+class ColorComboBox : public QComboBox {
   Q_OBJECT
 public:
   ColorComboBox();

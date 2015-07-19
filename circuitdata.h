@@ -4,12 +4,12 @@
 #include <QRect>
 #include "tools.h"
 
-class CircuitData
-{
+class CircuitData {
 public:
   CircuitData();
   virtual ~CircuitData();
   void setIndex(int i);
+
 protected:
   QRect visibleRectangle;
   K::tool::tool tool;

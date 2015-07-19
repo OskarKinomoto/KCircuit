@@ -5,8 +5,7 @@
 
 #include "circuitdata.h"
 
-class CircuitView : public QWidget, public virtual CircuitData
-{
+class CircuitView : public QWidget, public virtual CircuitData {
   Q_OBJECT
 public:
   explicit CircuitView(QWidget *parent = 0);
@@ -21,10 +20,10 @@ protected:
   void mouseMoveEvent(QMouseEvent *event);
   void mouseReleaseEvent(QMouseEvent *event);
   void mousePressEvent(QMouseEvent *event);
-  void mouseDoubleClickEvent(QMouseEvent * event);
+  void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
-  void paint(QPaintEvent * p);
+  void paint(QPaintEvent *p);
   void mouseMove(QPoint p);
   void mouseDrag(QPoint d);
   void leave();
@@ -32,7 +31,7 @@ signals:
   void doubleClick();
   void moveMiddle(int dx, int dy);
   void centering();
-  void press(QMouseEvent * e);
+  void press(QMouseEvent *e);
 
 public slots:
 

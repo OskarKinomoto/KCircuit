@@ -5,8 +5,9 @@
 #include "circuit.h"
 #include "listobjects.h"
 
-ObjectSettingsResistor::ObjectSettingsResistor(ObjectResistor *resistor, Circuit * c) : ObjectSettingsAbstract(c)
-{
+ObjectSettingsResistor::ObjectSettingsResistor(ObjectResistor *resistor,
+                                               Circuit *c)
+    : ObjectSettingsAbstract(c) {
   r = resistor;
 
   name = new QLineEdit(r->getName());
@@ -16,7 +17,6 @@ ObjectSettingsResistor::ObjectSettingsResistor(ObjectResistor *resistor, Circuit
   label = new QLineEdit(r->getLabel());
   l->addRow(tr("Label"), label);
   connect(label, SIGNAL(textEdited(QString)), this, SLOT(labelEdited(QString)));
-
 
   type = new QComboBox();
   type->addItem(tr("Resistor"), 0);
@@ -30,40 +30,32 @@ ObjectSettingsResistor::ObjectSettingsResistor(ObjectResistor *resistor, Circuit
   color = new ColorComboBox();
   l->addRow(tr("Color"), color);
   connect(color, SIGNAL(colorChanged(QColor)), this, SLOT(colorEdited(QColor)));
-  if(r->isColorSet())
+  if (r->isColorSet())
     color->setCurrentIndex(color->findData(r->getColor()));
 }
 
-ObjectSettingsResistor::~ObjectSettingsResistor()
-{
+ObjectSettingsResistor::~ObjectSettingsResistor() {}
 
-}
-
-void ObjectSettingsResistor::nameEdited(QString t)
-{
+void ObjectSettingsResistor::nameEdited(QString t) {
   r->setName(t);
   c->listObjects->load();
   this->c->setModyfied();
 }
 
-void ObjectSettingsResistor::labelEdited(QString t)
-{
+void ObjectSettingsResistor::labelEdited(QString t) {
   r->setLabel(t);
   c->update();
   this->c->setModyfied();
 }
 
-void ObjectSettingsResistor::typeEdited(int i)
-{
+void ObjectSettingsResistor::typeEdited(int i) {
   r->setTyp(i);
   c->update();
   this->c->setModyfied();
 }
 
-void ObjectSettingsResistor::colorEdited(QColor c)
-{
+void ObjectSettingsResistor::colorEdited(QColor c) {
   r->setColor(c);
   this->c->update();
   this->c->setModyfied();
 }
-

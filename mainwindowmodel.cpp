@@ -5,18 +5,16 @@
 #include <QFontMetrics>
 #include <QColor>
 
-MainWindowModel::MainWindowModel()
-{
+MainWindowModel::MainWindowModel() {
   globalInit();
 
 #ifdef QT_DEBUG
-  if(!K::oxygen.exactMatch())
+  if (!K::oxygen.exactMatch())
     qWarning() << "Oxygen is not loaded.";
 #endif
 }
 
-MainWindowModel::~MainWindowModel()
-{
+MainWindowModel::~MainWindowModel() {
   K::pointerI = QIcon();
   K::wireI = QIcon();
   K::wireTaxiI = QIcon();
@@ -26,8 +24,7 @@ MainWindowModel::~MainWindowModel()
   K::coilI = QIcon();
 }
 
-void MainWindowModel::globalInit()
-{
+void MainWindowModel::globalInit() {
   QSettings set;
   QFontDatabase::addApplicationFont(":/fonts/oxygen.otf");
   K::oxygen = QFont("oxygen");
@@ -47,6 +44,5 @@ void MainWindowModel::globalInit()
   K::coilI = QIcon(":/icons/L.svg");
   K::home = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
-  K::baseC = QColor::fromRgb(77,77,77);
+  K::baseC = QColor::fromRgb(77, 77, 77);
 }
-

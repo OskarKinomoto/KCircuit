@@ -5,8 +5,7 @@
 #include "global.h"
 #include "qdebug.h"
 
-class MainWindowModel
-{
+class MainWindowModel {
 public:
   MainWindowModel();
   ~MainWindowModel();

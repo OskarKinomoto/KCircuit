@@ -9,4 +9,3 @@
 #include "objectcoil.h"
 
 #endif // OBJECTS_H
-

@@ -8,31 +8,30 @@ class Circuit;
 
 #include <QMenu>
 
-class ListObjects : public QListWidget
-{
+class ListObjects : public QListWidget {
   Q_OBJECT
 public:
-  ListObjects(Circuit * circuit);
+  ListObjects(Circuit *circuit);
   ~ListObjects();
 
-  void setCurrent(ObjectAbstract * o);
+  void setCurrent(ObjectAbstract *o);
 public slots:
   void load();
 
 private:
-  Circuit * c;
-  QAction * remove;
+  Circuit *c;
+  QAction *remove;
   QMenu contextMenu;
 
-  ListObjectsItem * cur = nullptr;
-  ListObjectsItem * prev = nullptr;
+  ListObjectsItem *cur = nullptr;
+  ListObjectsItem *prev = nullptr;
 
 public slots:
   void ShowContextMenu(const QPoint &pos);
-  void activated ( QListWidgetItem * item );
+  void activated(QListWidgetItem *item);
 
 protected:
-  void mousePressEvent ( QMouseEvent * event );
+  void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // LISTOBJECTS_H

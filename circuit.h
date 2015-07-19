@@ -4,8 +4,7 @@
 #include "circuitmodel.h"
 #include "circuitview.h"
 
-class Circuit : public CircuitView, public CircuitModel
-{
+class Circuit : public CircuitView, public CircuitModel {
   Q_OBJECT
 public:
   Circuit(CircuitSettings settings);
@@ -38,7 +37,7 @@ private:
   void updateSize();
   void init();
 
-  QAction * removeCurrentA;
+  QAction *removeCurrentA;
   QMenu contextMenu;
 
 signals:

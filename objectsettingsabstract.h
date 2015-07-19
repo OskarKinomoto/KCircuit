@@ -5,8 +5,7 @@
 
 class Circuit;
 
-class ObjectSettingsAbstract : public QWidget
-{
+class ObjectSettingsAbstract : public QWidget {
   Q_OBJECT
 public:
   explicit ObjectSettingsAbstract(Circuit *circuit);
@@ -17,9 +16,8 @@ signals:
 public slots:
 
 protected:
-  QFormLayout * l;
-  Circuit * c;
-
+  QFormLayout *l;
+  Circuit *c;
 };
 
 #endif // OBJECTSETTINGSABSTRACT_H

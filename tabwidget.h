@@ -5,15 +5,14 @@
 #include "mainwidget.h"
 #include "global.h"
 
-class TabWidget : public TabWidgetView
-{
+class TabWidget : public TabWidgetView {
   Q_OBJECT
 public:
   TabWidget();
   ~TabWidget();
 
   void setName(QString name, int index);
-  Circuit* circuit();
+  Circuit *circuit();
 
   void changeTitle(QString title, int index);
 
@@ -24,7 +23,7 @@ public slots:
   void saveAs();
   void saveAll();
   void open();
-  bool closeTab(int i, bool * saveAll = new bool(false), bool close = false);
+  bool closeTab(int i, bool *saveAll = new bool(false), bool close = false);
   bool closeAllTab();
   void zoomIn();
   void zoomOut();

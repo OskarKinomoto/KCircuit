@@ -3,8 +3,7 @@
 
 #include <QtWidgets>
 
-class TabWidgetView : public QTabWidget
-{
+class TabWidgetView : public QTabWidget {
   Q_OBJECT
 public:
   TabWidgetView();

@@ -3,8 +3,7 @@
 
 #include <QScrollArea>
 
-class ScrollArea : public QScrollArea
-{
+class ScrollArea : public QScrollArea {
   Q_OBJECT
 public:
   ScrollArea();
@@ -21,12 +20,12 @@ signals:
   void move();
 
 protected:
-  virtual void resizeEvent(QResizeEvent * event);
-  virtual void wheelEvent(QWheelEvent * event);
+  virtual void resizeEvent(QResizeEvent *event);
+  virtual void wheelEvent(QWheelEvent *event);
 
 private:
 #ifdef __linux__
-  QWidget * corner = nullptr;
+  QWidget *corner = nullptr;
   void recolorScrollBars();
 #endif
   int delta = 0;

@@ -5,8 +5,8 @@
 
 #include "circuit.h"
 
-RightWidgetView::RightWidgetView(Circuit * circuit, QWidget *parent) : QWidget(parent)
-{
+RightWidgetView::RightWidgetView(Circuit *circuit, QWidget *parent)
+    : QWidget(parent) {
   this->setMinimumWidth(150);
   this->setMaximumWidth(250);
   c = circuit;
@@ -24,16 +24,12 @@ RightWidgetView::RightWidgetView(Circuit * circuit, QWidget *parent) : QWidget(p
   s->setCollapsible(1, false);
 }
 
-RightWidgetView::~RightWidgetView()
-{
+RightWidgetView::~RightWidgetView() {}
 
-}
-
-void RightWidgetView::setObjectSettings(ObjectSettingsAbstract *osa)
-{
+void RightWidgetView::setObjectSettings(ObjectSettingsAbstract *osa) {
   auto tmp = s->sizes();
   delete b;
-  if(osa)
+  if (osa)
     b = osa;
   else
     b = new ObjectSettingsAbstract(nullptr);
@@ -41,4 +37,3 @@ void RightWidgetView::setObjectSettings(ObjectSettingsAbstract *osa)
   s->setCollapsible(1, false);
   s->setSizes(tmp);
 }
-

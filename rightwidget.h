@@ -3,8 +3,7 @@
 
 #include "rightwidgetview.h"
 
-class RightWidget : public RightWidgetView
-{
+class RightWidget : public RightWidgetView {
 public:
   RightWidget(Circuit *circuit);
   ~RightWidget();
